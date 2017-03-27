@@ -13,6 +13,21 @@ Meteor.startup(() => {
     prettyJson: true
   });
 
+  //convert a given list of required values into regex
+  function createListRequirementRegex(possibleValues){
+    var regexString="((";
+    for (i=0;i<possibleValues.length;i++){
+      if (i!=0){
+        regexString=regexString + "|"+possibleValues[i];
+      } else {
+        regexString=regexString + possibleValues[i];
+      }
+    };
+    regexString=regexString+")(,+|$))+";
+    return regexString;
+  };
+
+  //pass this function a set of requirements and a query and it will check the query fulfils it
   function checkRequirements(requirements,queryParams){
     var errorStack = new Array();
     var warningStack = new Array();
@@ -24,7 +39,6 @@ Meteor.startup(() => {
         var regex = currReq.expected.exec(queryParams[currReq.name]); //execute regex
         var unexpectedError = {code:100, errorDetails:"Unexpected data value for \""+currReq.name+ "\", recieved \""+queryParams[currReq.name]+"\"expected "+currReq.possibles}
         if (regex == null){ //if there are no matches to the regex at all
-          console.log(currReq.expected.exec(queryParams[currReq.name]));
           errorStack.push(unexpectedError);
         } else {
           if (regex[0]!=regex['input']){ //if the regex matches multiples as opposed to one single match, useful for list checking
@@ -32,29 +46,48 @@ Meteor.startup(() => {
           }
         }
       }
-    }
+    };
+
     if (requirements.length<queryParams.length){
       errorStack.push({code:01, warningDetails:"Unnessasary paramaters detected, some given paramaters are not needed"});
-    }
+    };
+
     var response = {requirements:requirements,errors:errorStack,warnings:warningStack};
     return response;
   };
 
   //add routes to the API here
-  Api.addRoute('test', {authRequired: false}, {
+
+  //basic is api working route
+  Api.addRoute('isApiAlive', {authRequired: false}, {
     get: function () {
-      return {statusCode:202, body:{status:'Success', message:'Test success'}};
+      return {statusCode:200, body:{status:'Success', message:'Yes'}};
     }
   });
 
   Api.addRoute('retailTrade', {authRequired: false}, {
     get: function () {
-      //var expectedAreas = ["Retail","MerchandiseExports"];
-      var requirements = [{name:"statisticsArea", expected: new RegExp('(Retail|MerchandiseExports)','gi'),possibles:"one or multiple of \"Retail,MerchandiseExports\"",required:true},
-                          {name:"state", expected: new RegExp('((AUS|NSW|WA|SA|ACT|VIC|TAS|QLD|NT)(,+|$))+','gi'),possibles:"one or multiple of \"AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT\"",required:true},
-                          {name:"category", expected: new RegExp('(.*)'), possibles:"stubbed", required:true},
-                          {name:"startDate", expected: new RegExp('(.*)'), possibles:"stubbed", required:true},
-                          {name:"endDate",expected: new RegExp('(.*)'), possibles:"stubbed", required:true}];
+      var possibleStatisticsArea = ["Retail","MerchandiseExports"];
+      var possibleState = ["AUS","NSW","WA","SA","ACT","VIC","TAS","QLD","NT"];
+      var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
+      var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"]
+
+      if (this.queryParams.statisticsArea.match(/retail/gi)){
+        var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true},
+                            {name:"state", expected: new RegExp(createListRequirementRegex(possibleState),'gi'),possibles:"one or multiple of "+possibleState.toString(),required:true},
+                            {name:"category", expected: new RegExp(createListRequirementRegex(possibleCategoryRetail),'gi'), possibles:"one or multiple of "+possibleCategoryRetail.toString(), required:true},
+                            {name:"startDate", expected: new RegExp('....-..-..','gi'), possibles:"date in format YYYY-MM-DD", required:true},
+                            {name:"endDate",expected: new RegExp('....-..-..','gi'), possibles:"date in format YYYY-MM-DD", required:true}];
+      } else if (this.queryParams.statisticsArea.match(/MerchandiseExports/gi)){
+        var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true},
+                            {name:"state", expected: new RegExp(createListRequirementRegex(possibleState),'gi'),possibles:"one or multiple of "+possibleState.toString(),required:true},
+                            {name:"category", expected: new RegExp(createListRequirementRegex(possibleCategoryMerchandise),'gi'), possibles:"one or multiple of "+possibleCategoryMerchandise.toString(), required:true},
+                            {name:"startDate", expected: new RegExp('....-..-..','gi'), possibles:"date in format YYYY-MM-DD", required:true},
+                            {name:"endDate",expected: new RegExp('....-..-..','gi'), possibles:"date in format YYYY-MM-DD", required:true}];
+      } else { //these requirements will be failed
+        var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true}];
+      }
+
 
       var errorsAndWarnings = checkRequirements(requirements,this.queryParams);
       if (errorsAndWarnings.errors.length!=0){
@@ -65,7 +98,14 @@ Meteor.startup(() => {
         var category = this.queryParams.category;
         var startDate = this.queryParams.startDate;
         var endDate = this.queryParams.endDate;
-        return {statusCode:202, body:{status:'Success', message:'Test success'}};
+        if (this.queryParams.statisticsArea.match(/retail/gi)){
+          var data = Meteor.call('getRetailTurnover',state,category,startDate,endDate);
+        } else {
+          var data = Meteor.call('getMerchandiseExports',state,category,startDate,endDate);
+        }
+        if(data!=null){ //add further testing for whether the call failed here TODO
+          return {statusCode:200, body:{status:errorsAndWarnings, data:data}};
+        }
       }
     }
   });
@@ -128,10 +168,12 @@ Example API call:
 
     'getRetailTurnover' : function(){
       //code for retail turnover here
+      return ("stubbed");
     },
 
     'getMerchandiseExports' : function(){
       //code for Merchandise exports turnover here
+      return("stubbed");
     }
 
 
