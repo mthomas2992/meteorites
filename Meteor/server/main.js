@@ -9,6 +9,7 @@ Meteor.startup(() => {
 
   // API config, default routes have domain/api/<route>
   var Api = new Restivus({
+    version:'v1',
     useDefaultAuth: true,
     prettyJson: true
   });
@@ -134,26 +135,6 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
 Parameter C - Time & Frequency
 
 http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-01&endTime=2017-01
-
-Example API call:
-// returns a list of ALBUMS
-  'getNewReleases' : function(authToken){
-    const options = {
-      "params": {
-        "limit": "30",
-        "country": "AU"
-      },
-      "headers" : {
-        "Authorization": "Bearer " + authToken
-      }
-    }
-    console.log("Called getNewReleases");
-    var result = HTTP.get("https://api.spotify.com/v1/browse/new-releases", options);
-    // console.log("THIS IS YOUR RESULT:\n")
-    // console.log(result);
-    return result;
-  },
-
 */
 
   Meteor.methods ({

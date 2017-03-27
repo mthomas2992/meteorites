@@ -7,19 +7,10 @@ class App extends React.Component {
 
     constructor(props){
       super(props);
-
-      this.state = {
-        currentData:null
-      };
-
     };
 
     componentDidMount(){
-      var self = this;
-      Meteor.call('testAPIAccess',function(err,res){
-        console.log(res);
-        self.setState({currentData:res});
-      });
+
     };
 
 
