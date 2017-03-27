@@ -48,8 +48,8 @@ Meteor.startup(() => {
       }
     };
 
-    if (requirements.length<queryParams.length){
-      errorStack.push({code:01, warningDetails:"Unnessasary paramaters detected, some given paramaters are not needed"});
+    if (requirements.length<Object.keys(queryParams).length){
+      warningStack.push({code:01, warningDetails:"Unnessasary paramaters detected, some given paramaters are not needed"});
     };
 
     var response = {requirements:requirements,errors:errorStack,warnings:warningStack};
