@@ -69,7 +69,7 @@ Example API call:
   Meteor.methods ({
 
     'testAPIAccess' :function (){
-      var queryString = "http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-01&endTime=2017-01"
+      var queryString = "http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-02&endTime=2017-01&dimensionAtObservation=allDimensions&pid=28a5828e-8915-407f-8244-4c4a8635b29c"
       var result = HTTP.get(queryString);
       var newresult = JSON.parse(result.content);
       console.log(newresult);

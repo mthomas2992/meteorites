@@ -32,8 +32,6 @@ class App extends React.Component {
                 <p> Mark Nerwich </p>
                 <p> Benjamin Phipps</p>
                 <p> Tomas Donovic</p>
-                <h2>Data test</h2>
-                <p>{this.state.currentData}</p>
                 </div>);
       } else {
         return (<p>404</p>);
