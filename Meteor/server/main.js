@@ -20,6 +20,14 @@ Meteor.startup(() => {
     }
   });
 
+  Api.addRoute('retailTrade', {authRequired: false}, {
+    get: function () {
+
+
+      return {statusCode:202, body:{status:'Success', message:'Test success'}};
+    }
+  });
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////      ENDAPI          ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +82,14 @@ Example API call:
       var newresult = JSON.parse(result.content);
       console.log(newresult);
       return newresult;
+    }
+
+    'getRetailTurnover' : function(){
+      //code for retail turnover here
+    }
+
+    'getMerchandiseExports' : function(){
+      //code for Merchandise exports turnover here
     }
 
 
