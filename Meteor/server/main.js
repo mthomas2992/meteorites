@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 
+import showdown from 'showdown';
+
 Meteor.startup(() => {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +147,19 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
       var newresult = JSON.parse(result.content);
       console.log(newresult);
       return newresult;
+    },
+
+    'getApiDocumentationIndex' : function(){
+      return Assets.getText('Index.txt');
+    },
+
+    'getApiVersionIndex' :function(version){
+      return JSON.parse(Assets.getText(version+'/versionIndex.txt'));
+    },
+
+    'getDocumentationPageContents' : function(version,endpoint){
+      var converter = new showdown.Converter();
+      return converter.makeHtml(Assets.getText(version+'/'+endpoint+'.txt'));
     },
 
     'getRetailTurnover' : function(){

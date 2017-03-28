@@ -1,1 +1,1 @@
-{versions:[v1]}
+{"versions":["v1"]}

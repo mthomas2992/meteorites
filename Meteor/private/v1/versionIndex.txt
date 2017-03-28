@@ -1,1 +1,1 @@
-{paths:[RetailTrade,isApiAlive]}
+{"ver":"v1","paths":["RetailTrade","isApiAlive"]}

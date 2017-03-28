@@ -12,7 +12,7 @@ FlowRouter.route('/', {
 //Api documentation routes are defined for a different app
 FlowRouter.route('/api/documentation', {
   action(params,queryParams) {
-    ReactDOM.render(<APIDocumentation path="Home"/>, document.getElementById('app'));
+    ReactDOM.render(<APIDocumentation version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
   }
 })
 
