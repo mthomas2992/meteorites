@@ -1,5 +1,27 @@
 /* CSS declarations go here */
 
+/* DOCUMENTATION CSS */
+
+#header {
+  background-color: grey;
+
+  padding-top:10%;
+}
+
+#docoSpacer{
+  padding-top:3%;
+}
+
+#mainBodyText {
+  border-style: dashed;
+  border-color: black;
+
+}
+
+#mainBodyTop {
+  border-style: dashed;
+  border-color: black;
+}
 
 #navBarTop {
   border-style: dashed;
