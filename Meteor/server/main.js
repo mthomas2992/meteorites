@@ -149,6 +149,7 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
       return newresult;
     },
 
+
     'getApiDocumentationIndex' : function(){
       return Assets.getText('Index.txt');
     },
@@ -162,9 +163,70 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
       return converter.makeHtml(Assets.getText(version+'/'+endpoint+'.txt'));
     },
 
-    'getRetailTurnover' : function(){
+
+    'getRetailTurnover' : function(stateList, industryList, startDate, endDate){
       //code for retail turnover here
-      return ("stubbed");
+      var absQuery = "";
+      var stateArray = stateList.split(",");
+      var i;
+      var length = stateArray.length;
+      for(i=0; i<length; i++){
+
+        if (stateList[i] == "AUS") {
+          absQuery += "0";
+        } else if (stateList[i] == "NSW") {
+          absQuery += "1";
+        } else if (stateList[i] == "VIC") {
+          absQuery += "2";
+        } else if (stateList[i] == "QLD") {
+          absQuery += "3";
+        } else if (stateList[i] == "SA") {
+          absQuery += "4";
+        } else if (stateList[i] == "WA") {
+          absQuery += "5";
+        } else if (stateList[i] == "TAS") {
+          absQuery += "6";
+        } else if (stateList[i] == "NT") {
+          absQuery += "7";
+        } else if (stateList[i] == "ACT") {
+          absQuery += "8";
+        } else {
+          absQuery +="MISTAKEHERE";
+        }
+        if (i < length - 1){
+          absQuery += "+";
+        }
+      }
+      absQuery += ".2";
+
+      var industryArray;
+      industryArray = industryList.split(",");
+
+      length = industryArray.length;
+      for(i=0; i<length; i++){
+          //parse industry list here
+          if ("Total") {
+
+          } else if ("Food") {
+
+          } else if ("HouseholdGood") {
+
+          } else if ("ClothingFootwareAndPersonalAccessory") {
+
+          } else if ("DepartmentStores") {
+
+          } else if ("CafesResturantsAndTakeawayFood") {
+
+          } else if ("Other") {
+
+          } else {
+            absQuery +="MISTAKEHERE";
+          }
+      }
+
+      absQuery += ".10.M";
+
+      return "To Be Completed";
     },
 
     'getMerchandiseExports' : function(){
