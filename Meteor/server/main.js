@@ -167,7 +167,7 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
       //console.log(stateString);
-      var absQuery = "/RT/";
+      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
@@ -241,13 +241,18 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-      return absQuery;
+
+      var result = HTTP.get(absQuery);
+      var newresult = JSON.parse(result.content);
+      console.log(newresult);
+      return newresult;
       //return "To Be Completed";
     },
 
     'getMerchandiseExports' : function(stateString, commodityString, startDate, endDate){
       //code for Merchandise exports turnover here
-            var absQuery = "/MERCH_EXP/";
+            var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/MERCH_EXP/";
+
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
@@ -329,7 +334,7 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-      
+
 
 
       return absQuery;
