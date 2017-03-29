@@ -59,6 +59,141 @@ Meteor.startup(() => {
     return response;
   };
 
+  function getDateOutput(data){
+    var timePeriods = data.structure.dimensions.observation;
+    
+    for (x in timePeriods){
+      if (timePeriods[x].id == "TIME_PERIOD"){
+        timePeriods = timePeriods[x].values;
+        break;
+      }
+    }
+
+    var dates = [];
+    var date;
+    for (d in timePeriods) {
+      date = timePeriods[d].id;
+      if (date.match(/-0[13578]/g) || date.match(/-1[02]/g)){
+        date = date + "-31";
+      } else if (date.match(/-02/g)) {
+        date = date + "-28";
+      } else {
+        date = date + "-30";
+      }
+      dates.push(date);
+    }
+
+    // console.log(dates);
+    return dates;
+  }
+
+  function getRetailIndustryOutput(data) {
+    var dataIndustries = data.structure.dimensions.observation;
+
+    for (x in dataIndustries){
+      if (dataIndustries[x].name == "Retail Industry"){
+        dataIndustries = dataIndustries[x].values;
+        break;
+      }
+    }
+
+    var industries = [];
+    var industryID;
+    var industryName;
+    for (i in dataIndustries) {
+      industryID = dataIndustries[i].id;
+
+      if (industryID.match(/20/)) {
+        industryName = "Total";
+      } else if (industryID.match(/41/)) {
+        industryName = "Food";
+      } else if (industryID.match(/42/)) {
+        industryName = "HouseholdGood";
+      } else if (industryID.match(/43/)) {
+        industryName = "ClothingFootwareAndPersonalAccessory";
+      } else if (industryID.match(/44/)) {
+        industryName = "DepartmentStores";
+      } else if (industryID.match(/45/)) {
+        industryName = "CafesResturantsAndTakeawayFood";
+      } else if (industryID.match(/46/)) {
+        industryName = "Other";
+      } else {
+        industryName = "error";
+      }
+      industries.push(industryName);
+    }
+
+    // console.log(industries);
+    return(industries);
+  }
+
+  function getStateOutput(data){
+    var regions = data.structure.dimensions.observation;
+    
+    for (x in regions){
+      if (regions[x].name == "Region"){
+        regions = regions[x].values;
+        break;
+      }
+    }
+
+    var states = [];
+    var stateID;
+    var stateName;
+    for (i in regions){
+      stateID = regions[i].id;
+      if (stateID.match(/0/)){   // potential error: note that we dont push AUS into states[]
+        continue;
+      } else if (stateID.match(/1/)) {
+        stateName = "NSW";
+      } else if (stateID.match(/2/)) {
+        stateName = "VIC";
+      } else if (stateID.match(/3/)) {
+        stateName = "QLD";
+      } else if (stateID.match(/4/)) {
+        stateName = "SA";
+      } else if (stateID.match(/5/)) {
+        stateName = "WA";
+      } else if (stateID.match(/6/)) {
+        stateName = "TAS";
+      } else if (stateID.match(/7/)) {
+        stateName = "NT";
+      } else if (stateID.match(/8/)) {
+        stateName = "ACT";
+      } else {
+        stateName = "error";
+      }
+      states.push(stateName);
+    }
+
+    // console.log(states);
+    return states;
+  }
+
+  function getTurnoverOutput(data){
+    var observations = data.dataSets[0];
+    var results = observations.observations;
+
+    var turnovers = [];
+    for (i in results) {
+      turnovers.push(results[i][0]);
+    }
+
+    // console.log(turnovers);
+    return turnovers;
+  }
+
+  function formatRetailOutput(data) {
+    var dateOutputArray = getDateOutput(data); // array of consecutive dates in order
+    var stateOutputArray = getStateOutput(data); // array of regions (not including AUS)
+    var RetailIndustryOutputArray = getRetailIndustryOutput(data); // array of retail industries
+    var TurnoverOutputArray = getTurnoverOutput(data); // array of turnovers. note there might be too many elements here
+
+    var output = {};
+
+    return output;
+  }
+
   //add routes to the API here
 
   //basic is api working route
@@ -113,31 +248,17 @@ Meteor.startup(() => {
     }
   });
 
+
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////      ENDAPI          ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //add server side methods to be called with Meteor.call here
-// add API calls to ABS here
-
-/// ***************** API calls to ABS *****************
 
 // ****** API documentation ******
 // http://www.abs.gov.au/ausstats/abs@.nsf/Lookup/1407.0.55.002Main+Features3User+Guide
 
-/*
 
-Parameter A - by region
-
-http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-02&endTime=2017-01&dimensionAtObservation=allDimensions
-
-Parameter B - Retail Industry Type
-
-http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-02&endTime=2017-01&dimensionAtObservation=allDimensions
-
-Parameter C - Time & Frequency
-
-http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-01&endTime=2017-01
-*/
 
   Meteor.methods ({
 
@@ -167,7 +288,7 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
       //console.log(stateString);
-      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
+      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/0+";
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
@@ -175,9 +296,7 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
 
         //console.log(stateArray[i]);
 
-        if (stateArray[i].match(/AUS/gi)) {
-          absQuery += "0";
-        } else if (stateArray[i].match(/NSW/gi)) {
+        if (stateArray[i].match(/NSW/gi)) {
           absQuery += "1";
         } else if (stateArray[i].match(/VIC/gi)) {
           absQuery += "2";
@@ -244,7 +363,8 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
 
       var result = HTTP.get(absQuery);
       var newresult = JSON.parse(result.content);
-      console.log(newresult);
+      // console.log(newresult);
+      var evenNewerResult = formatRetailOutput(newresult);
       return newresult;
       //return "To Be Completed";
     },
