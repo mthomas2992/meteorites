@@ -28,7 +28,7 @@ class NavBar extends React.Component {
         }
         return (<div>Endpoints:{links}</div>)
       } else {
-        return (<div>No Version selected
+        return (<div>Invalid Version selected
                 </div>);
       }
     }

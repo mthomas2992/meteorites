@@ -24,7 +24,7 @@ class MainBody extends React.Component {
       if (this.state.pageContents){
         return (<div id="mainBodyText" dangerouslySetInnerHTML={this.state.pageContents}></div>);
       } else {
-        return (<div> No contents
+        return (<div> Loading....
                 </div>);
       }
 
