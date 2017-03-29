@@ -164,31 +164,34 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
     },
 
 
-    'getRetailTurnover' : function(stateList, industryList, startDate, endDate){
+    'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
-      var absQuery = "";
-      var stateArray = stateList.split(",");
+      //console.log(stateString);
+      var absQuery = "/RT/";
+      var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
       for(i=0; i<length; i++){
 
-        if (stateList[i] == "AUS") {
+        //console.log(stateArray[i]);
+
+        if (stateArray[i].match(/AUS/gi)) {
           absQuery += "0";
-        } else if (stateList[i] == "NSW") {
+        } else if (stateArray[i].match(/NSW/gi)) {
           absQuery += "1";
-        } else if (stateList[i] == "VIC") {
+        } else if (stateArray[i].match(/VIC/gi)) {
           absQuery += "2";
-        } else if (stateList[i] == "QLD") {
+        } else if (stateArray[i].match(/QLD/gi)) {
           absQuery += "3";
-        } else if (stateList[i] == "SA") {
+        } else if (stateArray[i].match(/SA/gi)) {
           absQuery += "4";
-        } else if (stateList[i] == "WA") {
+        } else if (stateArray[i].match(/WA/gi)) {
           absQuery += "5";
-        } else if (stateList[i] == "TAS") {
+        } else if (stateArray[i].match(/TAS/gi)) {
           absQuery += "6";
-        } else if (stateList[i] == "NT") {
+        } else if (stateArray[i].match(/NT/gi)) {
           absQuery += "7";
-        } else if (stateList[i] == "ACT") {
+        } else if (stateArray[i].match(/ACT/gi)) {
           absQuery += "8";
         } else {
           absQuery +="MISTAKEHERE";
@@ -197,41 +200,139 @@ http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+3
           absQuery += "+";
         }
       }
-      absQuery += ".2";
+      absQuery += ".2.";
 
       var industryArray;
-      industryArray = industryList.split(",");
+      industryArray = industryString.split(",");
 
       length = industryArray.length;
       for(i=0; i<length; i++){
           //parse industry list here
-          if ("Total") {
-
-          } else if ("Food") {
-
-          } else if ("HouseholdGood") {
-
-          } else if ("ClothingFootwareAndPersonalAccessory") {
-
-          } else if ("DepartmentStores") {
-
-          } else if ("CafesResturantsAndTakeawayFood") {
-
-          } else if ("Other") {
-
+          if (industryArray[i].match(/Total/gi)) {
+            absQuery += "20";
+          } else if (industryArray[i].match(/FOOD/gi)) {
+            absQuery += "41";
+          } else if (industryArray[i].match(/HouseholdGood/gi)) {
+            absQuery += "42";
+          } else if (industryArray[i].match(/ClothingFootwareAndPersonalAccessory/gi)) {
+            absQuery += "43";
+          } else if (industryArray[i].match(/DepartmentStores/gi)) {
+            absQuery += "44";
+          } else if (industryArray[i].match(/CafesResturantsAndTakeawayFood/gi)) {
+            absQuery += "45";
+          } else if (industryArray[i].match(/Other/gi)) {
+            absQuery += "46";
           } else {
             absQuery +="MISTAKEHERE";
           }
+          if (i < length - 1){
+            absQuery += "+";
+        }
       }
 
-      absQuery += ".10.M";
-
-      return "To Be Completed";
+      absQuery += ".10.M/all?startTime=";
+      var startDateArray = startDate.split("-");
+      absQuery += startDateArray[0];
+      absQuery += "-"
+      absQuery += startDateArray[1];
+      absQuery += "&endTime=";
+      var endDateArray = endDate.split("-");
+      absQuery += endDateArray[0];
+      absQuery += "-"
+      absQuery += endDateArray[1];
+      absQuery += "&dimensionAtObservation=allDimensions";
+      return absQuery;
+      //return "To Be Completed";
     },
 
-    'getMerchandiseExports' : function(){
+    'getMerchandiseExports' : function(stateString, commodityString, startDate, endDate){
       //code for Merchandise exports turnover here
-      return("stubbed");
+            var absQuery = "/MERCH_EXP/";
+      var stateArray = stateString.split(",");
+      var i;
+      var length = stateArray.length;
+      for(i=0; i<length; i++){
+
+        //console.log(stateArray[i]);
+
+        if (stateArray[i].match(/AUS/gi)) {
+          absQuery += "-";
+        } else if (stateArray[i].match(/NSW/gi)) {
+          absQuery += "1";
+        } else if (stateArray[i].match(/VIC/gi)) {
+          absQuery += "2";
+        } else if (stateArray[i].match(/QLD/gi)) {
+          absQuery += "3";
+        } else if (stateArray[i].match(/SA/gi)) {
+          absQuery += "4";
+        } else if (stateArray[i].match(/WA/gi)) {
+          absQuery += "5";
+        } else if (stateArray[i].match(/TAS/gi)) {
+          absQuery += "6";
+        } else if (stateArray[i].match(/NT/gi)) {
+          absQuery += "7";
+        } else if (stateArray[i].match(/ACT/gi)) {
+          absQuery += "8";
+        } else {
+          absQuery +="MISTAKEHERE";
+        }
+        if (i < length - 1){
+          absQuery += "+";
+        }
+      }
+      absQuery += ".";
+
+
+      var commodityArray;
+      commodityArray = commodityString.split(",");
+      length = commodityArray.length;
+      for(i=0; i<length; i++){
+          //parse commodity list here
+          if (commodityArray[i].match(/TOTAL/gi)) {
+            absQuery += "-1";
+          } else if (commodityArray[i].match(/FoodAndLiveAnimals/gi)) {
+            absQuery += "0";
+          } else if (commodityArray[i].match(/BeveragesAndTobacco/gi)) {
+            absQuery += "1";
+          } else if (commodityArray[i].match(/CrudMaterialAndInedible/gi)) {
+            absQuery += "2";
+          } else if (commodityArray[i].match(/MineralFuelLubricentAndRelatedMaterial/gi)) {
+            absQuery += "3";
+          } else if (commodityArray[i].match(/AnimalAndVegitableOilFatAndWaxes/gi)) {
+            absQuery += "4";
+          } else if (commodityArray[i].match(/ChemicalsAndRelatedProducts/gi)) {
+            absQuery += "5";
+          } else if (commodityArray[i].match(/ManufacutedGoods/gi)) {
+            absQuery += "6";
+          } else if (commodityArray[i].match(/MachineryAndTransportEquipments/gi)) {
+            absQuery += "7";
+          } else if (commodityArray[i].match(/OtherManucacturedArticles/gi)) {
+            absQuery += "8";
+          } else if (commodityArray[i].match(/Unclassified/gi)) {
+            absQuery += "9 ";
+          } else {
+            absQuery +="MISTAKEHERE";
+          }
+          if (i < length - 1){
+            absQuery += "+";
+        }
+      }
+      absQuery += ".9.-1.-.M/all?startTime=";
+
+      var startDateArray = startDate.split("-");
+      absQuery += startDateArray[0];
+      absQuery += "-"
+      absQuery += startDateArray[1];
+      absQuery += "&endTime=";
+      var endDateArray = endDate.split("-");
+      absQuery += endDateArray[0];
+      absQuery += "-"
+      absQuery += endDateArray[1];
+      absQuery += "&dimensionAtObservation=allDimensions";
+      
+
+
+      return absQuery;
     }
 
 
