@@ -19,14 +19,24 @@ class NavBar extends React.Component {
       });
     };
 
+    componentWillMount(){
+      var self = this;
+      Meteor.call('getApiVersionIndex', this.props.version,function(err,res){
+        self.setState({currentVersionIndex:res});
+      });
+    }
 
     render() {
+
       if (this.state.currentVersionIndex){
         var links = new Array();
         for (i=0;i<this.state.currentVersionIndex.paths.length;i++){
           links.push(<a href={"/api/documentation?ver="+this.state.currentVersionIndex.ver+"&endpoint="+this.state.currentVersionIndex.paths[i]}><div className="col-md-12 col-md-offset-1">{this.state.currentVersionIndex.paths[i]}</div></a>)
         }
-        return (<div>Endpoints:{links}</div>)
+        return (<div>
+                  <a href={"/api/documentation?ver="+this.state.currentVersionIndex.ver}> <div> Version home/changelog </div></a>
+                  <div>Endpoints:{links}</div>
+                </div>)
       } else {
         return (<div>Invalid Version selected
                 </div>);

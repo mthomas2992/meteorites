@@ -19,6 +19,16 @@ class MainBody extends React.Component {
       })
     };
 
+    componentWillMount(){
+      var self = this;
+      Meteor.call('getDocumentationPageContents',this.props.version,this.props.endpoint, function (err,res){
+        self.setState({pageContents:{__html:res}});
+      })
+    }
+
+    loadContents(){
+
+    }
 
     render() {
       if (this.state.pageContents){
