@@ -1,1 +1,314 @@
-##Main changelog
+##What is this API?
+
+The Meteoristics API is a RESTful web API that is intended to offer statistics in multiple areas.
+It achieves this through interfacing with the Australian Bureau of Statistics API which can be found here <http://stat.data.abs.gov.au/> .
+For any questions not covered relating to this api, contact <z5061594@ad.unsw.edu.au>
+
+
+### Version information
+| Property     | Value |
+| ------------- |-------------:|
+|Version | "v1"|
+|Released|30/03/2017|
+|Api endpoint |<http://meteoristics.com/api/v1/>|
+
+
+###Changelog
+**This is the first version of the Meteoristic API **
+
+
++ [ADDED]: RetailTrade endpoint [view here][1]
+
+
++ [ADDED]: isApiAlive endpoint [view here][2]
+
+
++ [ADDED]: Standard API formatting for all query responses
+
+
+[1]: ?ver=v1&endpoint=RetailTrade
+[2]:?ver=v1&endpoint=isApiAlive
+
+
+###Current Level of implementation
+
+Currently the API fulfills all requirements of the specification given and returns
+all nessasary data for both merchandise exports and retail turnover. As these
+have been completed development will focus now on creating more endpoints and features
+within the actual endpoints themselves
+
+
+###How to use the API
+
+The meteoristics API is a standard REST API, in that you make requests to our endpoints
+and we return data to you. Currently we only support the get request type, as we
+have not needed any other types as of yet. Specific information about how to pass
+specific variables to endpoints are defined on their respective page as they require different paramaters to function
+
+But in general a request is made by using any web browser or http client (such as cURL or google chrome). Using these clients
+you type in the applicable URL, which will be of the following format
+
+
+```md
+http://meteoristics.com/api/<version of api you are wanting to use (in this case "v1")>/<endpoint you wish to use here>?<variables you wish to pass here>
+```
+You then change the applicable parts of the URL as needed then make the request. Our server will then interpret your request and return data to you in the JSON format.
+
+
+For example, if you were using the cURL client you would run the following command in your unix terminal prompt to make a query to the endpoint retailTrade
+and pass the variables
+
+
++ statisticsArea = Retail
+
+
++ state = NSW
+
+
++ category = total
+
+
++ startDate = 2015-09-09
+
+
++ endDate = 2016-09-09
+
+
+
+```md
+curl -X GET http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09
+```
+
+
+The returned JSON will also always be in the same general format of
+
+```md
+status: {
+  requirements: <an arrayrequired variables for the endpoint you requested>
+  passedParamaters: <object contained the variables you did send to us>
+  errors:< an array of any errors preventing execution>
+  warnings:<an array of any warnings that aren't preventing execution of your query but should be corrected>
+  executionTime: <data relating to the time and speed of your requested query>
+}
+data: <actual requested data or error string>
+info: <appendixed data about our API and its version>
+```
+
+In the case that relevant statistical data is not provided from the ABS API, nothing will be returned for that part of the query or the data will have the field "data missing"
+
+An example succesful query output retrieved from <http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+
+```md
+{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "Retail",
+      "state": "nsw",
+      "category": "Total",
+      "startDate": "2015-09-09",
+      "endDate": "2016-09-09"
+    },
+    "errors": [],
+    "warnings": [],
+    "executionTime": {
+      "start": "30 Mar 2017 16:24:36",
+      "end": "30 Mar 2017 16:24:36",
+      "elapsed": 0,
+      "highResTime": {
+        "highResStart": {
+          "seconds": 175570,
+          "nanoseconds": 130719758
+        },
+        "highResEnd": {
+          "seconds": 175570,
+          "nanoseconds": 189528567
+        },
+        "highResElapsed": {
+          "seconds": 0,
+          "nanoseconds": 58811616
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "RetailIndustry": "Total",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 7664.8
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 8168.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 8351.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 10383.7
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 7997.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 7301
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 7847.1
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 7703.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 7796
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 7756.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 7792
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 7805.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 8043.8
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+```
+
+An example of a failed output due to errors retrieved from <http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw,USA&category=Total,badcat&startDate=2015-09-09>
+
+```md
+{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "Retail",
+      "state": "nsw,USA",
+      "category": "Total,badcat",
+      "startDate": "2015-09-09"
+    },
+    "errors": [
+      {
+        "code": 100,
+        "errorDetails": "Unexpected data value for \"state\", recieved \"nsw,USA\"expected one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT"
+      },
+      {
+        "code": 100,
+        "errorDetails": "Unexpected data value for \"category\", recieved \"Total,badcat\"expected one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other"
+      },
+      {
+        "code": 101,
+        "errorDetails": "\"endDate\" is a required variable for this request, can be date in format YYYY-MM-DD"
+      }
+    ],
+    "warnings": [],
+    "executionTime": {
+      "start": "Query Failed",
+      "end": "Query Failed",
+      "elapsed": "Query Failed",
+      "highResTime": "Query Failed"
+    }
+  },
+  "data": "Errors prevented data request, check the status field",
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+```
+
+
+As you can see, specific details as to why you are not recieving your expected output can be found in the errors array. Warnings tend to be as a result of passing a non-nessasary variable to us

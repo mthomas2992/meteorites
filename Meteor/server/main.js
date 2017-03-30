@@ -244,6 +244,7 @@ Meteor.startup(() => {
 
     'getDocumentationPageContents' : function(version,endpoint){
       var converter = new showdown.Converter();
+      converter.setOption('tables',true);
       return converter.makeHtml(Assets.getText(version+'/'+endpoint+'.txt'));
     },
 
