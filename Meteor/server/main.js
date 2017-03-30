@@ -59,145 +59,7 @@ Meteor.startup(() => {
     return response;
   };
 
-  function getDateOutput(data){
-    var timePeriods = data.structure.dimensions.observation;
-
-    for (x in timePeriods){
-      if (timePeriods[x].id == "TIME_PERIOD"){
-        timePeriods = timePeriods[x].values;
-        break;
-      }
-    }
-
-    var dates = [];
-    var date;
-    for (d in timePeriods) {
-      date = timePeriods[d].id;
-      if (date.match(/-0[13578]/g) || date.match(/-1[02]/g)){
-        date = date + "-31";
-      } else if (date.match(/-02/g)) {
-        date = date + "-28";
-      } else {
-        date = date + "-30";
-      }
-      dates.push(date);
-    }
-
-    // console.log(dates);
-    return dates;
-  }
-
-  function getRetailIndustryOutput(data) {
-    var dataIndustries = data.structure.dimensions.observation;
-
-    for (x in dataIndustries){
-      if (dataIndustries[x].name == "Retail Industry"){
-        dataIndustries = dataIndustries[x].values;
-        break;
-      }
-    }
-
-    var industries = [];
-    var industryID;
-    var industryName;
-    for (i in dataIndustries) {
-      industryID = dataIndustries[i].id;
-
-      if (industryID.match(/20/)) {
-        industryName = "Total";
-      } else if (industryID.match(/41/)) {
-        industryName = "Food";
-      } else if (industryID.match(/42/)) {
-        industryName = "HouseholdGood";
-      } else if (industryID.match(/43/)) {
-        industryName = "ClothingFootwareAndPersonalAccessory";
-      } else if (industryID.match(/44/)) {
-        industryName = "DepartmentStores";
-      } else if (industryID.match(/45/)) {
-        industryName = "CafesResturantsAndTakeawayFood";
-      } else if (industryID.match(/46/)) {
-        industryName = "Other";
-      } else {
-        industryName = "error";
-      }
-      industries.push(industryName);
-    }
-
-    // console.log(industries);
-    return(industries);
-  }
-
-  function getStateOutput(data){
-    var regions = data.structure.dimensions.observation;
-
-    for (x in regions){
-      if (regions[x].name == "Region"){
-        regions = regions[x].values;
-        break;
-      }
-    }
-
-    var states = [];
-    var stateID;
-    var stateName;
-    for (i in regions){
-      stateID = regions[i].id;
-      if (stateID.match(/0/)){   // potential error: note that we dont push AUS into states[]
-        continue;
-      } else if (stateID.match(/1/)) {
-        stateName = "NSW";
-      } else if (stateID.match(/2/)) {
-        stateName = "VIC";
-      } else if (stateID.match(/3/)) {
-        stateName = "QLD";
-      } else if (stateID.match(/4/)) {
-        stateName = "SA";
-      } else if (stateID.match(/5/)) {
-        stateName = "WA";
-      } else if (stateID.match(/6/)) {
-        stateName = "TAS";
-      } else if (stateID.match(/7/)) {
-        stateName = "NT";
-      } else if (stateID.match(/8/)) {
-        stateName = "ACT";
-      } else {
-        stateName = "error";
-      }
-      states.push(stateName);
-    }
-
-    // console.log(states);
-    return states;
-  }
-
-  function getTurnoverOutput(data){
-    var observations = data.dataSets[0];
-    var results = observations.observations;
-
-    var turnovers = [];
-    for (i in results) {
-      turnovers.push(results[i][0]);
-    }
-
-    // console.log(turnovers);
-    return turnovers;
-  }
-
   function formatRetailOutput(data) {
-    // var dateOutputArray = getDateOutput(data); // array of consecutive dates in order
-    // var stateOutputArray = getStateOutput(data); // array of regions (not including AUS)
-    // var RetailIndustryOutputArray = getRetailIndustryOutput(data); // array of retail industries
-    // var TurnoverOutputArray = getTurnoverOutput(data); // array of turnovers. note there might be too many elements here
-    //
-    // var output = {TurnoverOutputArray};
-    //
-    // var MonthlyRetailData = new Array();
-    //
-    //
-    // return output;
-
-    console.log(data.dataSets[0].observations["0:0:0:0:0:0"]);
-
     var mRD = new Array();
     var currIndustry = null;
     var currIndustryKey = null;
@@ -217,7 +79,7 @@ Meteor.startup(() => {
         monthsData = []; //reset months data array
         for (k=0;k<data.structure.dimensions.observation[5].values.length;k++){ //for each month
           currDate = data.structure.dimensions.observation[5].values[k].id;
-          if (currDate.match(/-0[13578]/g) || currDate.match(/-1[02]/g)){
+          if (currDate.match(/-0[13578]/g) || currDate.match(/-1[02]/g)){ //add last day of month for the data
             currDate = currDate + "-31";
           } else if (currDate.match(/-02/g)) {
             currDate = currDate + "-28";
@@ -232,7 +94,6 @@ Meteor.startup(() => {
     }
 
     return mRD;
-    //for each industry, so we find the industries given
   }
 
   //add routes to the API here
