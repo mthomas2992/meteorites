@@ -71,7 +71,7 @@ Meteor.startup(() => {
 
     var value = "Turnover";
     var industry = "RetailIndustry";
-    if (type="Merch"){
+    if (type=="Merch"){
       value = "Value";
       industry = "Commodity";
     }
