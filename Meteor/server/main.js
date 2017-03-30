@@ -255,9 +255,9 @@ Meteor.startup(() => {
             absQuery += "43";
           } else if (industryArray[i].match(/DepartmentStores/gi)) {
             absQuery += "44";
-          } else if (industryArray[i].match(/CafesResturantsAndTakeawayFood/gi)) {
-            absQuery += "45";
           } else if (industryArray[i].match(/Other/gi)) {
+            absQuery += "45";
+          } else if (industryArray[i].match(/CafesResturantsAndTakeawayFood/gi)) {
             absQuery += "46";
           } else {
             absQuery +="MISTAKEHERE";
@@ -293,7 +293,7 @@ Meteor.startup(() => {
       var length = stateArray.length;
       for(i=0; i<length; i++){
 
-        //console.log(stateArray[i]);
+        console.log(stateArray[i]);
 
         if (stateArray[i].match(/AUS/gi)) {
           absQuery += "-";
@@ -328,6 +328,7 @@ Meteor.startup(() => {
       length = commodityArray.length;
       for(i=0; i<length; i++){
           //parse commodity list here
+          console.log(commodityArray[i]);
           if (commodityArray[i].match(/TOTAL/gi)) {
             absQuery += "-1";
           } else if (commodityArray[i].match(/FoodAndLiveAnimals/gi)) {
@@ -349,7 +350,7 @@ Meteor.startup(() => {
           } else if (commodityArray[i].match(/OtherManucacturedArticles/gi)) {
             absQuery += "8";
           } else if (commodityArray[i].match(/Unclassified/gi)) {
-            absQuery += "9 ";
+            absQuery += "9";
           } else {
             absQuery +="MISTAKEHERE";
           }
@@ -357,6 +358,7 @@ Meteor.startup(() => {
             absQuery += "+";
         }
       }
+      console.log(absQuery);
       absQuery += ".-1.-.M/all?startTime=";
 
       var startDateArray = startDate.split("-");
@@ -369,7 +371,7 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-
+      console.log(absQuery);
       var result = HTTP.get(absQuery);
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
