@@ -86,7 +86,11 @@ Meteor.startup(() => {
           } else {
             currDate = currDate + "-30";
           }
-          monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0]});
+          if (data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]){
+            monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0]});
+          } else {
+            monthsData.push({Date:currDate,Turnover: "Data missing"});
+          }
         }
         rD.push({State:currState,Data:monthsData});
       }
@@ -344,7 +348,7 @@ Meteor.startup(() => {
             absQuery += "+";
         }
       }
-      absQuery += ".9.-1.-.M/all?startTime=";
+      absQuery += ".-1.-.M/all?startTime=";
 
       var startDateArray = startDate.split("-");
       absQuery += startDateArray[0];
@@ -357,9 +361,12 @@ Meteor.startup(() => {
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
 
+      var result = HTTP.get(absQuery);
+      var newresult = JSON.parse(result.content);
+      // console.log(newresult);
+      var evenNewerResult = formatRetailOutput(newresult);
+      return evenNewerResult;
 
-
-      return absQuery;
     }
 
 
