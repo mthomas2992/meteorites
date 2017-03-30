@@ -18,8 +18,8 @@ class App extends React.Component {
 
       if (this.props.path == "Home"){
         return (<div id="home"><h1 id="header">Home page for the meteorites</h1>
-                <h2> What are we even doing here????</h2>
-                <p> After a rather successful attempt at SENG2021, we decided we had to try it <a>href="https://www.youtube.com/watch?v=FGBhQbmPwH8">one more time</a>. As a result, we are here, writing more really well written and honestly, better than ever solutions to arbitrary problems that we are given. Given this is the last SENG workshop, we want to make it count and do even better than last time. Thats why we bought a URL this time ( ͡° ͜ʖ ͡°)</p>
+                <h2> So What's Our deal?</h2>
+                <p> After a rather successful attempt at SENG2021, we decided we had to try it <a href="https://www.youtube.com/watch?v=FGBhQbmPwH8">one more time</a>. As a result, we are here, writing more really well written and honestly, better than ever solutions to arbitrary problems that we are given. Given this is the last SENG workshop, we want to make it count and do even better than last time. Thats why we bought a URL this time</p>
                 <br></br>
                 <h2> But who are we?</h2>
                 <p> Matthew Thomas </p>
