@@ -296,7 +296,7 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-
+      console.log(absQuery);
       var result = HTTP.get(absQuery);
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
