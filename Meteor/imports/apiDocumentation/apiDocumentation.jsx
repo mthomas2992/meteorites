@@ -67,7 +67,7 @@ class APIDocumentation extends React.Component {
                 </div>
                 <div id="mainDocumentationRow" className="row">
                   <div className= "col-md-2 col-md-offset-1" id="navBarTop">
-                    <VerSelector versionIndex = {this.state.documentationIndex} currentVersion = {this.state.currentVersion}/>
+                    <VerSelector versionIndex = {this.state.documentationIndex} currentVersion = {this.state.currentVersion} currentEndpoint={currEndpoint}/>
                     <NavBar version={this.state.currentVersion} endpoint={currEndpoint}/>
                   </div>
                   <div id="mainBodyTop" className = "col-md-8 col-md-offset-1">
