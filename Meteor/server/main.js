@@ -55,7 +55,7 @@ Meteor.startup(() => {
       warningStack.push({code:01, warningDetails:"Unnessasary paramaters detected, some given paramaters are not needed"});
     };
 
-    var response = {requirements:requirements,errors:errorStack,warnings:warningStack};
+    var response = {requirements:requirements,passedParamaters:queryParams,errors:errorStack,warnings:warningStack,executionTime:{start:"Query Failed",end:"Query Failed",elapsed:"Query Failed",highResTime:"Query Failed"}};
     return response;
   };
 
@@ -130,6 +130,20 @@ Meteor.startup(() => {
     return mRD;
   }
 
+
+  function timeConverter(UNIX_timestamp){ //obtained from http://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+    var a = new Date(UNIX_timestamp);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
+
   //add routes to the API here
 
   //basic is api working route
@@ -141,6 +155,9 @@ Meteor.startup(() => {
 
   Api.addRoute('retailTrade', {authRequired: false}, {
     get: function () {
+      var dateGetter = new Date();
+      var sTime = process.hrtime();
+      var startTime = dateGetter.getTime();
       var possibleStatisticsArea = ["Retail","MerchandiseExports"];
       var possibleState = ["AUS","NSW","WA","SA","ACT","VIC","TAS","QLD","NT"];
       var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
@@ -164,8 +181,9 @@ Meteor.startup(() => {
 
 
       var errorsAndWarnings = checkRequirements(requirements,this.queryParams);
+      var apiInfo = {devTeam:"Meteorites",version:"v1",module:"Meteoristics API",wesbite:"http://meteoristics.com"};
       if (errorsAndWarnings.errors.length!=0){
-        return {statusCode:400, body:{status:errorsAndWarnings, data:'Errors prevented data request, check the status field'}}
+        return {statusCode:400, body:{status:errorsAndWarnings, data:'Errors prevented data request, check the status field',info:apiInfo}}
       } else {
         //execute safe logic
         var state = this.queryParams.state;
@@ -177,8 +195,17 @@ Meteor.startup(() => {
         } else {
           var data = Meteor.call('getMerchandiseExports',state,category,startDate,endDate);
         }
+
+
         if(data!=null){ //add further testing for whether the call failed here TODO
-          return {statusCode:200, body:{status:errorsAndWarnings, data:data}};
+          var eTime = process.hrtime();
+          var diff = process.hrtime(sTime);
+          var endTime = dateGetter.getTime();
+          errorsAndWarnings.executionTime.start=timeConverter(startTime);
+          errorsAndWarnings.executionTime.end=timeConverter(endTime);
+          errorsAndWarnings.executionTime.elapsed=endTime-startTime;
+          errorsAndWarnings.executionTime.highResTime = {highResStart:{seconds:sTime[0],nanoseconds:sTime[1]} , highResEnd:{seconds:eTime[0],nanoseconds:eTime[1]}, highResElapsed:{seconds:diff[0],nanoseconds:diff[1]}};
+          return {statusCode:200, body:{status:errorsAndWarnings, data:data, info:apiInfo}};
         }
       }
     }
