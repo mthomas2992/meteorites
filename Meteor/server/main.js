@@ -59,7 +59,7 @@ Meteor.startup(() => {
     return response;
   };
 
-  function formatRetailOutput(data) {
+  function formatRetailTradeOutput(data,type) {
     var mRD = new Array();
     var currIndustry = null;
     var currIndustryKey = null;
@@ -68,6 +68,13 @@ Meteor.startup(() => {
     var rD = new Array();
     var monthsData = new Array();
     var currDate = null;
+
+    var value = "Turnover";
+    var industry = "RetailIndustry";
+    if (type="Merch"){
+      value = "Value";
+      industry = "Commodity";
+    }
 
     for (i=0;i<data.structure.dimensions.observation[2].values.length;i++){ //for each region
       currIndustry = data.structure.dimensions.observation[2].values[i].name;
@@ -86,15 +93,20 @@ Meteor.startup(() => {
           } else {
             currDate = currDate + "-30";
           }
+          var toBePushed = {Date:currDate};
           if (data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]){
-            monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0]});
+            toBePushed[value]=data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0];
           } else {
-            monthsData.push({Date:currDate,Turnover: "Data missing"});
+            toBePushed[value] = "Data missing";
           }
+          monthsData.push(toBePushed);
         }
         rD.push({State:currState,Data:monthsData});
       }
-      mRD.push({RetailIndustry:currIndustry,RegionalData:rD});
+      var industryToBePushed = {};
+      industryToBePushed[industry] = currIndustry;
+      industryToBePushed["RegionalData"] = rD;
+      mRD.push(industryToBePushed);
     }
 
     return mRD;
@@ -268,11 +280,8 @@ Meteor.startup(() => {
       absQuery += "&dimensionAtObservation=allDimensions";
 
       var result = HTTP.get(absQuery);
-      var newresult = JSON.parse(result.content);
-      // console.log(newresult);
-      var evenNewerResult = formatRetailOutput(newresult);
-      return evenNewerResult;
-      //return "To Be Completed";
+
+      return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
     },
 
     'getMerchandiseExports' : function(stateString, commodityString, startDate, endDate){
@@ -362,11 +371,8 @@ Meteor.startup(() => {
       absQuery += "&dimensionAtObservation=allDimensions";
 
       var result = HTTP.get(absQuery);
-      var newresult = JSON.parse(result.content);
-      // console.log(newresult);
-      var evenNewerResult = formatRetailOutput(newresult);
-      return evenNewerResult;
 
+      return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
     }
 
 
