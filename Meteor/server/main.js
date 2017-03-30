@@ -61,7 +61,7 @@ Meteor.startup(() => {
 
   function getDateOutput(data){
     var timePeriods = data.structure.dimensions.observation;
-    
+
     for (x in timePeriods){
       if (timePeriods[x].id == "TIME_PERIOD"){
         timePeriods = timePeriods[x].values;
@@ -129,7 +129,7 @@ Meteor.startup(() => {
 
   function getStateOutput(data){
     var regions = data.structure.dimensions.observation;
-    
+
     for (x in regions){
       if (regions[x].name == "Region"){
         regions = regions[x].values;
@@ -184,14 +184,48 @@ Meteor.startup(() => {
   }
 
   function formatRetailOutput(data) {
-    var dateOutputArray = getDateOutput(data); // array of consecutive dates in order
-    var stateOutputArray = getStateOutput(data); // array of regions (not including AUS)
-    var RetailIndustryOutputArray = getRetailIndustryOutput(data); // array of retail industries
-    var TurnoverOutputArray = getTurnoverOutput(data); // array of turnovers. note there might be too many elements here
+    // var dateOutputArray = getDateOutput(data); // array of consecutive dates in order
+    // var stateOutputArray = getStateOutput(data); // array of regions (not including AUS)
+    // var RetailIndustryOutputArray = getRetailIndustryOutput(data); // array of retail industries
+    // var TurnoverOutputArray = getTurnoverOutput(data); // array of turnovers. note there might be too many elements here
+    //
+    // var output = {TurnoverOutputArray};
+    //
+    // var MonthlyRetailData = new Array();
+    //
+    //
+    // return output;
 
-    var output = {};
+    console.log(data.dataSets[0].observations["0:0:0:0:0:0"]);
 
-    return output;
+    var mRD = new Array();
+    var currIndustry = null;
+    var currIndustryKey = null;
+    var currState = null;
+    var currStateKey = null;
+    var rD = new Array();
+    var monthsData = new Array();
+    var currDate = null;
+
+    for (i=0;i<data.structure.dimensions.observation[2].values.length;i++){ //for each region
+      currIndustry = data.structure.dimensions.observation[2].values[i].name;
+      currIndustryKey = i;
+      rD=[];
+      for (j=0;j<data.structure.dimensions.observation[0].values.length;j++){ //for each state
+        currState = data.structure.dimensions.observation[0].values[j].name;
+        currStateKey = j;
+        monthsData = []; //reset months data array
+        for (k=0;k<data.structure.dimensions.observation[5].values.length;k++){ //for each month
+          currDate = data.structure.dimensions.observation[5].values[k].id;
+          monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]});
+        }
+        rD.push({State:currState,Data:monthsData});
+      }
+      mRD.push({RetailIndustry:currIndustry,RegionalData:rD});
+    }
+
+    return mRD;
+    //for each industry, so we find the industries given
   }
 
   //add routes to the API here
@@ -365,7 +399,7 @@ Meteor.startup(() => {
       var newresult = JSON.parse(result.content);
       // console.log(newresult);
       var evenNewerResult = formatRetailOutput(newresult);
-      return newresult;
+      return evenNewerResult;
       //return "To Be Completed";
     },
 
