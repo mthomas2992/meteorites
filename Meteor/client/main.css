@@ -9,6 +9,7 @@
   font-size: 30pt;
   font-weight: 200;
   color: white;
+
 }
 
 #docoSpacer{
@@ -39,4 +40,10 @@
 
 h1, h2, h3, h4, h5, h6, a, p{
 	font-family: 'Roboto', sans-serif;
+}
+
+#home{
+	padding-left:2%;
+	padding-right:2%;
+
 }
