@@ -26,7 +26,7 @@ class NavBar extends React.Component {
         for (i=0;i<this.state.currentVersionIndex.paths.length;i++){
           links.push(<a href={"/api/documentation?ver="+this.state.currentVersionIndex.ver+"&endpoint="+this.state.currentVersionIndex.paths[i]}><div className="col-md-12 col-md-offset-1">{this.state.currentVersionIndex.paths[i]}</div></a>)
         }
-        return (<div>Endpoints:{links}</div>)
+        return (<div id='subTitle'>Endpoints:{links}</div>)
       } else {
         return (<div>Invalid Version selected
                 </div>);
