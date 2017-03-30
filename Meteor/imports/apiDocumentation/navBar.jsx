@@ -35,7 +35,7 @@ class NavBar extends React.Component {
         }
         return (<div>
                   <a href={"/api/documentation?ver="+this.state.currentVersionIndex.ver}> <div> Version home/changelog </div></a>
-                  <div>Endpoints:{links}</div>
+                  <div id = 'subTitle'>Endpoints:{links}</div>
                 </div>)
       } else {
         return (<div>Invalid Version selected

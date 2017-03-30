@@ -24,3 +24,4 @@ http
 nimble:restivus
 kadira:flow-router
 twbs:bootstrap
+meteorhacks:inject-initial
