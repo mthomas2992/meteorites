@@ -312,3 +312,10 @@ An example of a failed output due to errors retrieved from <http://meteoristics.
 
 
 As you can see, specific details as to why you are not recieving your expected output can be found in the errors array. Warnings tend to be as a result of passing a non-nessasary variable to us
+
+
+###System integration
+
+Any system can integrate with our API as long as they are able to make standard HTTP requests. By then following the request formats specified by each endpoint you can
+fully utilise our API in almost any environment (as long as it also has an internet connection of course). Our API follows the HTTP RESTful format completely. We do not use
+any authentication.

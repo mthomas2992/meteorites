@@ -1,1 +1,187 @@
-#Test
+
+This endpoint is deigned to get data relating to merchandise exports (in thousands of dollars) and retail turnover (in millions of dollars)
+
+##Example request
+
+The following are sample requests to the endpoint, they are passing the variables
+
+ + statisticsArea = Retail
+ + state = nsw,vic
+ + category = total
+ + startDate = 2015-09-09
+ + endDate = 2016-09-09
+
+<http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+
+or for a curl request
+```md
+curl -X GET http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
+```
+
+
+##Input
+
+####Type of requests
+
+GET is currently the only type of request supported by this endpoint
+
+####Data
+The following variables are accepted/required by this endpoint to return the relevant data
+
+| Variable Name| Variable format/type |Required?| Example |
+|:-------------|:--------------------|--------:|--------:|
+|statisticsArea| either the string "Retail" or "MerchandiseExports" | Yes | Retail |
+|state| one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT using the comma to delimit the states | Yes (atleast one)|NSW,WA or NSW |
+|category|one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other |Yes (atleast one)| Total or Total,Food|
+|startDate| date in the format YYYY-MM-DD, must also be a date before the endDate variable | Yes | 2016-05-01 |
+|endDate| date in the format YYYY-MM-DD, must also be a date after the startDate variable | Yes | 2016-06-01 |
+
+
+##Output
+
+Data will be returned in the normal Meteoristic format as described on the version home page. Output also differs heavily based on the statistics area requested, the following is the format
+of a request where the entry is retail
+
+```md
+  RetailIndustry : <a given industry>
+  RegionalData : [
+  {
+    State :<a given state>
+    Data [
+      {
+        Date: <date of given month in given time period>
+        Turnover: <turnover for that month>
+      }
+    ],
+  }
+  ]
+```
+
+For each retail industry a subset of that data will be provided, and for each state a subset containing the data for that state is provided
+and for each month a subset of data is provided for that state. For more clarity the following is an example for the Total retail for both victoria and new south wales
+
+```md
+{
+      "RetailIndustry": "Total",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 7664.8
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 8168.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 8351.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 10383.7
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 7997.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 7301
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 7847.1
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 7703.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 7796
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 7756.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 7792
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 7805.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 8043.8
+            }
+          ]
+        },
+        {
+          "State": "Victoria",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 5985.7
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 6396.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 6507.8
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 8159.5
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 6168.4
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 5740.6
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 6179.5
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 6088
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 6083.8
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 6072.5
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 6059.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 6127.3
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 6270.8
+            }
+          ]
+        }
+      ]
+    }
+  ],
+```
+
+
+A response from when MerchandiseExports is requested is of the exact same structure, however the field RetailIndustry is replaced with "Commodity" and the field Turnover is replaced with "value"

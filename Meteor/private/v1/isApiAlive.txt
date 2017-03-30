@@ -1,1 +1,24 @@
-Test2
+
+This endpoint is designed to provide authentication that our API is up and running
+
+##Example request
+
+<http://meteoristics.com/api/v1/isApiAlive>
+
+or in cURL
+
+```md
+curl -X GET http://meteoristics.com/api/v1/isApiAlive
+```
+
+##Inputs
+
+There are no inputs required
+
+##Output
+If the API is running, the following JSON will be returned
+
+```md
+{status:'Success',
+ message:'Yes'}
+```
