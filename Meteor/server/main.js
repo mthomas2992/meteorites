@@ -71,21 +71,30 @@ Meteor.startup(() => {
 
     var value = "Turnover";
     var industry = "RetailIndustry";
+
+    var industryIndexKey = 2;
+    var stateIndexKey = 0;
+    var monthIndexKey =5;
+
     if (type=="Merch"){
       value = "Value";
       industry = "Commodity";
+
+      industryIndexKey = 1;
+      stateIndexKey=0;
+      monthIndexKey = 5;
     }
 
-    for (i=0;i<data.structure.dimensions.observation[2].values.length;i++){ //for each region
-      currIndustry = data.structure.dimensions.observation[2].values[i].name;
+    for (i=0;i<data.structure.dimensions.observation[industryIndexKey].values.length;i++){ //for each industry
+      currIndustry = data.structure.dimensions.observation[industryIndexKey].values[i].name;
       currIndustryKey = i;
       rD=[];
-      for (j=0;j<data.structure.dimensions.observation[0].values.length;j++){ //for each state
-        currState = data.structure.dimensions.observation[0].values[j].name;
+      for (j=0;j<data.structure.dimensions.observation[stateIndexKey].values.length;j++){ //for each state
+        currState = data.structure.dimensions.observation[stateIndexKey].values[j].name;
         currStateKey = j;
         monthsData = []; //reset months data array
-        for (k=0;k<data.structure.dimensions.observation[5].values.length;k++){ //for each month
-          currDate = data.structure.dimensions.observation[5].values[k].id;
+        for (k=0;k<data.structure.dimensions.observation[monthIndexKey].values.length;k++){ //for each month
+          currDate = data.structure.dimensions.observation[monthIndexKey].values[k].id;
           if (currDate.match(/-0[13578]/g) || currDate.match(/-1[02]/g)){ //add last day of month for the data
             currDate = currDate + "-31";
           } else if (currDate.match(/-02/g)) {
@@ -94,10 +103,19 @@ Meteor.startup(() => {
             currDate = currDate + "-30";
           }
           var toBePushed = {Date:currDate};
-          if (data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]){
-            toBePushed[value]=data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0];
+
+          if (type=="Merch"){
+            if (data.dataSets[0].observations[currStateKey +":" + currIndustryKey+":0:0:0:"+k]){
+              toBePushed[value]=data.dataSets[0].observations[currStateKey +":" + currIndustryKey+":0:0:0:"+k][0];
+            } else {
+              toBePushed[value] = "Data missing";
+            }
           } else {
-            toBePushed[value] = "Data missing";
+            if (data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]){
+                toBePushed[value]=data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0];
+            } else {
+              toBePushed[value] = "Data missing";
+            }
           }
           monthsData.push(toBePushed);
         }
@@ -293,8 +311,6 @@ Meteor.startup(() => {
       var length = stateArray.length;
       for(i=0; i<length; i++){
 
-        console.log(stateArray[i]);
-
         if (stateArray[i].match(/AUS/gi)) {
           absQuery += "-";
         } else if (stateArray[i].match(/NSW/gi)) {
@@ -328,7 +344,6 @@ Meteor.startup(() => {
       length = commodityArray.length;
       for(i=0; i<length; i++){
           //parse commodity list here
-          console.log(commodityArray[i]);
           if (commodityArray[i].match(/TOTAL/gi)) {
             absQuery += "-1";
           } else if (commodityArray[i].match(/FoodAndLiveAnimals/gi)) {
@@ -358,7 +373,6 @@ Meteor.startup(() => {
             absQuery += "+";
         }
       }
-      console.log(absQuery);
       absQuery += ".-1.-.M/all?startTime=";
 
       var startDateArray = startDate.split("-");
@@ -371,7 +385,7 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-      console.log(absQuery);
+
       var result = HTTP.get(absQuery);
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
