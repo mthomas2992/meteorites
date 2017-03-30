@@ -276,8 +276,8 @@ Meteor.startup(() => {
           absQuery += "7";
         } else if (stateArray[i].match(/ACT/gi)) {
           absQuery += "8";
-        } else {
-          absQuery +="MISTAKEHERE";
+        } else if (stateArray[i].match(/AUS/gi)) {
+          absQuery +="0";
         }
         if (i < length - 1){
           absQuery += "+";
