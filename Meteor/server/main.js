@@ -190,7 +190,7 @@ Meteor.startup(() => {
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
       //console.log(stateString);
-      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/0+";
+      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
