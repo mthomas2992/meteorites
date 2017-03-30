@@ -217,7 +217,14 @@ Meteor.startup(() => {
         monthsData = []; //reset months data array
         for (k=0;k<data.structure.dimensions.observation[5].values.length;k++){ //for each month
           currDate = data.structure.dimensions.observation[5].values[k].id;
-          monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k]});
+          if (currDate.match(/-0[13578]/g) || currDate.match(/-1[02]/g)){
+            currDate = currDate + "-31";
+          } else if (currDate.match(/-02/g)) {
+            currDate = currDate + "-28";
+          } else {
+            currDate = currDate + "-30";
+          }
+          monthsData.push({Date:currDate,Turnover: data.dataSets[0].observations[currStateKey +":" +"0:"+currIndustryKey+":0:0:"+k][0]});
         }
         rD.push({State:currState,Data:monthsData});
       }
