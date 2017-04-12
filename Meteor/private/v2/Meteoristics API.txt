@@ -67,7 +67,7 @@ and pass the variables
 
 
 ```md
-curl -X GET http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09
+curl -X GET http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09
 ```
 
 
@@ -92,6 +92,6 @@ For a more detailed description of this API's output, please view the specific e
 
 ###System integration
 
-Any system can integrate with our API as long as they are able to make standard HTTP requests. By then following the request formats specified by each endpoint you can
-fully utilise our API in almost any environment (as long as it also has an internet connection of course). Our API follows the HTTP RESTful format completely. We do not use
+Our system can seamlessly integrate with any other system as long as it supports standard HTTP requests. By following the **formats and examples specified in each endpoint documentation**, you can
+fully utilise our API in almost any web-connected environment. Our API follows the HTTP RESTful format. Our system integration is made even easier by the fact that we do not use
 any authentication.

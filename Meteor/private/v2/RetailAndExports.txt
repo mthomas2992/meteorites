@@ -1,23 +1,5 @@
 
-This endpoint is deigned to get data relating to merchandise exports (in thousands of dollars) and retail turnover (in millions of dollars)
-
-##Example request
-
-The following are sample requests to the endpoint, they are passing the variables
-
- + statisticsArea = Retail
- + state = nsw,vic
- + category = total
- + startDate = 2015-09-09
- + endDate = 2016-09-09
-
-<http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
-
-or for a curl request
-```md
-curl -X GET http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
-```
-
+####This endpoint is deigned to get data relating to merchandise exports (in thousands of dollars) and retail turnover (in millions of dollars)
 
 ##Input
 
@@ -35,7 +17,6 @@ The following variables are accepted/required by this endpoint to return the rel
 |category|one or multiple of Total, Food, Householdgood, ClothingFootwareAndPersonalAccessory, DepartmentStores, CafesResturantsAndTakeawayFood, Other |Yes (atleast one)| Total,Food|
 |startDate| date in the format YYYY-MM-DD, must also be a date before the endDate variable | Yes | 2016-05-01 |
 |endDate| date in the format YYYY-MM-DD, must also be a date after the startDate variable | Yes | 2016-06-01 |
-
 
 ##Output
 
@@ -56,133 +37,9 @@ Data will be returned in the same format as described on the version home page. 
   ]
 ```
 
-For each retail industry a subset of that data will be provided, and for each state a subset containing the data for that state is provided
-and for each month a subset of data is provided for that state. For more clarity the following is an example for the Total retail for both Victoria and New South Wales.
+The output data contains an array of industries, each containing an array of states, which contains an array of turnovers corresponding to each month within the supplied dates.
 
-```md
-{
-      "RetailIndustry": "Total",
-      "RegionalData": [
-        {
-          "State": "New South Wales",
-          "Data": [
-            {
-              "Date": "2015-09-30",
-              "Turnover": 7664.8
-            },
-            {
-              "Date": "2015-10-31",
-              "Turnover": 8168.2
-            },
-            {
-              "Date": "2015-11-30",
-              "Turnover": 8351.7
-            },
-            {
-              "Date": "2015-12-31",
-              "Turnover": 10383.7
-            },
-            {
-              "Date": "2016-01-31",
-              "Turnover": 7997.5
-            },
-            {
-              "Date": "2016-02-28",
-              "Turnover": 7301
-            },
-            {
-              "Date": "2016-03-31",
-              "Turnover": 7847.1
-            },
-            {
-              "Date": "2016-04-30",
-              "Turnover": 7703.5
-            },
-            {
-              "Date": "2016-05-31",
-              "Turnover": 7796
-            },
-            {
-              "Date": "2016-06-30",
-              "Turnover": 7756.2
-            },
-            {
-              "Date": "2016-07-31",
-              "Turnover": 7792
-            },
-            {
-              "Date": "2016-08-31",
-              "Turnover": 7805.4
-            },
-            {
-              "Date": "2016-09-30",
-              "Turnover": 8043.8
-            }
-          ]
-        },
-        {
-          "State": "Victoria",
-          "Data": [
-            {
-              "Date": "2015-09-30",
-              "Turnover": 5985.7
-            },
-            {
-              "Date": "2015-10-31",
-              "Turnover": 6396.2
-            },
-            {
-              "Date": "2015-11-30",
-              "Turnover": 6507.8
-            },
-            {
-              "Date": "2015-12-31",
-              "Turnover": 8159.5
-            },
-            {
-              "Date": "2016-01-31",
-              "Turnover": 6168.4
-            },
-            {
-              "Date": "2016-02-28",
-              "Turnover": 5740.6
-            },
-            {
-              "Date": "2016-03-31",
-              "Turnover": 6179.5
-            },
-            {
-              "Date": "2016-04-30",
-              "Turnover": 6088
-            },
-            {
-              "Date": "2016-05-31",
-              "Turnover": 6083.8
-            },
-            {
-              "Date": "2016-06-30",
-              "Turnover": 6072.5
-            },
-            {
-              "Date": "2016-07-31",
-              "Turnover": 6059.4
-            },
-            {
-              "Date": "2016-08-31",
-              "Turnover": 6127.3
-            },
-            {
-              "Date": "2016-09-30",
-              "Turnover": 6270.8
-            }
-          ]
-        }
-      ]
-    }
-  ],
-```
-
-An example succesful query output retrieved from <http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+ Below is an example of a succesful query with the request URL as <http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
 
 ```md
 {
@@ -270,43 +127,8 @@ An example succesful query output retrieved from <http://meteoristics.com/api/v2
             {
               "Date": "2015-12-31",
               "Turnover": 10383.7
-            },
-            {
-              "Date": "2016-01-31",
-              "Turnover": 7997.5
-            },
-            {
-              "Date": "2016-02-28",
-              "Turnover": 7301
-            },
-            {
-              "Date": "2016-03-31",
-              "Turnover": 7847.1
-            },
-            {
-              "Date": "2016-04-30",
-              "Turnover": 7703.5
-            },
-            {
-              "Date": "2016-05-31",
-              "Turnover": 7796
-            },
-            {
-              "Date": "2016-06-30",
-              "Turnover": 7756.2
-            },
-            {
-              "Date": "2016-07-31",
-              "Turnover": 7792
-            },
-            {
-              "Date": "2016-08-31",
-              "Turnover": 7805.4
-            },
-            {
-              "Date": "2016-09-30",
-              "Turnover": 8043.8
             }
+            ...
           ]
         }
       ]
@@ -321,8 +143,9 @@ An example succesful query output retrieved from <http://meteoristics.com/api/v2
 }
 ```
 
-A response from when MerchandiseExports is requested is of the exact same structure, however the field RetailIndustry is replaced with "Commodity" and the field Turnover is replaced with "value".
+A response when the statistics area is MerchandiseExports follows the exact same structure as above, however the field 'RetailIndustry' is replaced with 'Commodity' and the field 'Turnover' is replaced with 'value'.
 
+###Errors and warnings
 
 An example of a failed output due to errors retrieved from <http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,USA&category=Total,badcat&startDate=2015-09-09>
 
@@ -398,5 +221,73 @@ An example of a failed output due to errors retrieved from <http://meteoristics.
   }
 }
 ```
+In the case of an error, no data is returned to the user. Specific information related to the error can be found in the errors array. Warnings tend to be as a result of passing a non-nessasary variable to the API.
 
-As you can see, specific information as to why you are not recieving your expected output can be found in the errors array. Warnings tend to be as a result of passing a non-nessasary variable to the API.
+##Example request
+
+The following are sample requests to the endpoint, they are passing the variables
+
+
+|Parameter name|Parameter supplied|
+|:------------:|:----------------:|
+|statisticsArea|Retail            |
+|state         |nsw,vic           |
+|category      |Total             |
+|startDate     |2015-09-09        |
+|endDate       |2016-09-09        |
+
+####Web browser
+
+<http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+
+####cURL
+```md
+curl -X GET http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
+```
+
+####Python
+Make sure to import the Requests module in the following manner:
+
+```md
+import requests
+```
+Then you can make the request:
+```md
+parameters = {'statisticsArea': 'Retail', 'state': 'nsw,vic', 'category': 'Total', 'startDate' : '2015-09-09', 'endDate': '2016-09-09'}
+data = requests.get('http://meteoristics.com/api/v2/retailTrade', params=parameters)
+```
+
+####NodeJS
+```md
+request.get('http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09', function(err,res,body){
+  body = JSON.parse(body);
+});
+```
+
+####PHP
+```md
+$params = http_build_query([
+ 'statisticsArea' => 'Retail',
+ 'state' => 'nsw,vic',
+ 'category' => 'Total',
+ 'startDate' => '2015-09-09',
+ 'endDate' => '2016-09-09'
+]);
+$url='http://meteoristics.com/api/v2/retailTrade'.$params;
+$request = curl_init();
+curl_setopt($curl, CURLOPT_URL,$url);
+curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+$data = json_decode(curl_exec($request));
+curl_close($request);
+```
+
+
+
+
+
+
+
+
+
+
+
