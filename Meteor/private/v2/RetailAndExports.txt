@@ -12,11 +12,11 @@ The following variables are accepted/required by this endpoint to return the rel
 
 | Variable Name| Variable format/type |Required?| Example |
 |:-------------|:--------------------|--------:|--------:|
-|statisticsArea|    either the string "Retail" or "MerchandiseExports" | Yes | Retail |
-|state| one or multiple of AUS, NSW, WA, SA, ACT, VIC, TAS, QLD, NT using a comma to delimit the states | Yes (atleast one)|NSW,WA|
-|category|one or multiple of Total, Food, Householdgood, ClothingFootwareAndPersonalAccessory, DepartmentStores, CafesResturantsAndTakeawayFood, Other |Yes (atleast one)| Total,Food|
-|startDate| date in the format YYYY-MM-DD, must also be a date before the endDate variable | Yes | 2016-05-01 |
-|endDate| date in the format YYYY-MM-DD, must also be a date after the startDate variable | Yes | 2016-06-01 |
+|statisticsArea|    Either of the **strings**: "Retail" or "MerchandiseExports" | Yes | Retail |
+|state| List of regions in a **string**, separated by a comma (no space): AUS, NSW, WA, SA, ACT, VIC, TAS, QLD, NT | Yes (atleast one)|NSW,WA|
+|category|List of industries in a **string**, separated by a comma (no space): Total, Food, Householdgood, ClothingFootwareAndPersonalAccessory, DepartmentStores, CafesResturantsAndTakeawayFood, Other |Yes (atleast one)| Total,Food|
+|startDate| **string** date in the format YYYY-MM-DD, must be a date before the endDate variable | Yes | 2016-05-01 |
+|endDate| **string** date in the format YYYY-MM-DD, must be a date after the startDate variable | Yes | 2016-06-01 |
 
 ##Output
 
