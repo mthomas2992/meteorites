@@ -1,0 +1,97 @@
+##What is this API?
+
+The Meteoristics API is a RESTful web API that is intended to offer statistics in multiple areas.
+It achieves this through interfacing with the Australian Bureau of Statistics API which can be found here <http://stat.data.abs.gov.au/> .
+For any questions relating to this api, contact <z5061594@student.unsw.edu.au>.
+
+
+### Version information
+| Property     | Value |
+| ------------------ |------------------:|
+|Version | "v2"|
+|Released|13/04/2017|
+|Api endpoint |<http://meteoristics.com/api/v2/>|
+
+
+###Changelog
+**This is the second version of the Meteoristic API**
+
++ [ADDED]: Functionality to access data directly on [this webpage][1]
+
++ [UPDATED]: Documentation has been refined and improved
+
++ [UPDATED]: Name of the "RetailTrade" endpoint has been changed to "RetailAndExports"
+
+// [1]:?ver=v2
+
+###Current Level of implementation
+
+Currently the API returns all available data for both merchandise exports and retail turnover for a given user query. The API system can also output data to a user supplying the given parameters on [this webpage][1].
+
+// [1]:?ver=v2
+
+###How to use the API
+
+The meteoristics API is a standard REST API, in that you make requests to its endpoints
+and it will return data to you. Currently we only support GET requests. Specific information about how to pass variables to endpoints are defined on their respective page (see navigation bar) as they require different paramaters to function.
+
+In general, a request is made by using any web browser or http client (such as cURL or google chrome). Using these clients
+you type in the applicable URL, which will be of the following format
+
+
+```md
+http://meteoristics.com/api/<version of api you are wanting to use (in this case "v2")>/<endpoint you wish to use here>?<variables you wish to pass here>
+```
+
+You then change the applicable parts of the URL as needed then make the request. Meteoristics server will then interpret your request and return data to you in the JSON format.
+
+
+For example, if you were using the cURL client you would run the following command in your unix terminal prompt to make a query to the endpoint *RetailAndExports*
+and pass the variables
+
+
++ statisticsArea = Retail
+
+
++ state = NSW
+
+
++ category = total
+
+
++ startDate = 2015-09-09
+
+
++ endDate = 2016-09-09
+
+
+
+```md
+curl -X GET http://meteoristics.com/api/v1/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09
+```
+
+
+The returned JSON will also always be in the same general format of
+
+```md
+status: {
+  requirements: <an arrayrequired variables for the endpoint you requested>
+  passedParamaters: <object contained the variables you did send to us>
+  errors:< an array of any errors preventing execution>
+  warnings:<an array of any warnings that aren't preventing execution of your query but should be corrected>
+  executionTime: <data relating to the time and speed of your requested query>
+}
+data: <actual requested data or error string>
+info: <appendixed data about our API and its version>
+```
+
+In the case that relevant statistical data is not provided from the ABS API, nothing will be returned for that part of the query or the data will have the field "data missing".
+
+For a more detailed description of this API's output, please view the specific endpoint information accessed via the navigation bar.
+
+
+###System integration
+
+Any system can integrate with our API as long as they are able to make standard HTTP requests. By then following the request formats specified by each endpoint you can
+fully utilise our API in almost any environment (as long as it also has an internet connection of course). Our API follows the HTTP RESTful format completely. We do not use
+any authentication.
