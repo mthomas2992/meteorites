@@ -3,12 +3,28 @@
 /* DOCUMENTATION CSS */
 
 #header {
-  background-color: grey;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  border-bottom-style:solid;
+  border-bottom-color: rgba(100,100,100,0.2);
+  border-bottom-width: 0.01px;
   font-family: 'Roboto', sans-serif;
   padding-top:0;
   font-size: 30pt;
   font-weight: 200;
-  color: white;
+  color: black;
+
+}
+
+#frontHeader {
+  /*box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);*/
+  border-bottom-style:solid;
+  border-bottom-color: rgba(100,100,100,0.2);
+  border-bottom-width: 0.01px;
+  font-family: 'Roboto', sans-serif;
+  padding-top:0;
+  font-size: 30pt;
+  font-weight: 200;
+  color: black;
 
 }
 
@@ -55,7 +71,9 @@ h1, h2, h3, h4, h5, h6, a, p{
 }
 
 #mapRoot {
-  background-color: red;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 #singularTitle {
@@ -88,4 +106,54 @@ th{
 
 tr:nth-child(even) {
     background-color: #DDDDDD;
+}
+
+#WA {
+  position: relative;
+  left: -15.2vw;
+  top:50vh;
+}
+
+#NT {
+  position: relative;
+  left: -5vw;
+  top:0vh;
+}
+
+#QA {
+  position: relative;
+  left: 5vw;
+  top:-22vh;
+}
+
+#SA {
+  position: relative;
+  left: -4vw;
+  top:-26vh;
+}
+
+#NSW {
+  position: relative;
+  left: 6vw;
+  top:-49vh;
+}
+
+#VIC {
+  position: relative;
+  left: 6vw;
+  top:-54.5vh;
+}
+
+#Menu {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  /*background-color: rgba(50,50,50,0.7);*/
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200;
+  color: black;
+  padding-right: 15px;
+  text-align: right;
+}
+
+#briefsRoot {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
 }

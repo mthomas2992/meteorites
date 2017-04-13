@@ -45,8 +45,7 @@ class App extends React.Component {
 
     render() {
       var layout = [
-       {i: 'map', x: 0, y: 0, w:6 , h:1 , static:true},
-       {i: 'briefs', x: 6, y: 0, w: 6, h: 1, static:true}
+       {i: 'briefs', x: 3, y: 0, w: 6, h: 1, static:true}
       ];
 
       var layouts = {lg:layout};
@@ -54,6 +53,14 @@ class App extends React.Component {
 
       if (this.props.path == "Home"){
         return (<div id="home" className="container-fluid">
+                  <div id="mainDocumentationTopHeaderRow" className="row">
+                    <div id="frontHeader" className="col-md-12">
+                      Meteoristics
+                    </div>
+                    <div id="Menu">
+                      test
+                    </div>
+                  </div>
                   <div className="row">
                     <ResponsiveReactGridLayout
                       {...this.props}
@@ -64,8 +71,7 @@ class App extends React.Component {
                       cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
                       measureBeforeMount={false}
                       onBreakpointChange={this.onBreakpointChange}>
-                      <div id = "mapRoot" key={"map"}> <AusMap status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
-                      <div key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
+                      <div id = "briefsRoot" key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
                     </ResponsiveReactGridLayout>
                   </div>
 
