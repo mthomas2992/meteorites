@@ -104,7 +104,7 @@ class Briefs extends React.Component {
         }
         var pieDataSet = {
           value: 0,
-      		color:"#F7464A",
+      		color:"rgba(220,220,220,0.5)",
       		highlight: "#FF5A5E",
       		label: curr.RetailIndustry
         }
@@ -152,7 +152,10 @@ class Briefs extends React.Component {
                       <PieChart data={this.state.pieGraphData[this.state.currentStates[0]]} width = {(window.innerWidth/100)*23} height = {(window.innerHeight/100)*40}/>
                     </div>
                   </div>
-                  <div id= "singularTableData" className="row">{dataTable}</div>
+                  <div id= "singularTableData" className="row">
+
+                    {dataTable}
+                  </div>
 
                 </div>);
         } else {
