@@ -12,6 +12,9 @@ import Moment from 'moment'
 
 var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"Turnover"},MerchandiseExports:{topLevelCategory:"Commodity",dataValue:"Value"}};
 
+var colours=["rgba(150,0,0,","rgba(0,150,0,","rgba(0,0,150,","rgba(250,200,150,","rgba(150,200,250,",
+            "rgba(250,0,150,","rgba(200,250,150,","rgba(220,220,220,","rgba(100,200,150,","rgba(200,150,100,"];
+
 class Briefs extends React.Component {
 
     constructor(props){
@@ -120,9 +123,9 @@ class Briefs extends React.Component {
         var curr = data[i];
         var dataSet= {
           label: curr[transforms[this.state.currentIndustry].topLevelCategory].substring(0,15) +"... ",
-          fillColor: "rgba(220,220,220,0.2)",
-          strokeColor: "rgba(220,220,220,1)",
-          pointColor: "rgba(220,220,220,1)",
+          fillColor: colours[i]+"0.2)",
+          strokeColor: colours[i]+"1)",
+          pointColor: colours[i]+"1)",
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
@@ -130,7 +133,7 @@ class Briefs extends React.Component {
         }
         var pieDataSet = {
           value: 0,
-      		color:"rgba(220,220,220,0.5)",
+      		color:colours[i]+"0.5)",
       		highlight: "#FF5A5E",
       		label: curr[transforms[this.state.currentIndustry].topLevelCategory].substring(0,15) +"... "
         }
