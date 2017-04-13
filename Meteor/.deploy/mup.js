@@ -2,12 +2,13 @@ module.exports = {
   servers: {
     one: {
       // TODO: set host address, username, and authentication method
-      host: '13.54.47.144',
+      host: '52.63.101.238',
       username: 'ubuntu',
       pem: '../../../METEORITE.pem'
       // password: 'server-password'
       // or neither for authenticate from ssh-agent
-    }
+    },
+
   },
 
   meteor: {
@@ -26,7 +27,7 @@ module.exports = {
     env: {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
-      ROOT_URL: 'http://ec2-13-54-47-144.ap-southeast-2.compute.amazonaws.com',
+      ROOT_URL: 'http://ec2-52-63-101-238.ap-southeast-2.compute.amazonaws.com',
       MONGO_URL: 'mongodb://localhost/meteor',
     },
 

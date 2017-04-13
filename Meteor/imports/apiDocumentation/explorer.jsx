@@ -25,6 +25,10 @@ class ApiExplorer extends React.Component {
       const target = event.target;
       const value = target.value;
       const name = target.name;
+
+      if (value.match(/script/gi)){
+        return;
+      }
       this.setState({
         [name]: value
       });
