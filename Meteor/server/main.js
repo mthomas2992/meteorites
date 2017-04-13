@@ -300,7 +300,6 @@ Meteor.startup(() => {
           if (industryArray[i].match(/Total/gi)) {
             absQuery += "20";
           } else if (industryArray[i].match(/^FOOD/gi)) {
-            console.log("called");
             absQuery += "41";
           } else if (industryArray[i].match(/HouseholdGood/gi)) {
             absQuery += "42";
@@ -308,11 +307,10 @@ Meteor.startup(() => {
             absQuery += "43";
           } else if (industryArray[i].match(/DepartmentStores/gi)) {
             absQuery += "44";
+          } else if (industryArray[i].match(/CafesResturantsAndTakeawayFood/gi)) {
+            absQuery += "46";
           } else if (industryArray[i].match(/Other/gi)) {
             absQuery += "45";
-          } else if (industryArray[i].match(/CafesResturantsAndTakeawayFood/gi)) {
-            console.log("called");
-            absQuery += "46";
           } else {
             absQuery +="MISTAKEHERE";
           }
