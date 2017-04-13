@@ -442,8 +442,6 @@ Meteor.startup(() => {
 
     'makeHttpRequest' :function(queryString){
       var result = HTTP.get(queryString);
-      console.log(queryString);
-      console.log(result);
       return HTTP.get(queryString);
     }
 

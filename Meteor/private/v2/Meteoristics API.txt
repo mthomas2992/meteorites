@@ -22,13 +22,13 @@ For any questions relating to this api, contact <z5061594@student.unsw.edu.au>.
 
 + [UPDATED]: Name of the "RetailTrade" endpoint has been changed to "RetailAndExports"
 
-// [1]:?ver=v2
+[1]:?ver=v2&endpoint=explorer
 
 ###Current Level of implementation
 
 Currently the API returns all available data for both merchandise exports and retail turnover for a given user query. The API system can also output data to a user supplying the given parameters on [this webpage][1].
 
-// [1]:?ver=v2
+ [1]:?ver=v2&endpoint=explorer
 
 ###How to use the API
 
