@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 var LineChart = require("react-chartjs").Line;
+var PieChart = require("react-chartjs").Pie;
 
 class Briefs extends React.Component {
 
@@ -18,13 +19,14 @@ class Briefs extends React.Component {
         currentData:null,
         lineGraphLabels:null,
         lineGraphData: null,
+        pieGraphData:null,
         loading: true
       }
 
       this.loadData = this.loadData.bind(this);
       this.createTable = this.createTable.bind(this);
 
-      this.createLineGraph = this.createLineGraph.bind(this);
+      this.formatResponse = this.formatResponse.bind(this);
     };
 
     componentWillReceiveProps(nextProps){
@@ -43,6 +45,7 @@ class Briefs extends React.Component {
       var newCurrStateData = {};
       var newCurrData={};
       var newLineGraphData = {};
+      var newPieGraphData ={};
       var self =this;
       for (i=0;i<newProps.status.selectedStates.length;i++){
         Meteor.call('getAllTotalsOverTimeRetail',newProps.status.selectedStates[i],newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function (err,res){
@@ -56,8 +59,10 @@ class Briefs extends React.Component {
           self.setState({currentData:newCurrData});
           //call interpolation for tables ands stuff
           console.log(newProps.status.selectedStates[0]);
-          newLineGraphData[newProps.status.selectedStates[0]] =self.createLineGraph(res);
-          self.setState({lineGraphData:newLineGraphData});
+          var formattedResponses = self.formatResponse(res);
+          newLineGraphData[newProps.status.selectedStates[0]] =formattedResponses.lineGraph;
+          newPieGraphData[newProps.status.selectedStates[0]] = formattedResponses.pieGraph;
+          self.setState({lineGraphData:newLineGraphData, pieGraphData:newPieGraphData});
           self.setState({loading:false}); //only good when there is just one state
         });
 
@@ -79,10 +84,12 @@ class Briefs extends React.Component {
       return completedTable;
     };
 
-    createLineGraph(data) {
+    formatResponse(data) {
       console.log(data);
-      var setArray = new Array();
+      var lineArray = new Array();
       var labelArray = new Array();
+      var pieArray = new Array();
+
       for (i=0;i<data.length;i++){
         var curr = data[i];
         var dataSet= {
@@ -95,17 +102,27 @@ class Briefs extends React.Component {
           pointHighlightStroke: "rgba(220,220,220,1)",
           data: []
         }
+        var pieDataSet = {
+          value: 0,
+      		color:"#F7464A",
+      		highlight: "#FF5A5E",
+      		label: curr.RetailIndustry
+        }
+        var total =0;
         var currMonthData = curr.RegionalData[0].Data;
         for (j=0;j<currMonthData.length;j++){
           dataSet.data.push(currMonthData[j].Turnover);
+          total = total +currMonthData[j].Turnover;
           if (this.state.lineGraphLabels == null){
             labelArray.push(currMonthData[j].Date.slice(0,-3));
           }
         }
+        pieDataSet.value =total;
         if (this.state.lineGraphLabels == null) this.setState({lineGraphLabels:labelArray});
-        setArray.push(dataSet);
+        lineArray.push(dataSet);
+        if (curr.RetailIndustry!="Total")pieArray.push(pieDataSet);
       }
-      return setArray;
+      return {lineGraph:lineArray,pieGraph:pieArray};
     }
 
     componentDidMount(){
@@ -120,41 +137,21 @@ class Briefs extends React.Component {
           //create table from given data
           var dataTable = this.createTable(this.state.currentStates[0]);
 
-          // var data = {
-          //     labels: ["January", "February", "March", "April", "May", "June", "July"],
-          //     datasets: [
-          //         {
-          //           label: "My First dataset",
-          //     			fillColor: "rgba(220,220,220,0.2)",
-          //     			strokeColor: "rgba(220,220,220,1)",
-          //     			pointColor: "rgba(220,220,220,1)",
-          //     			pointStrokeColor: "#fff",
-          //     			pointHighlightFill: "#fff",
-          //     			pointHighlightStroke: "rgba(220,220,220,1)",
-          //     			data: [65, 59, 80, 81, 56, 55, 40]
-          //         },
-          //         {
-          //           label: "My Second dataset",
-          //     			fillColor: "rgba(151,187,205,0.2)",
-          //     			strokeColor: "rgba(151,187,205,1)",
-          //     			pointColor: "rgba(151,187,205,1)",
-          //     			pointStrokeColor: "#fff",
-          //     			pointHighlightFill: "#fff",
-          //     			pointHighlightStroke: "rgba(151,187,205,1)",
-          //     			data: [28, 48, 40, 19, 86, 27, 90]
-          //         }
-          //     ]
-          // };
-          console.log(this.state.lineGraphData);
-          var data = {
+          var lineData = {
             labels: this.state.lineGraphLabels,
             datasets:this.state.lineGraphData[this.state.currentStates[0]]
           }
-
-          console.log(data);
+          console.log(this.state.pieGraphData);
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row"> State data for {this.state.currentStates[0]}</div>
-                  <div id= "singularGraphSection" className="row"> <LineChart data={data} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/> </div>
+                  <div id= "singularGraphSection" className="row">
+                    <div className = "col-md-6">
+                      <LineChart data={lineData} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/>
+                    </div>
+                    <div className = "col-md-6">
+                      <PieChart data={this.state.pieGraphData[this.state.currentStates[0]]} width = {(window.innerWidth/100)*23} height = {(window.innerHeight/100)*40}/>
+                    </div>
+                  </div>
                   <div id= "singularTableData" className="row">{dataTable}</div>
 
                 </div>);
