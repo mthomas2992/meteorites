@@ -125,7 +125,7 @@ class Briefs extends React.Component {
       for (i=0;i<data.length;i++){
         var curr = data[i];
         var dataSet= {
-          label: curr.RetailIndustry,
+          label: curr.RetailIndustry.substring(0,15) +"... ",
           fillColor: "rgba(220,220,220,0.2)",
           strokeColor: "rgba(220,220,220,1)",
           pointColor: "rgba(220,220,220,1)",
@@ -138,7 +138,7 @@ class Briefs extends React.Component {
           value: 0,
       		color:"rgba(220,220,220,0.5)",
       		highlight: "#FF5A5E",
-      		label: curr.RetailIndustry
+      		label: curr.RetailIndustry.substring(0,15) +"... "
         }
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;

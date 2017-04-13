@@ -23,7 +23,7 @@ class App extends React.Component {
         selectedStates : ["AUS"],
         timePeriodStart : "2015-09-09",
         timePeriodEnd : "2016-09-09",
-        industry:"Exports"
+        industry:"Retail"
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
