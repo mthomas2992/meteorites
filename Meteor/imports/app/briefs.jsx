@@ -10,8 +10,6 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment'
 
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
 class Briefs extends React.Component {
 
     constructor(props){
@@ -21,18 +19,17 @@ class Briefs extends React.Component {
         currentIndustry: this.props.status.industry,
         currentTimePeriodStart: this.props.status.timePeriodStart,
         currentTimePeriodEnd: this.props.status.timePeriodEnd,
-        currentStatesData: null,
         currentData:null,
         lineGraphLabels:null,
         lineGraphData: null,
         pieGraphData:null,
+        tableData:null,
         loading: true,
         momentStart:null,
         momentEnd:null
       }
 
       this.loadData = this.loadData.bind(this);
-      this.createTable = this.createTable.bind(this);
 
       this.formatResponse = this.formatResponse.bind(this);
       this.handleStartDateChange = this.handleStartDateChange.bind(this);
@@ -77,24 +74,19 @@ class Briefs extends React.Component {
       var newCurrData={};
       var newLineGraphData = {};
       var newPieGraphData ={};
+      var newTableData={};
       var self =this;
 
       for (i=0;i<newProps.status.selectedStates.length;i++){
-        Meteor.call('getAllTotalsOverTimeRetail',newProps.status.selectedStates[i],newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function (err,res){
-          newCurrStateData[res.state] = res.data;
-          self.setState({currentStatesData:newCurrStateData});
-
-        });
-
         Meteor.call('getRetailTurnover',newProps.status.selectedStates[i],"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
           newCurrData[newProps.status.selectedStates[0]] = res; //need to change this TODO
           self.setState({currentData:newCurrData});
           //call interpolation for tables ands stuff
-          console.log(newProps.status.selectedStates[0]);
           var formattedResponses = self.formatResponse(res);
           newLineGraphData[newProps.status.selectedStates[0]] =formattedResponses.lineGraph;
           newPieGraphData[newProps.status.selectedStates[0]] = formattedResponses.pieGraph;
-          self.setState({lineGraphData:newLineGraphData, pieGraphData:newPieGraphData});
+          newTableData[newProps.status.selectedStates[0]] = formattedResponses.tableData;
+          self.setState({lineGraphData:newLineGraphData, pieGraphData:newPieGraphData, tableData:newTableData});
           self.setState({loading:false}); //only good when there is just one state
         });
 
@@ -102,25 +94,12 @@ class Briefs extends React.Component {
 
     }
 
-    createTable(state){
-      var table = new Array();
-      table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
-      console.log(Object.keys(this.state.currentStatesData[state]));
-      var stateKeys = Object.keys(this.state.currentStatesData[state]);
-
-      for (i=0;i<stateKeys.length;i++){
-        if (stateKeys[i]=="Total") continue;
-        table.push(<tr><td>{stateKeys[i]}</td> <td>{this.state.currentStatesData[state][stateKeys[i]].toFixed(2)}</td></tr>)
-      }
-      var completedTable = <table id ="singularDataTable">{table}</table>;
-      return completedTable;
-    };
-
     formatResponse(data) {
-      console.log(data);
       var lineArray = new Array();
       var labelArray = new Array();
       var pieArray = new Array();
+      var table = new Array();
+      table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
 
       for (i=0;i<data.length;i++){
         var curr = data[i];
@@ -152,9 +131,13 @@ class Briefs extends React.Component {
         pieDataSet.value =total.toFixed(2);
         if (i==0) this.setState({lineGraphLabels:labelArray});
         lineArray.push(dataSet);
-        if (curr.RetailIndustry!="Total")pieArray.push(pieDataSet);
+        if (curr.RetailIndustry!="Total"){
+          pieArray.push(pieDataSet);
+          table.push(<tr><td>{curr.RetailIndustry}</td> <td>{total.toFixed(2)}</td></tr>);
+        }
       }
-      return {lineGraph:lineArray,pieGraph:pieArray};
+      var completedTable = <table id ="singularDataTable">{table}</table>;
+      return {lineGraph:lineArray,pieGraph:pieArray,tableData:completedTable};
     }
 
     componentDidMount(){
@@ -166,14 +149,11 @@ class Briefs extends React.Component {
         return (<div>Loading....</div>);
       } else {
         if (this.state.currentStates.length <=1){
-          //create table from given data
-          var dataTable = this.createTable(this.state.currentStates[0]);
-
           var lineData = {
             labels: this.state.lineGraphLabels,
             datasets:this.state.lineGraphData[this.state.currentStates[0]]
           }
-          console.log(this.state.pieGraphData);
+
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row">
                     <div id = "actualTitle">Retail Turnover Data for {this.state.currentStates[0]}</div>
@@ -215,7 +195,7 @@ class Briefs extends React.Component {
                   </div>
                   <div id= "singularTableData" className="row">
 
-                    {dataTable}
+                    {this.state.tableData[this.state.currentStates[0]]}
                   </div>
 
                 </div>);

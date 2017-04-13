@@ -59,7 +59,6 @@ class App extends React.Component {
       ];
 
       var layouts = {lg:layout};
-      console.log(this.state);
 
       if (this.props.path == "Home"){
         return (<div id="home" className="container-fluid">
