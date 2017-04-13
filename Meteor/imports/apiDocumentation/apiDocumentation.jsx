@@ -63,7 +63,7 @@ class APIDocumentation extends React.Component {
                   <div id="header" className="col-md-12">
                     Meteoristics: Api Docs
                   </div>
-                  <div id="docoSpacer" className="col-md-12"></div>
+                  
                 </div>
                 <div id="mainDocumentationRow" className="row">
                   <div className= "col-md-2 col-md-offset-1" id="navBarTop">
