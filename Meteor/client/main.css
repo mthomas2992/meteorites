@@ -76,3 +76,16 @@ h1, h2, h3, h4, h5, h6, a, p{
   border-style: dashed;
   border-color: black;
 }
+
+#singularDataTable{
+  width: 100%;
+
+}
+
+th{
+  font-size: 20px;
+}
+
+tr:nth-child(even) {
+    background-color: #DDDDDD;
+}

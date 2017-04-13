@@ -17,6 +17,7 @@ class Briefs extends React.Component {
       }
 
       this.loadData = this.loadData.bind(this);
+      this.createTable = this.createTable.bind(this);
     };
 
     componentWillReceiveProps(nextProps){
@@ -44,6 +45,20 @@ class Briefs extends React.Component {
 
     }
 
+    createTable(state){
+      var table = new Array();
+      table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
+      console.log(Object.keys(this.state.currentStatesData[state]));
+      var stateKeys = Object.keys(this.state.currentStatesData[state]);
+
+      for (i=0;i<stateKeys.length;i++){
+        if (stateKeys[i]=="Total") continue;
+        table.push(<tr><td>{stateKeys[i]}</td> <td>{this.state.currentStatesData[state][stateKeys[i]]}</td></tr>)
+      }
+      var completedTable = <table id ="singularDataTable">{table}</table>;
+      return completedTable;
+    }
+
     componentDidMount(){
 
     };
@@ -54,12 +69,13 @@ class Briefs extends React.Component {
       } else {
         if (this.state.currentStates.length <=1){
           //create table from given data
+          var dataTable = this.createTable(this.state.currentStates[0]);
           console.log(this.state.currentStatesData);
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row"> State data for {this.state.currentStates[0]}</div>
                   <div id= "singularGraphSection" className="row"> Graphs will go here </div>
-                  <div id= "singularTableData" className="row">Data tables will go here</div>
-                  
+                  <div id= "singularTableData" className="row">{dataTable}</div>
+
                 </div>);
         } else {
           return (<div> Error </div>);
