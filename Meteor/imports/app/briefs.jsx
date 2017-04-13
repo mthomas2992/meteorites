@@ -7,8 +7,6 @@ var LineChart = require("react-chartjs").Line;
 var PieChart = require("react-chartjs").Pie;
 
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import Moment from 'moment'
 
 var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"Turnover"},MerchandiseExports:{topLevelCategory:"Commodity",dataValue:"Value"}};
 
@@ -20,7 +18,7 @@ class Briefs extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        currentStates: this.props.status.selectedStates,
+        currState:"AUS",
         currentIndustry: this.props.status.industry,
         currentTimePeriodStart: this.props.status.timePeriodStart,
         currentTimePeriodEnd: this.props.status.timePeriodEnd,
@@ -30,54 +28,31 @@ class Briefs extends React.Component {
         pieGraphData:null,
         tableData:null,
         loading: true,
-        momentStart:null,
-        momentEnd:null
       }
 
       this.loadData = this.loadData.bind(this);
 
       this.formatResponse = this.formatResponse.bind(this);
-      this.handleStartDateChange = this.handleStartDateChange.bind(this);
-      this.handleEndDateChange = this.handleEndDateChange.bind(this);
     };
 
     componentWillReceiveProps(nextProps){
-      this.loadData(nextProps);
+      this.loadData(nextProps,this.state.currState);
     }
 
     componentWillMount(){
-      this.loadData(this.props);
+      this.loadData(this.props,this.state.currState);
     };
 
-    handleStartDateChange(date){
-      this.setState({momentStart:date})
-      this.props.changeStartDate(date.format('YYYY-MM-DD'));
-    }
-
-    handleEndDateChange(date){
-      this.setState({momentEnd:date})
-      this.props.changeEndDate(date.format('YYYY-MM-DD'));
-    }
-
     selectChange(option){
-      this.props.changeSelectedStates([option.value]);
+      this.setState({currState:option.value});
+      this.loadData(this.props,option.value);
     }
 
-    selectIndustryChange(option){
-      this.props.changeIndustry(option.value);
-    }
-
-    loadData(newProps){
+    loadData(newProps,newState){
 
       this.setState({loading:true});
 
-      this.setState({currentStates:newProps.status.selectedStates,currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
-
-      var startDateSplit = newProps.status.timePeriodStart.split('-');
-      var endDateSplit = newProps.status.timePeriodEnd.split('-');
-      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
-      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
-      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
+      this.setState({currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
 
       var newCurrStateData = {};
       var newCurrData={};
@@ -94,21 +69,17 @@ class Briefs extends React.Component {
         categories = "Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified";
       }
 
-      for (i=0;i<newProps.status.selectedStates.length;i++){
-
-        Meteor.call(functionCall,newProps.status.selectedStates[i],categories,newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
-          newCurrData[newProps.status.selectedStates[0]] = res; //need to change this TODO
-          self.setState({currentData:newCurrData});
-          //call interpolation for tables ands stuff
-          var formattedResponses = self.formatResponse(res);
-          newLineGraphData[newProps.status.selectedStates[0]] =formattedResponses.lineGraph;
-          newPieGraphData[newProps.status.selectedStates[0]] = formattedResponses.pieGraph;
-          newTableData[newProps.status.selectedStates[0]] = formattedResponses.tableData;
-          self.setState({lineGraphData:newLineGraphData, pieGraphData:newPieGraphData, tableData:newTableData});
-          self.setState({loading:false}); //only good when there is just one state
-        });
-
-      }
+      Meteor.call(functionCall,newState,categories,newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
+        newCurrData[newState] = res; //need to change this TODO
+        self.setState({currentData:newCurrData});
+        //call interpolation for tables ands stuff
+        var formattedResponses = self.formatResponse(res);
+        newLineGraphData[newState] =formattedResponses.lineGraph;
+        newPieGraphData[newState] = formattedResponses.pieGraph;
+        newTableData[newState] = formattedResponses.tableData;
+        self.setState({lineGraphData:newLineGraphData, pieGraphData:newPieGraphData, tableData:newTableData});
+        self.setState({loading:false}); //only good when there is just one state
+      });
 
     }
 
@@ -171,64 +142,39 @@ class Briefs extends React.Component {
       if (this.state.loading){
         return (<div>Loading....</div>);
       } else {
-        if (this.state.currentStates.length <=1){
+        if (this.state.currState != null){
           var lineData = {
             labels: this.state.lineGraphLabels,
-            datasets:this.state.lineGraphData[this.state.currentStates[0]]
+            datasets:this.state.lineGraphData[this.state.currState]
           }
 
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row">
-                    <div id = "actualTitle">{this.state.currentIndustry} Data for {this.state.currentStates[0]}</div>
+                    <div id = "actualTitle">{this.state.currentIndustry} Data for {this.state.currState}</div>
                     <div id = "prompt" className= "col-md-1"> Select state : </div>
                     <div id = "stateSelectorID" className = "col-md-1">
                       <Select
                       name= "state-selector"
-                      value= {this.state.currentStates[0]}
+                      value= {this.state.currState}
                       options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
                       {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
                       clearable = {false}
                       onChange = {this.selectChange.bind(this)}
                       />
                     </div>
-                    <div id = "prompt" className= "col-md-1"> Select industry </div>
-                    <div id = "stateSelectorID" className = "col-md-1">
-                      <Select
-                      name= "industry-selector"
-                      value= {this.state.currentIndustry}
-                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
-                      clearable = {false}
-                      onChange = {this.selectIndustryChange.bind(this)}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      Start Date:
-                      <DatePicker
-                        dateFormat="YYYY-MM-DD"
-                        selected = {this.state.momentStart}
-                        onChange = {this.handleStartDateChange}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                      End Date:
-                      <DatePicker
-                        dateFormat="YYYY-MM-DD"
-                        selected = {this.state.momentEnd}
-                        onChange = {this.handleEndDateChange}
-                        />
-                    </div>
+
                   </div>
                   <div id= "singularGraphSection" className="row">
                     <div className = "col-md-6">
                       <LineChart data={lineData} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/>
                     </div>
                     <div className = "col-md-6">
-                      <PieChart data={this.state.pieGraphData[this.state.currentStates[0]]} width = {(window.innerWidth/100)*23} height = {(window.innerHeight/100)*40}/>
+                      <PieChart data={this.state.pieGraphData[this.state.currState]} width = {(window.innerWidth/100)*23} height = {(window.innerHeight/100)*40}/>
                     </div>
                   </div>
                   <div id= "singularTableData" className="row">
 
-                    {this.state.tableData[this.state.currentStates[0]]}
+                    {this.state.tableData[this.state.currState]}
                   </div>
 
                 </div>);

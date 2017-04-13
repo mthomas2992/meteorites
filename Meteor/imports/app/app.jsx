@@ -11,6 +11,10 @@ import ReactGridLayout from 'react-grid-layout';
 require ('/node_modules/react-grid-layout/css/styles.css');
 require ('/node_modules/react-resizable/css/styles.css');
 
+import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment'
+
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -20,60 +24,130 @@ class App extends React.Component {
       super(props);
 
       this.state = {
-        selectedStates : ["AUS"],
         timePeriodStart : "2015-09-09",
         timePeriodEnd : "2016-09-09",
-        industry:"RetailTurnover"
+        industry:"RetailTurnover",
+        momentStart:null,
+        momentEnd:null,
+        panelCount:1,
+        layout: [
+         {i: 'briefs0', x: 0, y: 0, w: 6, h: 1, isResizable:false},
+         {i: 'briefs1', x: 0, y: 1, w: 6, h: 1, isResizable:false},
+         {i: 'briefs2', x: 0, y: 1, w: 6, h: 1, isResizable:false},
+         {i: 'briefs3', x: 6, y: 1, w: 6, h: 1, isResizable:false},
+        ]
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
 
-      this.changeSelectedStates = this.changeSelectedStates.bind(this);
-      this.changeStartDate = this.changeStartDate.bind(this);
-      this.changeEndDate = this.changeEndDate.bind(this);
-      this.changeIndustry = this.changeIndustry.bind(this);
+      this.handleStartDateChange = this.handleStartDateChange.bind(this);
+      this.handleEndDateChange = this.handleEndDateChange.bind(this);
+      this.selectIndustryChange = this.selectIndustryChange.bind(this);
+
+      this.addPanel= this.addPanel.bind(this);
+      this.layoutChange = this.layoutChange.bind(this);
     };
 
-    changeSelectedStates(newStates) {
-      this.setState({selectedStates:newStates});
+
+    handleStartDateChange(date){
+      this.setState({momentStart:date})
+      this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
     }
 
-    changeStartDate(date){
-      this.setState({timePeriodStart:date});
+    handleEndDateChange(date){
+      this.setState({momentEnd:date})
+      this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
     }
 
-    changeEndDate(date){
-      this.setState({timePeriodEnd:date});
+    selectIndustryChange(option){
+      this.setState({industry:option.value});
     }
 
-    changeIndustry(industry){
-      this.setState({industry:industry});
-    }
-
-    componentDidMount(){
-
+    componentWillMount(){
+      var startDateSplit = this.state.timePeriodStart.split('-');
+      var endDateSplit = this.state.timePeriodEnd.split('-');
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
+      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
     };
+
+    addPanel(){
+      var currPanel = this.state.panelCount;
+      if (currPanel<4){
+        this.setState({panelCount:currPanel+1});
+      }
+    }
+
+    removePanel(){
+      var currPanel = this.state.panelCount;
+      if (currPanel>1){
+        this.setState({panelCount:currPanel-1});
+      }
+    }
 
     onBreakpointChange(breakpoint){
       // console.log(breakpoint)
     }
 
-    render() {
-      var layout = [
-       {i: 'briefs', x: 3, y: 0, w: 6, h: 1, static:true}
-      ];
+    layoutChange(layout){
+      for (kl=0;kl<layout.length;kl++){
+        layout[kl].w=6;
+        // if (kl%2 != 0 && kl!=0) layout[kl].x=6;
+      }
+    }
 
-      var layouts = {lg:layout};
+    render() {
+      var panels = new Array();
+      var string="";
+      for (i=0;i<this.state.panelCount;i++){
+        string = "briefs"+i;
+        panels.push(<div id = "briefsRoot" key={string}> <Briefs status = {this.state}/></div>);
+      }
+      console.log(panels);
+      var layouts = {lg:this.state.layout,md:this.state.layout};
+      console.log(layouts);
 
       if (this.props.path == "Home"){
         return (<div id="home" className="container-fluid">
-                  <div id="mainDocumentationTopHeaderRow" className="row">
-                    <div id="frontHeader" className="col-md-12">
+                  <div id="homeTopBar" className="row">
+                    <div id="frontHeader" className="col-md-4">
                       Meteoristics
                     </div>
-                    <div id="Menu">
-                      <a href="http://meteoristics.com/api/documentation">API</a>
+                    <div id = "prompt" className= "col-md-1"> Select industry </div>
+                    <div id = "stateSelectorID" className = "col-md-1">
+                      <Select
+                      name= "industry-selector"
+                      value= {this.state.industry}
+                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
+                      clearable = {false}
+                      onChange = {this.selectIndustryChange.bind(this)}
+                      />
                     </div>
+                    <div className="col-md-2">
+                      Start Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentStart}
+                        onChange = {this.handleStartDateChange}
+                        />
+                    </div>
+                    <div className="col-md-2">
+                      End Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentEnd}
+                        onChange = {this.handleEndDateChange}
+                        />
+                    </div>
+                    <div onClick={()=>{this.addPanel()}} id="addSection" className="col-md-1">
+                      Add Panel
+                    </div>
+                    <div onClick={()=>{this.removePanel()}}id="removeSection" className="col-md-1">
+                      Remove Panel
+                    </div>
+                  </div>
+                  <div id="Menu" className="row">
+                    <a href="http://meteoristics.com/api/documentation">API</a>
                   </div>
                   <div className="row">
                     <ResponsiveReactGridLayout
@@ -84,8 +158,9 @@ class App extends React.Component {
                       breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
                       cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
                       measureBeforeMount={false}
-                      onBreakpointChange={this.onBreakpointChange}>
-                      <div id = "briefsRoot" key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates} changeStartDate={this.changeStartDate} changeEndDate={this.changeEndDate} changeIndustry={this.changeIndustry}/></div>
+                      onBreakpointChange={this.onBreakpointChange}
+                      onLayoutChange={this.layoutChange}>
+                      {panels}
                     </ResponsiveReactGridLayout>
                   </div>
 
