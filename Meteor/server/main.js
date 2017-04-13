@@ -3,11 +3,13 @@ import { HTTP } from 'meteor/http';
 
 import showdown from 'showdown';
 
+//possible entries for API endpoints
+var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"];
+var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"];
+
+
 Meteor.startup(() => {
 
-  //possible entries for API endpoints
-  var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"];
-  var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"];
 
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////      API SECTION     ///////////////////////////////
@@ -424,11 +426,18 @@ Meteor.startup(() => {
     },
 
 
-    getAllTotalsOverTimeRetail(state, startDate,endDate) {
-      var results = new Array();
-      for (i=0;i<possibleCategoryRetail.length;i++){
-
+    getAllTotalsOverTimeRetail(state, startDate,endDate) { //returns totals of all retail categories over the given time
+      var results = {state:state,data:{}};
+      for (stopLoop=0;stopLoop<possibleCategoryRetail.length;stopLoop++){
+        var rawData = Meteor.call('getRetailTurnover',state,possibleCategoryRetail[stopLoop],startDate,endDate); //this can be made more efficient but no time
+        var refinedData = rawData[0].RegionalData[0].Data;
+        var totalForCategory = 0;
+        for (i=0; i<refinedData.length; i++){
+          totalForCategory = totalForCategory +refinedData[i].Turnover;
+        }
+        results.data[possibleCategoryRetail[stopLoop]] = totalForCategory;
       }
+      return results;
     }
 
   })
