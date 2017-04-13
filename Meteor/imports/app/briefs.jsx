@@ -143,7 +143,7 @@ class Briefs extends React.Component {
           }
           console.log(this.state.pieGraphData);
           return(<div className= "col-md-12">
-                  <div id = "singularTitle" className="row"> State data for {this.state.currentStates[0]}</div>
+                  <div id = "singularTitle" className="row"> Retail Turnover Data for {this.state.currentStates[0]}</div>
                   <div id= "singularGraphSection" className="row">
                     <div className = "col-md-6">
                       <LineChart data={lineData} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/>

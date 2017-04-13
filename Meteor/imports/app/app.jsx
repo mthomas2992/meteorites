@@ -58,7 +58,7 @@ class App extends React.Component {
                       Meteoristics
                     </div>
                     <div id="Menu">
-                      test
+                      <a href="http://meteoristics.com/api/documentation">API</a>
                     </div>
                   </div>
                   <div className="row">
