@@ -104,7 +104,7 @@ class Briefs extends React.Component {
           console.log(this.state.currentStatesData);
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row"> State data for {this.state.currentStates[0]}</div>
-                  <div id= "singularGraphSection" className="row"> <LineChart data={data}/> </div>
+                  <div id= "singularGraphSection" className="row"> <LineChart data={data} width = "25vw"/> </div>
                   <div id= "singularTableData" className="row">{dataTable}</div>
 
                 </div>);
