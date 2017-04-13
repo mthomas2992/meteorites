@@ -39,7 +39,7 @@ Data will be returned in the same format as described on the version home page. 
 
 The output data contains an array of industries, each containing an array of states, which contains an array of turnovers corresponding to each month within the supplied dates.
 
- Below is an example of a succesful query with the request URL as <http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+ Below is an example of a succesful query with the request URL as <http://meteoristics.com/api/v2/RetailAndExportsstatisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
 
 ```md
 {
@@ -147,7 +147,7 @@ A response when the statistics area is MerchandiseExports follows the exact same
 
 ###Errors and warnings
 
-An example of a failed output due to errors retrieved from <http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,USA&category=Total,badcat&startDate=2015-09-09>
+An example of a failed output due to errors retrieved from <http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,USA&category=Total,badcat&startDate=2015-09-09>
 
 ```md
 {
@@ -238,11 +238,11 @@ The following are sample requests to the endpoint, they are passing the variable
 
 ####Web browser
 
-<http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+<http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
 
 ####cURL
 ```md
-curl -X GET http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
+curl -X GET http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
 ```
 
 ####Python
@@ -254,12 +254,12 @@ import requests
 Then you can make the request:
 ```md
 parameters = {'statisticsArea': 'Retail', 'state': 'nsw,vic', 'category': 'Total', 'startDate' : '2015-09-09', 'endDate': '2016-09-09'}
-data = requests.get('http://meteoristics.com/api/v2/retailTrade', params=parameters)
+data = requests.get('http://meteoristics.com/api/v2/RetailAndExports', params=parameters)
 ```
 
 ####NodeJS
 ```md
-request.get('http://meteoristics.com/api/v2/retailTrade?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09', function(err,res,body){
+request.get('http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09', function(err,res,body){
   body = JSON.parse(body);
 });
 ```
@@ -273,21 +273,10 @@ $params = http_build_query([
  'startDate' => '2015-09-09',
  'endDate' => '2016-09-09'
 ]);
-$url='http://meteoristics.com/api/v2/retailTrade'.$params;
+$url='http://meteoristics.com/api/v2/RetailAndExports'.$params;
 $request = curl_init();
 curl_setopt($curl, CURLOPT_URL,$url);
 curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 $data = json_decode(curl_exec($request));
 curl_close($request);
 ```
-
-
-
-
-
-
-
-
-
-
-

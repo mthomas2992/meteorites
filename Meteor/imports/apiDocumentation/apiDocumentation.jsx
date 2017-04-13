@@ -57,13 +57,33 @@ class APIDocumentation extends React.Component {
       if (currEndpoint == null){
         currEndpoint = "Meteoristics API";
       }
-      if (this.state.documentationIndex!=null && this.state.currentVersion!=null){
+
+      if (this.state.endpoint=="explorer"){
         return (<div id="mainDocumentation" className="container-fluid">
                 <div id="mainDocumentationTopHeaderRow" className="row">
                   <div id="header" className="col-md-12">
                     Meteoristics: Api Docs
                   </div>
-                  
+
+                </div>
+                <div id="mainDocumentationRow" className="row">
+                  <div className= "col-md-2 col-md-offset-1" id="navBarTop">
+                    <VerSelector versionIndex = {this.state.documentationIndex} currentVersion = {this.state.currentVersion} currentEndpoint={currEndpoint}/>
+                    <NavBar version={this.state.currentVersion} endpoint={currEndpoint}/>
+                  </div>
+                  <div id="mainBodyTop" className = "col-md-8 col-md-offset-1">
+                    <h1>{this.state.currentVersion +" API Explorer"}</h1>
+
+                  </div>
+                </div>
+              </div>);
+      } else if (this.state.documentationIndex!=null && this.state.currentVersion!=null){
+        return (<div id="mainDocumentation" className="container-fluid">
+                <div id="mainDocumentationTopHeaderRow" className="row">
+                  <div id="header" className="col-md-12">
+                    Meteoristics: Api Docs
+                  </div>
+
                 </div>
                 <div id="mainDocumentationRow" className="row">
                   <div className= "col-md-2 col-md-offset-1" id="navBarTop">

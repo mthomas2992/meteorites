@@ -159,7 +159,7 @@ Meteor.startup(() => {
     }
   });
 
-  Api.addRoute('retailTrade', {authRequired: false}, {
+  Api.addRoute('RetailAndExports', {authRequired: false}, {
     get: function () {
       var dateGetter = new Date();
       var sTime = process.hrtime();
