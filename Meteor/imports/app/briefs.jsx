@@ -10,6 +10,8 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment'
 
+var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"Turnover"},MerchandiseExports:{topLevelCategory:"Commodity",dataValue:"Value"}};
+
 class Briefs extends React.Component {
 
     constructor(props){
@@ -58,6 +60,10 @@ class Briefs extends React.Component {
       this.props.changeSelectedStates([option.value]);
     }
 
+    selectIndustryChange(option){
+      this.props.changeIndustry(option.value);
+    }
+
     loadData(newProps){
 
       this.setState({loading:true});
@@ -77,8 +83,17 @@ class Briefs extends React.Component {
       var newTableData={};
       var self =this;
 
+      var functionCall = "getRetailTurnover";
+      var categories = "Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other";
+
+      if (newProps.status.industry == "MerchandiseExports"){
+        functionCall = "getMerchandiseExports";
+        categories = "Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified";
+      }
+
       for (i=0;i<newProps.status.selectedStates.length;i++){
-        Meteor.call('getRetailTurnover',newProps.status.selectedStates[i],"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
+
+        Meteor.call(functionCall,newProps.status.selectedStates[i],categories,newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
           newCurrData[newProps.status.selectedStates[0]] = res; //need to change this TODO
           self.setState({currentData:newCurrData});
           //call interpolation for tables ands stuff
@@ -104,7 +119,7 @@ class Briefs extends React.Component {
       for (i=0;i<data.length;i++){
         var curr = data[i];
         var dataSet= {
-          label: curr.RetailIndustry.substring(0,15) +"... ",
+          label: curr[transforms[this.state.currentIndustry].topLevelCategory].substring(0,15) +"... ",
           fillColor: "rgba(220,220,220,0.2)",
           strokeColor: "rgba(220,220,220,1)",
           pointColor: "rgba(220,220,220,1)",
@@ -117,23 +132,25 @@ class Briefs extends React.Component {
           value: 0,
       		color:"rgba(220,220,220,0.5)",
       		highlight: "#FF5A5E",
-      		label: curr.RetailIndustry.substring(0,15) +"... "
+      		label: curr[transforms[this.state.currentIndustry].topLevelCategory].substring(0,15) +"... "
         }
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;
         for (j=0;j<currMonthData.length;j++){
-          dataSet.data.push(currMonthData[j].Turnover.toFixed(2));
-          total = total +currMonthData[j].Turnover;
+          dataSet.data.push(currMonthData[j][transforms[this.state.currentIndustry].dataValue].toFixed(2));
+          total = total +currMonthData[j][transforms[this.state.currentIndustry].dataValue];
           if (i==0){
             labelArray.push(currMonthData[j].Date.slice(0,-3));
           }
         }
         pieDataSet.value =total.toFixed(2);
         if (i==0) this.setState({lineGraphLabels:labelArray});
-        lineArray.push(dataSet);
-        if (curr.RetailIndustry!="Total"){
+        if (curr[transforms[this.state.currentIndustry].topLevelCategory].match(/^total/gi)){
+          continue;
+        } else {
           pieArray.push(pieDataSet);
-          table.push(<tr><td>{curr.RetailIndustry}</td> <td>{total.toFixed(2)}</td></tr>);
+          lineArray.push(dataSet);
+          table.push(<tr><td>{curr[transforms[this.state.currentIndustry].topLevelCategory]}</td> <td>{total.toFixed(2)}</td></tr>);
         }
       }
       var completedTable = <table id ="singularDataTable">{table}</table>;
@@ -156,9 +173,9 @@ class Briefs extends React.Component {
 
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row">
-                    <div id = "actualTitle">Retail Turnover Data for {this.state.currentStates[0]}</div>
-                    <div id = "prompt" className= "col-md-2"> Select state : </div>
-                    <div id = "stateSelectorID" className = "col-md-2">
+                    <div id = "actualTitle">{this.state.currentIndustry} Data for {this.state.currentStates[0]}</div>
+                    <div id = "prompt" className= "col-md-1"> Select state : </div>
+                    <div id = "stateSelectorID" className = "col-md-1">
                       <Select
                       name= "state-selector"
                       value= {this.state.currentStates[0]}
@@ -166,6 +183,16 @@ class Briefs extends React.Component {
                       {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
                       clearable = {false}
                       onChange = {this.selectChange.bind(this)}
+                      />
+                    </div>
+                    <div id = "prompt" className= "col-md-1"> Select industry </div>
+                    <div id = "stateSelectorID" className = "col-md-1">
+                      <Select
+                      name= "industry-selector"
+                      value= {this.state.currentIndustry}
+                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
+                      clearable = {false}
+                      onChange = {this.selectIndustryChange.bind(this)}
                       />
                     </div>
                     <div className="col-md-4">
@@ -177,7 +204,7 @@ class Briefs extends React.Component {
                         />
                     </div>
                     <div className="col-md-4">
-                      End Date::
+                      End Date:
                       <DatePicker
                         dateFormat="YYYY-MM-DD"
                         selected = {this.state.momentEnd}
