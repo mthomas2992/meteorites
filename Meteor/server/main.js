@@ -5,6 +5,10 @@ import showdown from 'showdown';
 
 Meteor.startup(() => {
 
+  //possible entries for API endpoints
+  var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"];
+  var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"];
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////      API SECTION     ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -160,8 +164,8 @@ Meteor.startup(() => {
       var startTime = dateGetter.getTime();
       var possibleStatisticsArea = ["Retail","MerchandiseExports"];
       var possibleState = ["AUS","NSW","WA","SA","ACT","VIC","TAS","QLD","NT"];
-      var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
-      var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"]
+      // var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
+      // var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"]
 
       if (this.queryParams.statisticsArea.match(/retail/gi)){
         var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true},
@@ -417,8 +421,15 @@ Meteor.startup(() => {
       var result = HTTP.get(absQuery);
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
-    }
+    },
 
+
+    getAllTotalsOverTimeRetail(state, startDate,endDate) {
+      var results = new Array();
+      for (i=0;i<possibleCategoryRetail.length;i++){
+
+      }
+    }
 
   })
 });

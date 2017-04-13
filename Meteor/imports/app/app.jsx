@@ -20,21 +20,27 @@ class App extends React.Component {
       super(props);
 
       this.state = {
-        selectedStates : [],
+        selectedStates : ["AUS"],
         timePeriodStart : "2015-09-09",
         timePeriodEnd : "2016-09-09",
         industry:"Exports"
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
+
+      this.changeSelectedStates = this.changeSelectedStates.bind(this);
     };
+
+    changeSelectedStates(newStates) {
+      this.setState({selectedStates:newStates});
+    }
 
     componentDidMount(){
 
     };
 
     onBreakpointChange(breakpoint){
-      console.log(breakpoint)
+      // console.log(breakpoint)
     }
 
     render() {
@@ -44,8 +50,7 @@ class App extends React.Component {
       ];
 
       var layouts = {lg:layout};
-      console.log("called");
-      console.log(window.innerHeight);
+      console.log(this.state);
 
       if (this.props.path == "Home"){
         return (<div id="home" className="container-fluid">
@@ -59,8 +64,8 @@ class App extends React.Component {
                       cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
                       measureBeforeMount={false}
                       onBreakpointChange={this.onBreakpointChange}>
-                      <div id = "mapRoot" key={"map"}> <AusMap/></div>
-                      <div key={"briefs"}> <Briefs/></div>
+                      <div id = "mapRoot" key={"map"}> <AusMap status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
+                      <div key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
                     </ResponsiveReactGridLayout>
                   </div>
 

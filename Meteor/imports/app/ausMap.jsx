@@ -15,7 +15,10 @@ class AusMap extends React.Component {
     };
 
     render() {
-      return (<div> map will go here</div>)
+      return (<div>
+                <h2 onClick={()=>{this.props.changeSelectedStates(["NSW"])}}> NSW </h2>
+                <h2 onClick={()=>{this.props.changeSelectedStates(["VIC"])}}> VIC </h2>
+              </div>)
     }
 }
 
