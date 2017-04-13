@@ -29,10 +29,20 @@ class App extends React.Component {
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
 
       this.changeSelectedStates = this.changeSelectedStates.bind(this);
+      this.changeStartDate = this.changeStartDate.bind(this);
+      this.changeEndDate = this.changeEndDate.bind(this);
     };
 
     changeSelectedStates(newStates) {
       this.setState({selectedStates:newStates});
+    }
+
+    changeStartDate(date){
+      this.setState({timePeriodStart:date});
+    }
+
+    changeEndDate(date){
+      this.setState({timePeriodEnd:date});
     }
 
     componentDidMount(){
@@ -71,7 +81,7 @@ class App extends React.Component {
                       cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
                       measureBeforeMount={false}
                       onBreakpointChange={this.onBreakpointChange}>
-                      <div id = "briefsRoot" key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates}/></div>
+                      <div id = "briefsRoot" key={"briefs"}> <Briefs status = {this.state} changeSelectedStates = {this.changeSelectedStates} changeStartDate={this.changeStartDate}/></div>
                     </ResponsiveReactGridLayout>
                   </div>
 

@@ -7,6 +7,10 @@ var LineChart = require("react-chartjs").Line;
 var PieChart = require("react-chartjs").Pie;
 
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment'
+
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class Briefs extends React.Component {
 
@@ -22,13 +26,17 @@ class Briefs extends React.Component {
         lineGraphLabels:null,
         lineGraphData: null,
         pieGraphData:null,
-        loading: true
+        loading: true,
+        momentStart:null,
+        momentEnd:null
       }
 
       this.loadData = this.loadData.bind(this);
       this.createTable = this.createTable.bind(this);
 
       this.formatResponse = this.formatResponse.bind(this);
+      this.handleStartDateChange = this.handleStartDateChange.bind(this);
+      this.handleEndDateChange = this.handleEndDateChange.bind(this);
     };
 
     componentWillReceiveProps(nextProps){
@@ -39,22 +47,38 @@ class Briefs extends React.Component {
       this.loadData(this.props);
     };
 
+    handleStartDateChange(date){
+      this.setState({momentStart:date})
+      this.props.changeStartDate(date.format('YYYY-MM-DD'));
+    }
+
+    handleEndDateChange(date){
+      this.setState({momentEnd:date})
+      this.props.changeEndDate(date.format('YYYY-MM-DD'));
+    }
+
     selectChange(option){
-      console.log(option);
       this.props.changeSelectedStates([option.value]);
-      //this.setState({currentStates:[option.value]});
     }
 
     loadData(newProps){
-      console.log("called Loading" );
+
       this.setState({loading:true});
-      console.log(newProps);
+
       this.setState({currentStates:newProps.status.selectedStates,currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
+
+      var startDateSplit = newProps.status.timePeriodStart.split('-');
+      var endDateSplit = newProps.status.timePeriodEnd.split('-');
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
+      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
+
       var newCurrStateData = {};
       var newCurrData={};
       var newLineGraphData = {};
       var newPieGraphData ={};
       var self =this;
+
       for (i=0;i<newProps.status.selectedStates.length;i++){
         Meteor.call('getAllTotalsOverTimeRetail',newProps.status.selectedStates[i],newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function (err,res){
           newCurrStateData[res.state] = res.data;
@@ -121,12 +145,12 @@ class Briefs extends React.Component {
         for (j=0;j<currMonthData.length;j++){
           dataSet.data.push(currMonthData[j].Turnover);
           total = total +currMonthData[j].Turnover;
-          if (this.state.lineGraphLabels == null){
+          if (i==0){
             labelArray.push(currMonthData[j].Date.slice(0,-3));
           }
         }
         pieDataSet.value =total;
-        if (this.state.lineGraphLabels == null) this.setState({lineGraphLabels:labelArray});
+        if (i==0) this.setState({lineGraphLabels:labelArray});
         lineArray.push(dataSet);
         if (curr.RetailIndustry!="Total")pieArray.push(pieDataSet);
       }
@@ -153,9 +177,8 @@ class Briefs extends React.Component {
           return(<div className= "col-md-12">
                   <div id = "singularTitle" className="row">
                     <div id = "actualTitle">Retail Turnover Data for {this.state.currentStates[0]}</div>
-                    <div id = "prompt" className= "col-md-4 col-md-offset-1"> Select state : </div>
+                    <div id = "prompt" className= "col-md-2"> Select state : </div>
                     <div id = "stateSelectorID" className = "col-md-2">
-
                       <Select
                       name= "state-selector"
                       value= {this.state.currentStates[0]}
@@ -164,6 +187,22 @@ class Briefs extends React.Component {
                       clearable = {false}
                       onChange = {this.selectChange.bind(this)}
                       />
+                    </div>
+                    <div className="col-md-4">
+                      Start Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentStart}
+                        onChange = {this.handleStartDateChange}
+                        />
+                    </div>
+                    <div className="col-md-4">
+                      End Date::
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentEnd}
+                        onChange = {this.handleEndDateChange}
+                        />
                     </div>
                   </div>
                   <div id= "singularGraphSection" className="row">
