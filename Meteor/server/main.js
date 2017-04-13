@@ -438,6 +438,13 @@ Meteor.startup(() => {
         results.data[possibleCategoryRetail[stopLoop]] = totalForCategory;
       }
       return results;
+    },
+
+    'makeHttpRequest' :function(queryString){
+      var result = HTTP.get(queryString);
+      console.log(queryString);
+      console.log(result);
+      return HTTP.get(queryString);
     }
 
   })

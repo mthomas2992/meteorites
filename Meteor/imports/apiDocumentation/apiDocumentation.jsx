@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import NavBar from '/imports/apiDocumentation/navBar.jsx';
 import MainBody from '/imports/apiDocumentation/mainBody.jsx';
 import VerSelector from '/imports/apiDocumentation/verSelector.jsx';
+import ApiExplorer from '/imports/apiDocumentation/explorer.jsx';
 
 class APIDocumentation extends React.Component {
 
@@ -73,7 +74,7 @@ class APIDocumentation extends React.Component {
                   </div>
                   <div id="mainBodyTop" className = "col-md-8 col-md-offset-1">
                     <h1>{this.state.currentVersion +" API Explorer"}</h1>
-
+                    <ApiExplorer/>
                   </div>
                 </div>
               </div>);

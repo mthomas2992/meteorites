@@ -39,7 +39,7 @@ Data will be returned in the same format as described on the version home page. 
 
 The output data contains an array of industries, each containing an array of states, which contains an array of turnovers corresponding to each month within the supplied dates.
 
- Below is an example of a succesful query with the request URL as <http://meteoristics.com/api/v2/RetailAndExportsstatisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+ Below is an example of a succesful query with the request URL as <http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw&category=Total&startDate=2015-09-09&endDate=2016-09-09>
 
 ```md
 {
