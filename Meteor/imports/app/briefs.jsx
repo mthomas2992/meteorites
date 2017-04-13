@@ -143,13 +143,13 @@ class Briefs extends React.Component {
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;
         for (j=0;j<currMonthData.length;j++){
-          dataSet.data.push(currMonthData[j].Turnover);
+          dataSet.data.push(currMonthData[j].Turnover.toFixed(2));
           total = total +currMonthData[j].Turnover;
           if (i==0){
             labelArray.push(currMonthData[j].Date.slice(0,-3));
           }
         }
-        pieDataSet.value =total;
+        pieDataSet.value =total.toFixed(2);
         if (i==0) this.setState({lineGraphLabels:labelArray});
         lineArray.push(dataSet);
         if (curr.RetailIndustry!="Total")pieArray.push(pieDataSet);
