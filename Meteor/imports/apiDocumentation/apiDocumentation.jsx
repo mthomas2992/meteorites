@@ -75,6 +75,7 @@ class APIDocumentation extends React.Component {
                   <div id="mainBodyTop" className = "col-md-8 col-md-offset-1">
                     <h1>{this.state.currentVersion +" API Explorer"}</h1>
                     <ApiExplorer/>
+                    <br></br>
                   </div>
                 </div>
               </div>);

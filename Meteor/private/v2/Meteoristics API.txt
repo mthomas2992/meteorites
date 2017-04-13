@@ -75,8 +75,8 @@ The returned JSON will also always be in the same general format of
 
 ```md
 status: {
-  requirements: <an arrayrequired variables for the endpoint you requested>
-  passedParamaters: <object contained the variables you did send to us>
+  requirements: <an array of required variables for the endpoint you requested>
+  passedParamaters: <object containing the received variables>
   errors:< an array of any errors preventing execution>
   warnings:<an array of any warnings that aren't preventing execution of your query but should be corrected>
   executionTime: <data relating to the time and speed of your requested query>
