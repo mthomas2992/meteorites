@@ -102,7 +102,7 @@ class Briefs extends React.Component {
             labelArray.push(currMonthData[j].Date.slice(0,-3));
           }
         }
-        this.setState({lineGraphLabels:labelArray});
+        if (this.state.lineGraphLabels == null) this.setState({lineGraphLabels:labelArray});
         setArray.push(dataSet);
       }
       return setArray;
