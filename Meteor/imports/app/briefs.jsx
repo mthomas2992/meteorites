@@ -140,6 +140,9 @@ class Briefs extends React.Component {
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;
         for (j=0;j<currMonthData.length;j++){
+          if (currMonthData[j][transforms[this.state.currentIndustry].dataValue] == "Data missing" || currMonthData[j][transforms[this.state.currentIndustry].dataValue] == null){
+            continue;
+          }
           dataSet.data.push(currMonthData[j][transforms[this.state.currentIndustry].dataValue].toFixed(2));
           total = total +currMonthData[j][transforms[this.state.currentIndustry].dataValue];
           if (i==0){
