@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 var LineChart = require("react-chartjs").Line;
 var PieChart = require("react-chartjs").Pie;
 
+import Select from 'react-select';
+
 class Briefs extends React.Component {
 
     constructor(props){
@@ -36,6 +38,12 @@ class Briefs extends React.Component {
     componentWillMount(){
       this.loadData(this.props);
     };
+
+    selectChange(option){
+      console.log(option);
+      this.props.changeSelectedStates([option.value]);
+      //this.setState({currentStates:[option.value]});
+    }
 
     loadData(newProps){
       console.log("called Loading" );
@@ -143,7 +151,21 @@ class Briefs extends React.Component {
           }
           console.log(this.state.pieGraphData);
           return(<div className= "col-md-12">
-                  <div id = "singularTitle" className="row"> Retail Turnover Data for {this.state.currentStates[0]}</div>
+                  <div id = "singularTitle" className="row">
+                    <div id = "actualTitle">Retail Turnover Data for {this.state.currentStates[0]}</div>
+                    <div id = "prompt" className= "col-md-4 col-md-offset-1"> Select state : </div>
+                    <div id = "stateSelectorID" className = "col-md-2">
+
+                      <Select
+                      name= "state-selector"
+                      value= {this.state.currentStates[0]}
+                      options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
+                      {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
+                      clearable = {false}
+                      onChange = {this.selectChange.bind(this)}
+                      />
+                    </div>
+                  </div>
                   <div id= "singularGraphSection" className="row">
                     <div className = "col-md-6">
                       <LineChart data={lineData} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/>

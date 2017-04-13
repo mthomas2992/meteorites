@@ -77,11 +77,15 @@ h1, h2, h3, h4, h5, h6, a, p{
 }
 
 #singularTitle {
-  height: 10vh;
+  height: 12vh;
   text-align: center;
-  font-size: 50px;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, .4);
   margin-bottom: 5px;
+}
+
+#actualTitle {
+  font-size: 50px;
+
 }
 
 #singularGraphSection {
@@ -91,7 +95,7 @@ h1, h2, h3, h4, h5, h6, a, p{
 }
 
 #singularTableData {
-  height: 47vh;
+  height: 45vh;
   margin-top: 5px;
   padding: 5px;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, .4);
@@ -159,4 +163,12 @@ tr:nth-child(even) {
 
 #briefsRoot {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+}
+
+#stateSelectorID {
+  padding: 0px;
+}
+
+#prompt {
+  text-align: right;
 }
