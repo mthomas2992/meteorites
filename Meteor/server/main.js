@@ -17,7 +17,7 @@ Meteor.startup(() => {
 
   // API config, default routes have domain/api/<route>
   var Api = new Restivus({
-    version:'v1',
+    version:'v2',
     useDefaultAuth: true,
     prettyJson: true
   });
