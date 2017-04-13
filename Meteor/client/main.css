@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6, a, p{
 }
 
 .layout {
-  
+
 }
 
 #homeInfo {
@@ -56,4 +56,23 @@ h1, h2, h3, h4, h5, h6, a, p{
 
 #mapRoot {
   background-color: red;
+}
+
+#singularTitle {
+  height: 10vh;
+  text-align: center;
+  border-style: dashed;
+  border-color: black;
+}
+
+#singularGraphSection {
+  border-style: dashed;
+  border-color: black;
+  height: 40vh;
+}
+
+#singularTableData {
+  height: 47vh;
+  border-style: dashed;
+  border-color: black;
 }
