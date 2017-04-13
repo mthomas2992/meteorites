@@ -1,17 +1,5 @@
+####This endpoint is designed to validate that our API is up and running
 
-This endpoint is designed to provide authentication that our API is up and running
-
-##Example request
-
-Type the following into a web browser, or click this link.
-
-<http://meteoristics.com/api/v2/isApiAlive>
-
-or in cURL
-
-```md
-curl -X GET http://meteoristics.com/api/v2/isApiAlive
-```
 
 ##Inputs
 
@@ -24,3 +12,41 @@ If the API is running, the following JSON will be returned
 {status:'Success',
  message:'Yes'}
 ```
+
+##Example requests
+
+####Web browser
+
+<http://meteoristics.com/api/v2/isApiAlive>
+
+####cURL
+
+```md
+curl -X GET http://meteoristics.com/api/v2/isApiAlive
+```
+
+####Python
+Make sure to import the Requests module in the following manner:
+
+```md
+import requests
+```
+Then you can make the request:
+```md
+data = requests.get('http://meteoristics.com/api/v2/isApiAlive')
+```
+
+####NodeJS
+```md
+request.get('http://meteoristics.com/api/v2/isApiAlive')
+```
+
+####PHP
+```md
+$request = curl_init("http://meteoristics.com/api/v2/isApiAlive");
+curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+$data = json_decode(curl_exec($request));
+curl_close($request);
+```
+
+
