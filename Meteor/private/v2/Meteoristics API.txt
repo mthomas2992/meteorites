@@ -12,6 +12,12 @@ For any questions relating to this api, contact <z5061594@student.unsw.edu.au>.
 |Released|13/04/2017|
 |Api endpoint |<http://meteoristics.com/api/v2/>|
 
+### Team Information
+Created by
+ + Matthew Thomas
+ + Mark Nerwich
+ + Ben Phipps
+ + Tomas Donovic
 
 ###Changelog
 **This is the second version of the Meteoristic API**
