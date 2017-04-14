@@ -26,9 +26,15 @@ class ApiExplorer extends React.Component {
       const value = target.value;
       const name = target.name;
 
+      // for more sanitisation, look into Caja sanitizer and Google Closure
+
       if (value.match(/script/gi)){
         return;
       }
+      value.replace(/&/g, '&amp').replace(/</g, '&lt').replace(/"/g, '&quot');
+      value.replace(/>/g, '&gt').replace(/'/g, '&apos');
+      console.log(value);
+
       this.setState({
         [name]: value
       });
