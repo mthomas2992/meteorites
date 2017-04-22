@@ -25,3 +25,7 @@ nimble:restivus
 kadira:flow-router
 twbs:bootstrap
 meteorhacks:inject-initial
+dispatch:mocha-browser
+practicalmeteor:chai
+gandev:server-eval
+practicalmeteor:mocha
