@@ -3,48 +3,48 @@ import { HTTP } from 'meteor/http';
 
 var should = require('chai').should(),
 expect = require('chai').expect,
-supertest = require('supertest'),
+supertest = require('supertest');
+var testfile = "tests/bbtest.json";
 
 api = supertest('http://localhost:3000');
  
 describe("Basic Tests", function(){
-	describe("Does it return a 200?", function(){
+	describe("Does isApiAlive return a 200?", function(){
 		it("Returns a 200", function(done){
 			api.get('/api/v2/isApiAlive')
 			.set('Accept', 'application/json')
 			.expect(200, done);
 		});
 	});
-
-	/*describe("Does JSON returned have keys and values ", function(done){
-		api.get('/api/v2/')
-		.set('Accept', 'application/json')
-		.expect(200)
-		.end(function(err, res){
-			expect(res.body).to.have.property("")
-		}
-	}*/
-});
-
-describe("Initial Output Tester", function() {
-	describe("Test Case 1", function() {
-		it("Returns expected output", function(){
-			var tests = Assets.getText("tests/t1.test");
-			var test1 = "http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw&category=Food&startDate=2015-09-09&endDate=2016-09-09";		
-			api.get('api/v2/RetailAndExports?statisticsArea=Retail&state=nsw&category=Food&startDate=2015-09-09&endDate=2016-09-09')
-			.expect(200)
-			.end(function(err, res){
-				expect(res.body).to.eql(tests);
-				expect(res.body).to.not.equal(null);
-				done();
-			});
+	describe("Does RetailAndExports return a 200?", function(){
+		it("Returns a 200", function(done){
+			api.get('/api/v2/isApiAlive')
+			.set('Accept', 'application/json')
+			.expect(200, done);
 		});
 	});
 });
 
+describe("Black Box Output Tester", function() {
+	var testData = {};
+	testData = JSON.parse(Assets.getText(testfile));
+	var testNo = 1;
+	for (var key in testData){
+		if (testData.hasOwnProperty(key)){
+			it(testNo + " Black Box test has passed", function(){
+				api.get(key)
+				.expect(200)
+				.set('Accept', 'application/json')
+				.end(function(err,res){
+					Meteor.bindEnvironment(function(error,result){
+						expect(res.body).to.eql(JSON.parse(Assets.getText(testData['tests/responses/'+key])));
+					});
+					expect(res.body).to.not.equal(null);
+				});
+			});
+		}
+	}
+});
 
-describe("test case 2", function(){
-	it("does the thing, surely", function(){
-		expect('1').to.equal('1');
-	});
-});	
+
+
