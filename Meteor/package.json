@@ -9,6 +9,7 @@
     "bcrypt": "^1.0.2",
     "chai": "^3.5.0",
     "chart.js": "^1.1.1",
+    "deep-diff": "^0.3.6",
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.18.1",
     "react": "^15.4.2",

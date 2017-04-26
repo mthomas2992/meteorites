@@ -1,16 +1,32 @@
 import {Meteor} from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 
+var diff = require('deep-diff').diff;
+var observableDiff = require('deep-diff').observableDiff;
 expect = require('chai').expect
 
 const rootUrl = "http://meteoristics.com/api/";
 
 
+function observer(lhs, rhs) {
+
+}
+
 //function that will compare alpha and beta, ignoring the keys and their children of the array keystoignore
 function JSONComparator(fileAlpha,fileBeta,keysToIgnore){
-  // console.log(fileAlpha);
-  // console.log(fileBeta);
-  expect(true).to.equal(true);
+  var diffRes = observableDiff(fileAlpha,fileBeta,function(expected){
+    if (expected.path==undefined){
+      expect(expected.rhs).to.equal(expected.lhs);
+    } else {
+      expect(expected.path.join(".")).to.equal(expected.lhs);
+    }
+  },function(path,key){
+    for (l=0;l<keysToIgnore.length;l++){
+      if (key == keysToIgnore[l]){
+        return true;
+      }
+    }
+  });
 }
 
 var testIndex = JSON.parse(Assets.getText("tests/index.json"));
@@ -27,7 +43,7 @@ for (i=0;i<testIndex.versions.length;i++){ //for each version
         var testFile = JSON.parse(Assets.getText("tests/"+curr.versionID+"/blackbox/"+currEndpointTesting.endpoint+"/"+currEndpointTesting.tests[k]+".json"));
         it (testFile.Name, function (){
             var test=HTTP.get(rootUrl+curr.versionID+testFile.Query);
-            JSONComparator(testFile.Expected,test);
+            JSONComparator(testFile.Expected,test,[]);
         })
       }
     })
