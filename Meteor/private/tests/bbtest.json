@@ -1,7 +1,0 @@
-{
-	"/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw&category=Food&startDate=2015-09-09&endDate=2016-09-09": "1-1.json",
-	"/api/v2/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw&category=Food&startDate=2015-09-09&endDate=2016-09-09": "1-2.json",
-	"/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,tas,wa,qld,nt&category=Food&startDate=2015-09-09&endDate=2016-09-09": "1-3.json",
-	"/api/v2/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw,tas,wa,qld,nt&category=Food&startDate=2015-09-09&endDate=2016-09-09" : "1-4.json"
-
-}

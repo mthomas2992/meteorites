@@ -27,5 +27,4 @@ twbs:bootstrap
 meteorhacks:inject-initial
 dispatch:mocha-browser
 practicalmeteor:chai
-gandev:server-eval
 practicalmeteor:mocha
