@@ -1,0 +1,1528 @@
+{
+  "Query":"/RetailAndExports?statisticsArea=Retail&state=nsw,tas,wa,qld,nt&category=ClothingFootwareAndPersonalAccessory,DepartmentStores,Householdgood,CafesResturantsAndTakeawayFood,Food&startDate=2015-09-09&endDate=2016-09-09
+",
+  "Name":"basicRetailtest",
+  "Description": "Simple one area test ",
+  "Expected":{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "Retail",
+      "state": "nsw,tas,wa,qld,nt",
+      "category": "ClothingFootwareAndPersonalAccessory,DepartmentStores,Householdgood,CafesResturantsAndTakeawayFood,Food",
+      "startDate": "2015-09-09",
+      "endDate": "2016-09-09"
+    },
+    "errors": [],
+    "warnings": [],
+    "executionTime": {
+      "start": "20 Apr 2017 14:40:45",
+      "end": "20 Apr 2017 14:40:45",
+      "elapsed": 0,
+      "highResTime": {
+        "highResStart": {
+          "seconds": 1092061,
+          "nanoseconds": 949975908
+        },
+        "highResEnd": {
+          "seconds": 1092062,
+          "nanoseconds": 293562491
+        },
+        "highResElapsed": {
+          "seconds": 0,
+          "nanoseconds": 343589892
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "RetailIndustry": "Food retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 2932.3
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 3166.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 3104
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 3630.1
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 3156.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 2930.6
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 3170.9
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 2984.4
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 3012.7
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 2914.5
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 2979.3
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 3050.9
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 3051.3
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 2043.8
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 2157.9
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 2107.9
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 2386.2
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 2139.9
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1966
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 2143.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 2024.9
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 2045.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 2010.8
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 2152.7
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 2160.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 2131.3
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 1124
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 1187.9
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 1167.5
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1346.9
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 1158.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1106
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 1189.1
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 1112.4
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 1114.7
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 1082.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 1135.5
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 1135.5
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 1130.1
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 194.7
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 208
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 205.8
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 238.4
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 218.8
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 205.1
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 219
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 202.2
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 202.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 193.5
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 202.8
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 200.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 202.2
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 122
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 124
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 116.4
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 121.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 112.4
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 107.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 117.6
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 115.6
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 120.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 124.6
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 135.6
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 131.5
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 126.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Household goods retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 1337.5
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 1444.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 1499.4
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1827.4
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 1388.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1266.1
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 1297.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 1290.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 1318
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 1388.3
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 1337.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 1339.7
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 1442.6
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 819.3
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 864.4
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 890.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1079
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 841
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 777.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 800.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 785.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 800.9
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 861.3
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 853.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 862.2
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 897.3
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 527
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 575.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 567.5
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 677.4
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 538.9
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 470.3
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 498
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 493
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 487.7
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 526.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 502.2
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 492.5
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 518.8
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 93.2
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 100
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 102.5
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 122.1
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 91.3
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 87.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 91.9
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 91.3
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 92.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 94.8
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 94.3
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 97
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 94.1
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 44.1
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 43.1
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 41.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 47.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 38.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 36.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 38.2
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 38.3
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 39.4
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 42.3
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 40.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 41
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 39.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Clothing, footwear and personal accessory retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 664
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 700.9
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 716.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1168.5
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 715.8
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 594.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 676.9
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 713.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 723.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 747.6
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 693.8
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 667.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 708.9
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 317
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 318.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 325.4
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 541.2
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 337.3
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 265.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 285.5
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 302.2
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 310.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 336.8
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 345.2
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 329.6
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 347.6
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 156.1
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 164.9
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 168.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 271.8
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 156.4
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 139.4
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 151.2
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 163.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 169.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 164.6
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 165.3
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 154
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 159.3
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 29.5
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 30.5
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 32
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 50.7
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 34.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 28.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 30.2
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 33.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 29.3
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 28.8
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 29.7
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 28.3
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 29.3
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 12.6
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 13.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 12.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 20.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 11.9
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 12.3
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 12.5
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 12.8
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 13.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 13.8
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 16.3
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 15.5
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 14.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Department stores",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 469
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 519.6
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 564.1
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 954.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 501.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 369
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 470.4
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 472.9
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 475.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 530.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 468.2
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 413.9
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 461.8
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 283.6
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 304.1
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 349.4
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 566.5
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 305.1
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 224.6
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 274.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 266.5
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 269.7
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 312.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 300.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 266.9
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 286.6
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 159
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 179.5
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 199.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 333.2
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 168.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 131.2
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 164.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 168.3
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 167.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 170.7
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 163.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 145
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 150.3
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": null
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": null
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Cafes, restaurants and takeaway food services",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 1173.8
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 1214.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 1191.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1344.6
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 1203.2
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1115.8
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 1160
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 1182.8
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 1155.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 1110.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 1207.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 1224
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 1261.4
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 724.5
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 729.5
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 711.2
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 786
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 715
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 640.6
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 713.1
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 702.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 704
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 700.3
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 753.7
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 752.3
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 756.1
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 436.2
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 439.7
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 428.5
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 437.4
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 403.8
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 382.7
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 422.1
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 426.8
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 422
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 410.6
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 436.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 447.2
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 448.5
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 44.4
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 48.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 47.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 56
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 52.8
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 49.1
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 51.6
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 51.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 50.8
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 46.1
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 52.2
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 51.5
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 51.9
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 42
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 41.1
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 39.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 38.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 35
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 34.7
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 36.6
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 38.7
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 39.2
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 39.7
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 42.5
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 45.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 41.4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+}

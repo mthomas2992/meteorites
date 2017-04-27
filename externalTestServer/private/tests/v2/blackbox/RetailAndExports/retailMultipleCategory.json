@@ -1,0 +1,387 @@
+{
+  "Query":"/RetailAndExports?statisticsArea=Retail&state=nsw&category=ClothingFootwareAndPersonalAccessory,DepartmentStores,Householdgood,CafesResturantsAndTakeawayFood,Food&startDate=2015-09-09&endDate=2016-09-09",
+  "Name":"basicRetailtest",
+  "Description": "Simple one area test ",
+  "Expected":{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "Retail",
+      "state": "nsw",
+      "category": "ClothingFootwareAndPersonalAccessory,DepartmentStores,Householdgood,CafesResturantsAndTakeawayFood,Food",
+      "startDate": "2015-09-09",
+      "endDate": "2016-09-09"
+    },
+    "errors": [],
+    "warnings": [],
+    "executionTime": {
+      "start": "20 Apr 2017 14:35:32",
+      "end": "20 Apr 2017 14:35:32",
+      "elapsed": 0,
+      "highResTime": {
+        "highResStart": {
+          "seconds": 1091748,
+          "nanoseconds": 689969397
+        },
+        "highResEnd": {
+          "seconds": 1091748,
+          "nanoseconds": 825797173
+        },
+        "highResElapsed": {
+          "seconds": 0,
+          "nanoseconds": 135830845
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "RetailIndustry": "Food retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 2932.3
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 3166.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 3104
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 3630.1
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 3156.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 2930.6
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 3170.9
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 2984.4
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 3012.7
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 2914.5
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 2979.3
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 3050.9
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 3051.3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Household goods retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 1337.5
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 1444.8
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 1499.4
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1827.4
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 1388.5
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1266.1
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 1297.7
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 1290.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 1318
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 1388.3
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 1337.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 1339.7
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 1442.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Clothing, footwear and personal accessory retailing",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 664
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 700.9
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 716.3
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1168.5
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 715.8
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 594.5
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 676.9
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 713.1
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 723.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 747.6
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 693.8
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 667.4
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 708.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Department stores",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 469
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 519.6
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 564.1
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 954.3
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 501.7
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 369
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 470.4
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 472.9
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 475.6
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 530.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 468.2
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 413.9
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 461.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "RetailIndustry": "Cafes, restaurants and takeaway food services",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Turnover": 1173.8
+            },
+            {
+              "Date": "2015-10-31",
+              "Turnover": 1214.2
+            },
+            {
+              "Date": "2015-11-30",
+              "Turnover": 1191.7
+            },
+            {
+              "Date": "2015-12-31",
+              "Turnover": 1344.6
+            },
+            {
+              "Date": "2016-01-31",
+              "Turnover": 1203.2
+            },
+            {
+              "Date": "2016-02-28",
+              "Turnover": 1115.8
+            },
+            {
+              "Date": "2016-03-31",
+              "Turnover": 1160
+            },
+            {
+              "Date": "2016-04-30",
+              "Turnover": 1182.8
+            },
+            {
+              "Date": "2016-05-31",
+              "Turnover": 1155.1
+            },
+            {
+              "Date": "2016-06-30",
+              "Turnover": 1110.2
+            },
+            {
+              "Date": "2016-07-31",
+              "Turnover": 1207.4
+            },
+            {
+              "Date": "2016-08-31",
+              "Turnover": 1224
+            },
+            {
+              "Date": "2016-09-30",
+              "Turnover": 1261.4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+}

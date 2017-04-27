@@ -33,6 +33,8 @@ Meteor.startup(() => {
     },
 
     'JSONComparator' : function (fileAlpha,fileBeta,keysToIgnore){
+      console.log(fileAlpha);
+      console.log(fileBeta);
       var returningString="";
       var diffRes = observableDiff(fileAlpha,fileBeta,function(expected){
         if (expected.path==undefined){

@@ -1,0 +1,139 @@
+{
+  "Query":"/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw&category=FoodAndLiveAnimals&startDate=2015-09-09&endDate=2016-09-09",
+  "Name":"Basic Retail test",
+  "Description": "Simple one area test ",
+  "Expected":{
+    "status": {
+      "requirements": [
+        {
+          "name": "statisticsArea",
+          "expected": {},
+          "possibles": "one or multiple of Retail,MerchandiseExports",
+          "required": true
+        },
+        {
+          "name": "state",
+          "expected": {},
+          "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+          "required": true
+        },
+        {
+          "name": "category",
+          "expected": {},
+          "possibles": "one or multiple of Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",
+          "required": true
+        },
+        {
+          "name": "startDate",
+          "expected": {},
+          "possibles": "date in format YYYY-MM-DD",
+          "required": true
+        },
+        {
+          "name": "endDate",
+          "expected": {},
+          "possibles": "date in format YYYY-MM-DD",
+          "required": true
+        }
+      ],
+      "passedParamaters": {
+        "statisticsArea": "MerchandiseExports",
+        "state": "nsw",
+        "category": "FoodAndLiveAnimals",
+        "startDate": "2015-09-09",
+        "endDate": "2016-09-09"
+      },
+      "errors": [],
+      "warnings": [],
+      "executionTime": {
+        "start": "20 Apr 2017 14:28:43",
+        "end": "20 Apr 2017 14:28:43",
+        "elapsed": 0,
+        "highResTime": {
+          "highResStart": {
+            "seconds": 1091339,
+            "nanoseconds": 439951413
+          },
+          "highResEnd": {
+            "seconds": 1091339,
+            "nanoseconds": 745732134
+          },
+          "highResElapsed": {
+            "seconds": 0,
+            "nanoseconds": 305783738
+          }
+        }
+      }
+    },
+    "data": [
+      {
+        "Commodity": "Food and live animals",
+        "RegionalData": [
+          {
+            "State": "New South Wales",
+            "Data": [
+              {
+                "Date": "2015-09-30",
+                "Value": 371725.12
+              },
+              {
+                "Date": "2015-10-31",
+                "Value": 422811.495
+              },
+              {
+                "Date": "2015-11-30",
+                "Value": 456990.279
+              },
+              {
+                "Date": "2015-12-31",
+                "Value": 505930.27
+              },
+              {
+                "Date": "2016-01-31",
+                "Value": 342613.592
+              },
+              {
+                "Date": "2016-02-28",
+                "Value": 407546.616
+              },
+              {
+                "Date": "2016-03-31",
+                "Value": 444977.232
+              },
+              {
+                "Date": "2016-04-30",
+                "Value": 418721.98
+              },
+              {
+                "Date": "2016-05-31",
+                "Value": 454004.862
+              },
+              {
+                "Date": "2016-06-30",
+                "Value": 389439.595
+              },
+              {
+                "Date": "2016-07-31",
+                "Value": 450353.044
+              },
+              {
+                "Date": "2016-08-31",
+                "Value": 437378.152
+              },
+              {
+                "Date": "2016-09-30",
+                "Value": 407363.658
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "info": {
+      "devTeam": "Meteorites",
+      "version": "v1",
+      "module": "Meteoristics API",
+      "wesbite": "http://meteoristics.com"
+    }
+  }
+}

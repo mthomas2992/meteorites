@@ -2,8 +2,8 @@
 	"versions":[
 		{
 			"versionID":"v2",
-			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["generalTest"]}],
-			"whiteBoxTests":[{"type":"typeoffunctioncollection","tests":["generalTest"]}]
+			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["basicRetailTest","basicMerchTest","retailMultipleStates","merchMultipleStates","retailMultipleCategory","merchMultipleCategories","retailMultipleStatesCat","merchMultipleStatesCat"]}],
+			"whiteBoxTests":["generalTest"]
 		}
 	]
 }

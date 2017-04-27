@@ -1,0 +1,449 @@
+{
+  "Query":"/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw&category=FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts&startDate=2015-09-09&endDate=2016-09-09",
+  "Name":"basicRetailtest",
+  "Description": "Simple one area test ",
+  "Expected":{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "MerchandiseExports",
+      "state": "nsw",
+      "category": "FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts",
+      "startDate": "2015-09-09",
+      "endDate": "2016-09-09"
+    },
+    "errors": [],
+    "warnings": [],
+    "executionTime": {
+      "start": "20 Apr 2017 14:39:25",
+      "end": "20 Apr 2017 14:39:25",
+      "elapsed": 0,
+      "highResTime": {
+        "highResStart": {
+          "seconds": 1091981,
+          "nanoseconds": 750272297
+        },
+        "highResEnd": {
+          "seconds": 1091981,
+          "nanoseconds": 925097178
+        },
+        "highResElapsed": {
+          "seconds": 0,
+          "nanoseconds": 174828126
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "Commodity": "Beverages and tobacco",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 48504.437
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 51006.828
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 42881.737
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 53189.35
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 40137.595
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 39230.083
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 33950.457
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 51693.432
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 37232.16
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 42238.966
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 46549.48
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 43333.25
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 52313.708
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Commodity": "Mineral fuels, lubricants and related materials",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 1072252.888
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 1150064.816
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 1016945.005
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 1086388.877
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 946806.632
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 981443.682
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 981417.76
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 916085.772
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 984527.167
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 1017122.621
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 1072200.904
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 1005567.112
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 1218102.784
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Commodity": "Food and live animals",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 371725.12
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 422811.495
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 456990.279
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 505930.27
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 342613.592
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 407546.616
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 444977.232
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 418721.98
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 454004.862
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 389439.595
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 450353.044
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 437378.152
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 407363.658
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Commodity": "Crude materials, inedible, except fuels",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 415894.405
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 323126.54
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 343127.911
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 489524.324
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 266098.519
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 405620.417
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 324292.626
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 343602.808
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 401183.81
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 441271.092
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 427548.76
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 456312.435
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 441573.536
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Commodity": "Chemicals and related products, nes",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 211678.088
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 198592.182
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 187598.487
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 205085.966
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 193526.847
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 193052.407
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 205738.742
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 166347.585
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 214260.682
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 215253.825
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 225707.485
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 234657.8
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 217948.357
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Commodity": "Animal and vegetable oils, fats and waxes",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 8716.768
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 2396.775
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 1893.167
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 1354.689
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 7204.318
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 3834.584
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 3440.287
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 3458.14
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 2407.894
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 1676.716
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 2514.274
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 5159.437
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 2114.341
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+}
