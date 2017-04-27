@@ -1,0 +1,369 @@
+{
+  "Query":"/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw,tas,wa,qld,nt&category=FoodAndLiveAnimals&startDate=2015-09-09&endDate=2016-09-09",
+  "Name":"Multistate Merch",
+  "Description": "Checks with multi state merchandise for a year",
+  "Expected": "
+{
+  "status": {
+    "requirements": [
+      {
+        "name": "statisticsArea",
+        "expected": {},
+        "possibles": "one or multiple of Retail,MerchandiseExports",
+        "required": true
+      },
+      {
+        "name": "state",
+        "expected": {},
+        "possibles": "one or multiple of AUS,NSW,WA,SA,ACT,VIC,TAS,QLD,NT",
+        "required": true
+      },
+      {
+        "name": "category",
+        "expected": {},
+        "possibles": "one or multiple of Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",
+        "required": true
+      },
+      {
+        "name": "startDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      },
+      {
+        "name": "endDate",
+        "expected": {},
+        "possibles": "date in format YYYY-MM-DD",
+        "required": true
+      }
+    ],
+    "passedParamaters": {
+      "statisticsArea": "MerchandiseExports",
+      "state": "nsw,tas,wa,qld,nt",
+      "category": "FoodAndLiveAnimals",
+      "startDate": "2015-09-09",
+      "endDate": "2016-09-09"
+    },
+    "errors": [],
+    "warnings": [],
+    "executionTime": {
+      "start": "20 Apr 2017 14:34:51",
+      "end": "20 Apr 2017 14:34:51",
+      "elapsed": 0,
+      "highResTime": {
+        "highResStart": {
+          "seconds": 1091707,
+          "nanoseconds": 491621368
+        },
+        "highResEnd": {
+          "seconds": 1091707,
+          "nanoseconds": 687907580
+        },
+        "highResElapsed": {
+          "seconds": 0,
+          "nanoseconds": 196289446
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "Commodity": "Food and live animals",
+      "RegionalData": [
+        {
+          "State": "New South Wales",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 371725.12
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 422811.495
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 456990.279
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 505930.27
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 342613.592
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 407546.616
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 444977.232
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 418721.98
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 454004.862
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 389439.595
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 450353.044
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 437378.152
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 407363.658
+            }
+          ]
+        },
+        {
+          "State": "Queensland",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 700860.309
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 675640.061
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 919823.737
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 705317.674
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 349835.005
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 508339.289
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 589570.699
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 560734.675
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 668269.418
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 634304.621
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 635892.108
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 603799
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 609084.743
+            }
+          ]
+        },
+        {
+          "State": "Tasmania",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 51762.377
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 51077.523
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 58702.496
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 74617.541
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 104895.492
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 58658.063
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 55838.324
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 57456.643
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 54203.841
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 48200.101
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 38008.927
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 35717.957
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 40821.32
+            }
+          ]
+        },
+        {
+          "State": "Western Australia",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 424804.084
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 340286.549
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 338281.03
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 497865.777
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 568729.324
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 391207.972
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 469885.271
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 433660.068
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 449140.669
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 352870.839
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 327512.345
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 430939.794
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 353741.753
+            }
+          ]
+        },
+        {
+          "State": "Northern Territory",
+          "Data": [
+            {
+              "Date": "2015-09-30",
+              "Value": 39921.56
+            },
+            {
+              "Date": "2015-10-31",
+              "Value": 6959.975
+            },
+            {
+              "Date": "2015-11-30",
+              "Value": 49536.658
+            },
+            {
+              "Date": "2015-12-31",
+              "Value": 56998.348
+            },
+            {
+              "Date": "2016-01-31",
+              "Value": 38456.495
+            },
+            {
+              "Date": "2016-02-28",
+              "Value": 40925.266
+            },
+            {
+              "Date": "2016-03-31",
+              "Value": 52331.286
+            },
+            {
+              "Date": "2016-04-30",
+              "Value": 31613.656
+            },
+            {
+              "Date": "2016-05-31",
+              "Value": 64136.979
+            },
+            {
+              "Date": "2016-06-30",
+              "Value": 58025.805
+            },
+            {
+              "Date": "2016-07-31",
+              "Value": 52359.399
+            },
+            {
+              "Date": "2016-08-31",
+              "Value": 43335.642
+            },
+            {
+              "Date": "2016-09-30",
+              "Value": 23723.245
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": {
+    "devTeam": "Meteorites",
+    "version": "v1",
+    "module": "Meteoristics API",
+    "wesbite": "http://meteoristics.com"
+  }
+}
+"
+  }
