@@ -1,0 +1,15 @@
+{
+  "name": "externalTestServer",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "deep-diff": "^0.3.6",
+    "meteor-node-stubs": "~0.2.4",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-json-tree": "^0.10.9"
+  }
+}
