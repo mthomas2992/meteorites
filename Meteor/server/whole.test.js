@@ -7,11 +7,6 @@ expect = require('chai').expect
 
 const rootUrl = "http://meteoristics.com/api/";
 
-
-function observer(lhs, rhs) {
-
-}
-
 //function that will compare alpha and beta, ignoring the keys and their children of the array keystoignore
 function JSONComparator(fileAlpha,fileBeta,keysToIgnore){
   var diffRes = observableDiff(fileAlpha,fileBeta,function(expected){
@@ -40,10 +35,12 @@ for (i=0;i<testIndex.versions.length;i++){ //for each version
     var currEndpointTesting = curr.blackBoxTests[j];
     describe("Endpoint "+currEndpointTesting.endpoint, function(){
       for (k=0;k<currEndpointTesting.tests.length;k++){ //for each of the endpoints tests
+        console.log(currEndpointTesting.tests[k]);
         var testFile = JSON.parse(Assets.getText("tests/"+curr.versionID+"/blackbox/"+currEndpointTesting.endpoint+"/"+currEndpointTesting.tests[k]+".json"));
+        //console.log(testFile);
         it (testFile.Name, function (){
             var test=HTTP.get(rootUrl+curr.versionID+testFile.Query);
-            JSONComparator(testFile.Expected,test,[]);
+            JSONComparator(testFile.Expected,test,["status"]);
         })
       }
     })

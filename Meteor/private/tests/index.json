@@ -1,14 +1,9 @@
 {
 	"versions":[
 		{
-			"versionID":"v1",
-			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["generalTest"]}],
-			"whiteBoxTests":[{"type":"typeoffunctioncollection","tests":["generalTest"]}]
-		},
-		{
 			"versionID":"v2",
-			"blackBoxTests":[],
-			"whiteBoxTests":[]
+			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["basicRetailTest","basicMerchTest","retailMultipleStates","merchMultipleStates","retailMultipleCategory","merchMultipleCategories","retailMultipleStatesCat","merchMultipleStatesCat"]}],
+			"whiteBoxTests":["generalTest"]
 		}
 	]
 }

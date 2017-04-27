@@ -168,7 +168,9 @@ Meteor.startup(() => {
       var possibleState = ["AUS","NSW","WA","SA","ACT","VIC","TAS","QLD","NT"];
       // var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
       // var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"]
-
+      if(!this.queryParams.statisticsArea){
+        return {statusCode:400, body:{status:"Error in statistics Area"}}
+      }
       if (this.queryParams.statisticsArea.match(/retail/gi)){
         var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true},
                             {name:"state", expected: new RegExp(createListRequirementRegex(possibleState),'gi'),possibles:"one or multiple of "+possibleState.toString(),required:true},
@@ -196,6 +198,10 @@ Meteor.startup(() => {
         var category = this.queryParams.category;
         var startDate = this.queryParams.startDate;
         var endDate = this.queryParams.endDate;
+        console.log(state);
+        console.log(category);
+        console.log(startDate);
+        console.log(endDate);
         if (this.queryParams.statisticsArea.match(/retail/gi)){
           var data = Meteor.call('getRetailTurnover',state,category,startDate,endDate);
         } else {
@@ -330,7 +336,7 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-
+      console.log(absQuery);
       var result = HTTP.get(absQuery);
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Retail");

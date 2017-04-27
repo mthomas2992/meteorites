@@ -1,6 +1,6 @@
 {
-  "Query":"/RetailAndExports?statisticsArea=MerchandiseExports&state=nsw&category=FoodAndLiveAnimals&startDate=2015-09-09&endDate=2016-09-09",
-  "Name":"Basic Merch test",
+  "Query":"/RetailAndExports?statisticsArea=Retail&state=nsw&category=Food&startDate=2015-09-09&endDate=2016-09-09",
+  "Name":"basicRetailtest",
   "Description": "Simple one area test ",
   "Expected":{
     "status": {
@@ -20,7 +20,7 @@
         {
           "name": "category",
           "expected": {},
-          "possibles": "one or multiple of Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",
+          "possibles": "one or multiple of Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",
           "required": true
         },
         {
@@ -37,92 +37,92 @@
         }
       ],
       "passedParamaters": {
-        "statisticsArea": "MerchandiseExports",
+        "statisticsArea": "Retail",
         "state": "nsw",
-        "category": "FoodAndLiveAnimals",
+        "category": "Food",
         "startDate": "2015-09-09",
         "endDate": "2016-09-09"
       },
       "errors": [],
       "warnings": [],
       "executionTime": {
-        "start": "20 Apr 2017 14:28:43",
-        "end": "20 Apr 2017 14:28:43",
+        "start": "20 Apr 2017 14:24:57",
+        "end": "20 Apr 2017 14:24:57",
         "elapsed": 0,
         "highResTime": {
           "highResStart": {
-            "seconds": 1091339,
-            "nanoseconds": 439951413
+            "seconds": 1091113,
+            "nanoseconds": 311251894
           },
           "highResEnd": {
-            "seconds": 1091339,
-            "nanoseconds": 745732134
+            "seconds": 1091113,
+            "nanoseconds": 551773650
           },
           "highResElapsed": {
             "seconds": 0,
-            "nanoseconds": 305783738
+            "nanoseconds": 240524803
           }
         }
       }
     },
     "data": [
       {
-        "Commodity": "Food and live animals",
+        "RetailIndustry": "Food retailing",
         "RegionalData": [
           {
             "State": "New South Wales",
             "Data": [
               {
                 "Date": "2015-09-30",
-                "Value": 371725.12
+                "Turnover": 2932.3
               },
               {
                 "Date": "2015-10-31",
-                "Value": 422811.495
+                "Turnover": 3166.8
               },
               {
                 "Date": "2015-11-30",
-                "Value": 456990.279
+                "Turnover": 3104
               },
               {
                 "Date": "2015-12-31",
-                "Value": 505930.27
+                "Turnover": 3630.1
               },
               {
                 "Date": "2016-01-31",
-                "Value": 342613.592
+                "Turnover": 3156.7
               },
               {
                 "Date": "2016-02-28",
-                "Value": 407546.616
+                "Turnover": 2930.6
               },
               {
                 "Date": "2016-03-31",
-                "Value": 444977.232
+                "Turnover": 3170.9
               },
               {
                 "Date": "2016-04-30",
-                "Value": 418721.98
+                "Turnover": 2984.4
               },
               {
                 "Date": "2016-05-31",
-                "Value": 454004.862
+                "Turnover": 3012.7
               },
               {
                 "Date": "2016-06-30",
-                "Value": 389439.595
+                "Turnover": 2914.5
               },
               {
                 "Date": "2016-07-31",
-                "Value": 450353.044
+                "Turnover": 2979.3
               },
               {
                 "Date": "2016-08-31",
-                "Value": 437378.152
+                "Turnover": 3050.9
               },
               {
                 "Date": "2016-09-30",
-                "Value": 407363.658
+                "Turnover": 3051.3
               }
             ]
           }
