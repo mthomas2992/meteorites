@@ -1,0 +1,14 @@
+{
+	"versions":[
+		{
+			"versionID":"v1",
+			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["generalTest"]}],
+			"whiteBoxTests":[{"type":"typeoffunctioncollection","tests":["generalTest"]}]
+		},
+		{
+			"versionID":"v2",
+			"blackBoxTests":[],
+			"whiteBoxTests":[]
+		}
+	]
+}
