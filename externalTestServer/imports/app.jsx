@@ -17,7 +17,10 @@ class App extends React.Component {
     };
 
     componentWillMount(){
-
+      var self=this;
+      Meteor.call('runMeteoristicsTests',function(err,res){
+        self.setState({meteoristicsData:res});
+      })
     }
 
 
