@@ -7,6 +7,9 @@ var LineChart = require("react-chartjs").Line;
 var PieChart = require("react-chartjs").Pie;
 
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment';
+import Impact from '/imports/app/impact.jsx';
 
 var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"Turnover"},MerchandiseExports:{topLevelCategory:"Commodity",dataValue:"Value"}};
 
@@ -18,6 +21,11 @@ class Briefs extends React.Component {
     constructor(props){
       super(props);
       this.state = {
+        timePeriodStart : "2015-09-09",
+        timePeriodEnd : "2016-09-09",
+        industry:"RetailTurnover",
+        momentStart:null,
+        momentEnd:null,
         currState:"AUS",
         currentIndustry: this.props.status.industry,
         currentTimePeriodStart: this.props.status.timePeriodStart,
@@ -35,24 +43,78 @@ class Briefs extends React.Component {
       this.formatResponse = this.formatResponse.bind(this);
     };
 
-    componentWillReceiveProps(nextProps){
-      this.loadData(nextProps,this.state.currState);
+
+    handleStartDateChange(date){
+      this.setState({momentStart:date})
+      this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
+    }
+
+    handleEndDateChange(date){
+      this.setState({momentEnd:date})
+      this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
+    }
+
+    selectIndustryChange(option){
+      this.setState({industry:option.value});
+      console.log("PRE LOAD INDUSTRY CHANGED to "+option.value);
+      this.loadData(this.props,this.state.currState);
+      console.log("INDUSTRY CHANGED to "+option.value);
+      console.log("CURRENT INDUSTRY is "+this.state.industry);
     }
 
     componentWillMount(){
+      var startDateSplit = this.state.timePeriodStart.split('-');
+      var endDateSplit = this.state.timePeriodEnd.split('-');
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
+      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
       this.loadData(this.props,this.state.currState);
     };
+
+    addPanel(){
+      var currPanel = this.state.panelCount;
+      if (currPanel<4){
+        this.setState({panelCount:currPanel+1});
+      }
+    }
+
+    removePanel(){
+      var currPanel = this.state.panelCount;
+      if (currPanel>1){
+        this.setState({panelCount:currPanel-1});
+      }
+    }
+
+    onBreakpointChange(breakpoint){
+      // console.log(breakpoint)
+    }
+
+    layoutChange(layout){
+      for (kl=0;kl<layout.length;kl++){
+        layout[kl].w=6;
+        // if (kl%2 != 0 && kl!=0) layout[kl].x=6;
+      }
+    }
+
+
+    // componentWillReceiveProps(nextProps){
+    //   this.loadData(nextProps,this.state.currState);
+    // }
+
+    // componentWillMount(){
+    //     this.loadData(this.props,this.state.currState);
+    // };
 
     selectChange(option){
       this.setState({currState:option.value});
       this.loadData(this.props,option.value);
     }
 
-    loadData(newProps,newState){
+    loadData(newProps,newState){ //get rid of new props once state is fixed then replace newprops with stat.whatever
 
       this.setState({loading:true});
 
-      this.setState({currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
+      //this.setState({currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
 
       var newCurrStateData = {};
       var newCurrData={};
@@ -64,12 +126,12 @@ class Briefs extends React.Component {
       var functionCall = "getRetailTurnover";
       var categories = "Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other";
 
-      if (newProps.status.industry == "MerchandiseExports"){
+      if (this.state.industry == "MerchandiseExports"){
         functionCall = "getMerchandiseExports";
         categories = "Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified";
       }
-
-      Meteor.call(functionCall,newState,categories,newProps.status.timePeriodStart,newProps.status.timePeriodEnd, function(err,res){
+      console.log(functionCall);
+      Meteor.call(functionCall,newState,categories,this.state.currentTimePeriodStart,this.state.currentTimePeriodEnd, function(err,res){
         newCurrData[newState] = res; //need to change this TODO
         self.setState({currentData:newCurrData});
         //call interpolation for tables ands stuff
@@ -148,7 +210,49 @@ class Briefs extends React.Component {
             datasets:this.state.lineGraphData[this.state.currState]
           }
 
-          return(<div className= "col-md-12">
+
+
+
+          return(
+            <div>
+            <div id="homeTopBar" className="row">
+                    <div id="frontHeader" className="col-md-4">
+                      Meteoristics
+                    </div>
+                    <div id = "prompt" className= "col-md-1"> Select industry </div>
+                    <div id = "stateSelectorID" className = "col-md-1">
+                      <Select
+                      name= "industry-selector"
+                      value= {this.state.industry}
+                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
+                      clearable = {false}
+                      onChange = {this.selectIndustryChange.bind(this)}
+                      />
+                    </div>
+                    <div className="col-md-2">
+                      Start Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentStart}
+                        onChange = {this.handleStartDateChange}
+                        />
+                    </div>
+                    <div className="col-md-2">
+                      End Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentEnd}
+                        onChange = {this.handleEndDateChange}
+                        />
+                    </div>
+                    <div onClick={()=>{this.addPanel()}} id="addSection" className="col-md-1">
+                      Add Panel
+                    </div>
+                    <div onClick={()=>{this.removePanel()}}id="removeSection" className="col-md-1">
+                      Remove Panel
+                    </div>
+                  </div>
+            <div className= "col-md-12">
                   <div id = "singularTitle" className="row">
                     <div id = "actualTitle">{this.state.currentIndustry} Data for {this.state.currState}</div>
                     <div id = "prompt" className= "col-md-1"> Select state : </div>
@@ -177,6 +281,7 @@ class Briefs extends React.Component {
                     {this.state.tableData[this.state.currState]}
                   </div>
 
+                </div>
                 </div>);
         } else {
           return (<div> Error </div>);
