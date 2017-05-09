@@ -13,7 +13,8 @@ require ('/node_modules/react-resizable/css/styles.css');
 
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
-import Moment from 'moment'
+import Moment from 'moment';
+import Impact from '/imports/app/impact.jsx';
 
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -165,6 +166,15 @@ class App extends React.Component {
                   </div>
 
                 </div>);
+      } else if (this.props.path == "impact") {
+        return (<div className="container-fluid">
+                  <div id="homeTopBar" className="row">
+                      <div id="frontHeader" className="col-md-4">
+                        Meteoristics
+                      </div>
+                  </div>
+                  <Impact startDate={this.state.startDate} endDate = {this.state.endDate}/>
+                </div>)
       } else {
         return (<div><a href="http://meteoristics.com/api/documentation?ver=v1"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
       }

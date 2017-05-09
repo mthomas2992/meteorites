@@ -263,7 +263,6 @@ Meteor.startup(() => {
 
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
-      //console.log(stateString);
       var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
       var stateArray = stateString.split(",");
       var i;
@@ -336,10 +335,14 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-      console.log(absQuery);
-      var result = HTTP.get(absQuery);
+      try {
+        var result = HTTP.get(absQuery);
+        return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
+      } catch(err) {
+        var result = {"ABS Error":err};
+        return result;
+      }
 
-      return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
     },
 
     'getMerchandiseExports' : function(stateString, commodityString, startDate, endDate){
@@ -426,7 +429,13 @@ Meteor.startup(() => {
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
 
-      var result = HTTP.get(absQuery);
+      try {
+        var result = HTTP.get(absQuery);
+        return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
+      } catch(err) {
+        var result = {"ABS Error":err};
+        return result;
+      }
 
       return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
     },
