@@ -431,7 +431,9 @@ Meteor.startup(() => {
 
       try {
         var result = HTTP.get(absQuery);
-        return formatRetailTradeOutput(JSON.parse(result.content),"Retail");
+        //console.log(absQuery);
+        //console.log(result);
+        return formatRetailTradeOutput(JSON.parse(result.content),"Merch");
       } catch(err) {
         var result = {"ABS Error":err};
         return result;
@@ -454,6 +456,10 @@ Meteor.startup(() => {
       }
       return results;
     },
+
+    // getNewsData(startDate,EndDate, topicCodes){
+    //   var queryString;
+    // }
 
     'makeHttpRequest' :function(queryString){
       var result = HTTP.get(queryString);
