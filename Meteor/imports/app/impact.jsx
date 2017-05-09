@@ -112,7 +112,7 @@ class Impact extends React.Component {
           dataSet.data.push(currMonthData[j][transforms[industry].dataValue].toFixed(2));
           total = total +currMonthData[j][transforms[industry].dataValue];
           if (i==0){
-            labelArray.push(currMonthData[j].Date.slice(0,-3));
+            labelArray.push(currMonthData[j].Date.slice(5,-3));
           }
         }
         pieDataSet.value =total.toFixed(2);
@@ -210,7 +210,12 @@ class Impact extends React.Component {
                       }
                       specificGraphs.push(<div className = "col-md-6" id = "briefsRoot" key={"spec"+i}>
                                             <div className = "row">
-                                              <LineChart data={lineData} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                                              <div className = "col-md-12" id="specificHeading">
+                                                  {value3.label}
+                                              </div>
+                                              <div className = "col-md-12" id = "chart">
+                                                <LineChart data={lineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*40}/>
+                                              </div>
                                             </div>
                                           </div>);
                       i++;
