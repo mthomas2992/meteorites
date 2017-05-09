@@ -104,9 +104,9 @@ class App extends React.Component {
         string = "briefs"+i;
         panels.push(<div id = "briefsRoot" key={string}> <Briefs status = {this.state}/></div>);
       }
-      console.log(panels);
+      // console.log(panels);
       var layouts = {lg:this.state.layout,md:this.state.layout};
-      console.log(layouts);
+      // console.log(layouts);
 
       if (this.props.path == "Home"){
         return (<div id="home" className="container-fluid">
@@ -173,7 +173,7 @@ class App extends React.Component {
                         Meteoristics
                       </div>
                   </div>
-                  <Impact startDate={this.state.startDate} endDate = {this.state.endDate}/>
+                  <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate}/>
                 </div>)
       } else {
         return (<div><a href="http://meteoristics.com/api/documentation?ver=v1"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);

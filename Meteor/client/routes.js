@@ -10,6 +10,12 @@ FlowRouter.route('/', {
   }
 });
 
+FlowRouter.route('/impact', {
+  action(params, queryParams) {
+    ReactDOM.render(<App path="impact" queryParams={queryParams}/>, document.getElementById('app'));
+  }
+});
+
 //Api documentation routes are defined for a different app
 FlowRouter.route('/api/documentation', {
   action(params,queryParams) {

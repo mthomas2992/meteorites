@@ -84,6 +84,7 @@ class Briefs extends React.Component {
     }
 
     formatResponse(data) {
+      console.log(data);
       var lineArray = new Array();
       var labelArray = new Array();
       var pieArray = new Array();

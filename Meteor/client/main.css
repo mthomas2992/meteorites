@@ -130,40 +130,14 @@ tr:nth-child(even) {
     background-color: #DDDDDD;
 }
 
-#WA {
-  position: relative;
-  left: -15.2vw;
-  top:50vh;
-}
-
-#NT {
-  position: relative;
-  left: -5vw;
-  top:0vh;
-}
-
-#QA {
-  position: relative;
-  left: 5vw;
-  top:-22vh;
-}
-
-#SA {
-  position: relative;
-  left: -4vw;
-  top:-26vh;
-}
-
-#NSW {
-  position: relative;
-  left: 6vw;
-  top:-49vh;
-}
-
-#VIC {
-  position: relative;
-  left: 6vw;
-  top:-54.5vh;
+#percentageDisp {
+  border-color: black;
+  border-style: dashed;
+  height: 28vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #Menu {
