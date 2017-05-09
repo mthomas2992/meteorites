@@ -19,6 +19,8 @@ import Impact from '/imports/app/impact.jsx';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+import MainHome from '/imports/app/mainHome.jsx';
+
 class App extends React.Component {
 
     constructor(props){
@@ -108,7 +110,7 @@ class App extends React.Component {
       var layouts = {lg:this.state.layout,md:this.state.layout};
       // console.log(layouts);
 
-      if (this.props.path == "Home"){
+      if (this.props.path == "Explorer"){
         return (<div id="home" className="container-fluid">
                   <div id="homeTopBar" className="row">
                     <div id="frontHeader" className="col-md-4">
@@ -173,7 +175,22 @@ class App extends React.Component {
                         Meteoristics
                       </div>
                   </div>
+                  <div id="Menu" className="row">
+                    <a href="http://meteoristics.com/api/documentation">API</a>
+                  </div>
                   <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate}/>
+                </div>)
+      } else if (this.props.path =="Home"){
+        return(<div className="container-fluid">
+                  <div id="homeTopBar" className="row">
+                      <div id="frontHeader" className="col-md-4">
+                        Meteoristics
+                      </div>
+                  </div>
+                  <div id="Menu" className="row">
+                    <a href="http://meteoristics.com/api/documentation">API</a>
+                  </div>
+                  <MainHome/>
                 </div>)
       } else {
         return (<div><a href="http://meteoristics.com/api/documentation?ver=v1"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);

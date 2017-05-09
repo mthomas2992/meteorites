@@ -256,18 +256,23 @@ class Impact extends React.Component {
                           </div>
                         </div>;
         return (<div className = "row">
-                  <ResponsiveReactGridLayout
-                    className="layout"
-                    layouts={layouts}
-                    rowHeight={window.innerHeight-((window.innerHeight/100)*3)}
-                    breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                    cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
-                    measureBeforeMount={false}
-                    onBreakpointChange={this.onBreakpointChange}
-                    onLayoutChange={this.layoutChange}>
-                    {mainBrief}
-                    {specificGraphs}
-                  </ResponsiveReactGridLayout>
+                  <div id = "mainImpactTitle" className = "col-md-12">
+                    {this.props.title}
+                  </div>
+                  <div className = "col-md-12">
+                    <ResponsiveReactGridLayout
+                      className="layout"
+                      layouts={layouts}
+                      rowHeight={window.innerHeight-((window.innerHeight/100)*3)}
+                      breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                      cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
+                      measureBeforeMount={false}
+                      onBreakpointChange={this.onBreakpointChange}
+                      onLayoutChange={this.layoutChange}>
+                      {mainBrief}
+                      {specificGraphs}
+                    </ResponsiveReactGridLayout>
+                  </div>
                 </div>)
       } else {
         return (<div>Loading..</div>)
