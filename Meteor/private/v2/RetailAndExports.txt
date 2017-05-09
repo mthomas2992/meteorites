@@ -1,26 +1,94 @@
 
 ####This endpoint is deigned to get data relating to merchandise exports (in thousands of dollars) and retail turnover (in millions of dollars)
 
-##Input
+##Type of requests
 
-####Type of requests
+####GET is currently the only type of request supported by this endpoint
 
-GET is currently the only type of request supported by this endpoint
+##Parameters
 
-####Data
-The following variables are accepted/required by this endpoint to return the relevant data
+###Statistics Area - Retail
+| Variable Name| Variable type| Variable format/description |Required?|
+|:-------------|:----------|:----------|--------:|
+|**statisticsArea**|  string| "Retail" | Yes |
+|**state**| string|List of regions, separated by a comma (no space): AUS, NSW, WA, SA, ACT, VIC, TAS, QLD, NT | Yes (atleast one)|
+|**category**|string|List of industries, separated by a comma (no space): Total, Food, Householdgood, ClothingFootwareAndPersonalAccessory, DepartmentStores, CafesResturantsAndTakeawayFood, Other |Yes (atleast one)|
+|**startDate**| string| Date in the format YYYY-MM-DD, must be a date before the endDate variable | Yes |
+|**endDate**| string |Date in the format YYYY-MM-DD, must be a date after the startDate variable | Yes |
 
-| Variable Name| Variable format/type |Required?| Example |
-|:-------------|:--------------------|--------:|--------:|
-|statisticsArea|    Either of the **strings**: "Retail" or "MerchandiseExports" | Yes | Retail |
-|state| List of regions in a **string**, separated by a comma (no space): AUS, NSW, WA, SA, ACT, VIC, TAS, QLD, NT | Yes (atleast one)|NSW,WA|
-|category|List of industries in a **string**, separated by a comma (no space): Total, Food, Householdgood, ClothingFootwareAndPersonalAccessory, DepartmentStores, CafesResturantsAndTakeawayFood, Other |Yes (atleast one)| Total,Food|
-|startDate| **string** date in the format YYYY-MM-DD, must be a date before the endDate variable | Yes | 2016-05-01 |
-|endDate| **string** date in the format YYYY-MM-DD, must be a date after the startDate variable | Yes | 2016-06-01 |
+
+###Statistics Area - Merchandise Exports
+
+| Variable Name| Variable type| Variable format/description |Required?|
+|:-------------|:----------|:----------|--------:|
+|**statisticsArea**|  string| "MerchandiseExports" | Yes |
+|**state**| string|List of regions, separated by a comma (no space): AUS, NSW, WA, SA, ACT, VIC, TAS, QLD, NT | Yes (atleast one)|
+|**category**|string|List of industries, separated by a comma (no space): Total, FoodAndLiveAnimals, BeveragesAndTobacco, CrudMaterialAndInedible, MineralFuelLubricentAndRelatedMaterial, AnimalAndVegitableOilFatAndWaxes, ChemicalsAndRelatedProducts, ManufacutedGoods, MachineryAndTransportEquipments, OtherManucacturedArticles, Unclassified |Yes (atleast one)|
+|**startDate**| string| Date in the format YYYY-MM-DD, must be a date before the endDate variable | Yes |
+|**endDate**| string |Date in the format YYYY-MM-DD, must be a date after the startDate variable | Yes |
+
+
+##Example request
+
+The following are sample requests to the endpoint, they are passing the variables
+
+
+|Parameter name|Parameter supplied|
+|:------------:|:----------------:|
+|statisticsArea|Retail            |
+|state         |nsw,vic           |
+|category      |Total             |
+|startDate     |2015-09-09        |
+|endDate       |2016-09-09        |
+
+####Web browser
+
+<http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
+
+####cURL
+```md
+curl -X GET http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
+```
+
+####Python
+Make sure to import the Requests module in the following manner:
+
+```md
+import requests
+```
+Then you can make the request:
+```md
+parameters = {'statisticsArea': 'Retail', 'state': 'nsw,vic', 'category': 'Total', 'startDate' : '2015-09-09', 'endDate': '2016-09-09'}
+data = requests.get('http://meteoristics.com/api/v2/RetailAndExports', params=parameters)
+```
+
+####NodeJS
+```md
+request.get('http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09', function(err,res,body){
+  body = JSON.parse(body);
+});
+```
+
+####PHP
+```md
+$params = http_build_query([
+ 'statisticsArea' => 'Retail',
+ 'state' => 'nsw,vic',
+ 'category' => 'Total',
+ 'startDate' => '2015-09-09',
+ 'endDate' => '2016-09-09'
+]);
+$url='http://meteoristics.com/api/v2/RetailAndExports'.$params;
+$request = curl_init();
+curl_setopt($curl, CURLOPT_URL,$url);
+curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+$data = json_decode(curl_exec($request));
+curl_close($request);
+```
 
 ##Output
 
-Data will be returned in the same format as described on the version home page. Output differs heavily based on the statistics area requested. The following example is for Retail Statistics.
+Data will be returned in the format described on the version home page. Output differs heavily based on the statistics area requested. The following example is for Retail Statistics.
 
 ```md
   RetailIndustry : <a given industry>
@@ -223,60 +291,3 @@ An example of a failed output due to errors retrieved from <http://meteoristics.
 ```
 In the case of an error, no data is returned to the user. Specific information related to the error can be found in the errors array. Warnings tend to be as a result of passing a non-nessasary variable to the API.
 
-##Example request
-
-The following are sample requests to the endpoint, they are passing the variables
-
-
-|Parameter name|Parameter supplied|
-|:------------:|:----------------:|
-|statisticsArea|Retail            |
-|state         |nsw,vic           |
-|category      |Total             |
-|startDate     |2015-09-09        |
-|endDate       |2016-09-09        |
-
-####Web browser
-
-<http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09>
-
-####cURL
-```md
-curl -X GET http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09
-```
-
-####Python
-Make sure to import the Requests module in the following manner:
-
-```md
-import requests
-```
-Then you can make the request:
-```md
-parameters = {'statisticsArea': 'Retail', 'state': 'nsw,vic', 'category': 'Total', 'startDate' : '2015-09-09', 'endDate': '2016-09-09'}
-data = requests.get('http://meteoristics.com/api/v2/RetailAndExports', params=parameters)
-```
-
-####NodeJS
-```md
-request.get('http://meteoristics.com/api/v2/RetailAndExports?statisticsArea=Retail&state=nsw,vic&category=Total&startDate=2015-09-09&endDate=2016-09-09', function(err,res,body){
-  body = JSON.parse(body);
-});
-```
-
-####PHP
-```md
-$params = http_build_query([
- 'statisticsArea' => 'Retail',
- 'state' => 'nsw,vic',
- 'category' => 'Total',
- 'startDate' => '2015-09-09',
- 'endDate' => '2016-09-09'
-]);
-$url='http://meteoristics.com/api/v2/RetailAndExports'.$params;
-$request = curl_init();
-curl_setopt($curl, CURLOPT_URL,$url);
-curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-$data = json_decode(curl_exec($request));
-curl_close($request);
-```
