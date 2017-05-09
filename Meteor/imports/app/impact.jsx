@@ -16,6 +16,8 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 var PolarChart = require("react-chartjs").PolarArea;
+var LineChart = require("react-chartjs").Line;
+
 
 
 class Impact extends React.Component {
@@ -25,9 +27,10 @@ class Impact extends React.Component {
       this.state = {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.6, isResizable:false},
-         {i: 'briefs1', x: 0, y: 1, w: 6, h: 1, isResizable:false},
-         {i: 'briefs2', x: 0, y: 1, w: 6, h: 1, isResizable:false},
-         {i: 'briefs3', x: 6, y: 1, w: 6, h: 1, isResizable:false},
+         {i: 'spec0', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
+         {i: 'spec1', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
+         {i: 'spec2', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
+         {i: 'spec3', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
         ],
         areas:["Retail","MerchandiseExports"],
         impactBrief:null,
@@ -85,7 +88,7 @@ class Impact extends React.Component {
       for (i=0;i<data.length;i++){
         var curr = data[i];
         var dataSet= {
-          label: curr[transforms[industry].topLevelCategory].substring(0,15) +"... ",
+          label: curr[transforms[industry].topLevelCategory],
           fillColor: colours[i]+"0.2)",
           strokeColor: colours[i]+"1)",
           pointColor: colours[i]+"1)",
@@ -98,7 +101,7 @@ class Impact extends React.Component {
           value: 0,
       		color:colours[i]+"0.5)",
       		highlight: "#FF5A5E",
-      		label: curr[transforms[industry].topLevelCategory].substring(0,15) +"... "
+      		label: curr[transforms[industry].topLevelCategory]
         }
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;
@@ -147,7 +150,7 @@ class Impact extends React.Component {
         		color:colours[i]+"0.5)",
         		highlight: "#FF5A5E",
         		label: key
-          })
+          });
           totalsPercents[key]=percentageGrowth;
           i++;
         }
@@ -162,6 +165,9 @@ class Impact extends React.Component {
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         //will eventually add in a combination of retailChange and merchandise change when merchandise works
         var combinedChange = retailChange; //combination will occur here
+        var totalOldDataFormatted = {RetailTurnover:this.state.totalOldRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalOldMerchMonthlyDataFormatted.lineGraph};
+        var totalNewDataFormatted = {RetailTurnover:this.state.totalRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalMerchMonthlyDataFormatted.lineGraph};
+        // this.setState({totalOldDataFormatted:totalOldDataFormatted);
         var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:retailChange.percents}; //change this to merchChange when it works
         var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
         console.log(combinedPercents);
@@ -180,9 +186,41 @@ class Impact extends React.Component {
                   topElements.four = {Name:key2, Value:value2};
                 }
               }
-            )
+            );
           }
-        )
+        );
+        //now for each of the top elements we need to get their line graph data
+        var specificGraphs = new Array();
+        var i=0;
+        Object.entries(topElements).forEach(
+          ([key1,value1]) => {
+            //get line graph data,push to total elements pool
+            Object.entries(totalOldDataFormatted).forEach(
+              ([key2,value2]) => {
+                Object.entries(totalOldDataFormatted[key2]).forEach(
+                  ([key3,value3]) => {
+                    if (value1.Name == value3.label){
+                      var newData = new Array();
+                      newData.push(totalNewDataFormatted[key2][key3]);
+                      newData.push(value3);
+                      console.log(newData);
+                      var lineData = {
+                        labels: this.state.lineGraphLabels,
+                        datasets:newData
+                      }
+                      specificGraphs.push(<div className = "col-md-6" id = "briefsRoot" key={"spec"+i}>
+                                            <div className = "row">
+                                              <LineChart data={lineData} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                                            </div>
+                                          </div>);
+                      i++;
+                    }
+                  }
+                );
+              }
+            );
+          }
+        );
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div className = "row">
                             <div className ="col-md-6">
@@ -223,6 +261,7 @@ class Impact extends React.Component {
                     onBreakpointChange={this.onBreakpointChange}
                     onLayoutChange={this.layoutChange}>
                     {mainBrief}
+                    {specificGraphs}
                   </ResponsiveReactGridLayout>
                 </div>)
       } else {
