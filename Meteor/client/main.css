@@ -131,13 +131,29 @@ tr:nth-child(even) {
 }
 
 #percentageDisp {
-  border-color: black;
-  border-style: dashed;
+  /*border-color: black;
+  border-style: dashed;*/
   height: 28vh;
   text-align: center;
-  display: flex;
+  /*display: flex;*/
+  padding-top: 8vh;
   align-items: center;
   justify-content: center;
+  /*box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);*/
+
+}
+
+#specificHeading {
+  font-size: 30px;
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, .04);
+  background-color: rgba(80,80,80,0.8);
+  color: white;
+}
+
+#percentage {
+  font-size: 42px;
 }
 
 #yasiImage {
@@ -145,6 +161,31 @@ tr:nth-child(even) {
   max-height: 100%;
   position: relative;
   left: 90px;
+}
+
+#mainImpactTitle {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  /*padding-top: 10px;*/
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 48px;
+}
+
+#impactOptions {
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, .2);
+  /*background-color: rgba(50,50,50,0.7);*/
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200;
+  color: black;
+  padding-bottom: 15px;
+}
+
+#polarGraph {
+  padding-top :80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #yasiRoot {
@@ -177,6 +218,25 @@ tr:nth-child(even) {
 
 #briefsRoot {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+}
+
+#impactType {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  padding: 5px;
+  text-align: center;
+  font-size: 18px;
+  background-color: rgba(80,80,80,0.8);
+  color: white;
+}
+
+#specificsRoot {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  padding: -15px;
+}
+
+#graphLabel {
+  text-align: center;
+  color: grey;
 }
 
 #stateSelectorID {

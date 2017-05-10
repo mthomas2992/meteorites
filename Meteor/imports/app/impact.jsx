@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"Turnover"},MerchandiseExports:{topLevelCategory:"Commodity",dataValue:"Value"}};
 var colours=["rgba(150,0,0,","rgba(0,150,0,","rgba(0,0,150,","rgba(250,200,150,","rgba(150,200,250,",
-            "rgba(250,0,150,","rgba(200,250,150,","rgba(220,220,220,","rgba(100,200,150,","rgba(200,150,100,"];
+            "rgba(250,0,150,","rgba(200,250,150,","rgba(220,220,220,","rgba(100,200,150,","rgba(200,150,100,","rgba(10,20,100,"];
 
 import ReactGridLayout from 'react-grid-layout';
 require ('/node_modules/react-grid-layout/css/styles.css');
@@ -116,6 +116,7 @@ class Impact extends React.Component {
       var totals = {};
       table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
       for (i=0;i<data.length;i++){
+        console.log(colours[i]);
         var curr = data[i];
         var dataSet= {
           label: curr[transforms[industry].topLevelCategory],
@@ -219,9 +220,8 @@ class Impact extends React.Component {
             console.log(key1);
             Object.entries(combinedPercents[key1]).forEach(
               ([key2,value2]) => {
-                console.log(key2,Math.abs(value2));
+                // console.log(key2,Math.abs(value2));
                 if (Math.abs(value2)>Math.abs(topElements.one.Value)){
-                  console.log("entered with",value2,topElements.one.Value)
                   topElements.one = {Name:key2, Value:value2};
                 } else if (Math.abs(value2)>Math.abs(topElements.two.Value)){
                   topElements.two = {Name:key2, Value:value2};
@@ -246,20 +246,35 @@ class Impact extends React.Component {
                   ([key3,value3]) => {
                     if (value1.Name == value3.label){
                       var newData = new Array();
-                      newData.push(totalNewDataFormatted[key2][key3]);
-                      newData.push(value3);
-                      console.log(newData);
+                      var toBePushed = totalNewDataFormatted[key2][key3];
+                      var currLabel = toBePushed.label
+                      toBePushed.label = "Previous";
+                      newData.push(toBePushed);
+                      var newtoBePushed = value3;
+                      newtoBePushed.label="Current";
+                      // console.log(totalNewDataFormatted[key2][key3]);
+                      // console.log(value3);
+                      newData.push(newtoBePushed);
+                      // console.log(newData);
                       var lineData = {
                         labels: this.state.lineGraphLabels,
                         datasets:newData
                       }
-                      specificGraphs.push(<div className = "col-md-6" id = "briefsRoot" key={"spec"+i}>
+                      var currValue = "(Thousands of dollars)";
+                      var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
+                      if (possibleCategoryRetail.includes(currLabel)){
+                        currValue = "(Millions of dollars)"
+                      }
+                      specificGraphs.push(<div className = "col-md-6" id = "specificsRoot" key={"spec"+i}>
                                             <div className = "row">
                                               <div className = "col-md-12" id="specificHeading">
-                                                  {value3.label}
+                                                  {currLabel}
                                               </div>
                                               <div className = "col-md-12" id = "chart">
                                                 <LineChart data={lineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*40}/>
+                                              </div>
+                                              <div id = "graphLabel" className = "col-md-12">
+                                                {currValue}
                                               </div>
                                             </div>
                                           </div>);
@@ -271,30 +286,50 @@ class Impact extends React.Component {
             );
           }
         );
+        var prefixTwo = "";
+        var prefixThree = "";
+        var prefixFour = "";
+        var prefixOne = "";
+
+        if (topElements.one.Value>0){
+          prefixOne = "+";
+        }
+        if (topElements.two.Value>0){
+          prefixTwo = "+";
+        }
+        if (topElements.three.Value>0){
+          prefixThree = "+";
+        }
+        if (topElements.four.Value>0){
+          prefixFour = "+";
+        }
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
+                          <div  id = "impactType" className= "row">
+                            Perctantile impact
+                          </div>
                           <div className = "row">
-                            <div className ="col-md-6">
+                            <div id= "polarGraph" className ="col-md-6">
                               <PolarChart data={combinedChange.pieGraph} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
                             </div>
                             <div className = "col-md-6">
                               <div className = "row">
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  {topElements.one.Value*100+'%'}
-                                  {topElements.one.Name}
+                                  <div id = "percentage" className = "row">{prefixOne + topElements.one.Value*100+'%'}</div>
+                                  <div id = "identifier" className = "row">{topElements.one.Name}</div>
                                 </div>
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  {topElements.two.Value*100+'%'}
-                                  {topElements.two.Name}
+                                  <div id = "percentage" className = "row">{prefixTwo + topElements.two.Value*100+'%'}</div>
+                                  <div id = "identifier" className = "row">{topElements.two.Name}</div>
                                 </div>
                               </div>
                               <div className = "row">
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  {topElements.three.Value*100+'%'}
-                                  {topElements.three.Name}
+                                  <div id = "percentage" className = "row">{prefixThree + topElements.three.Value*100+'%'}</div>
+                                  <div id = "identifier" className = "row">{topElements.three.Name}</div>
                                 </div>
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  {topElements.four.Value*100+'%'}
-                                  {topElements.four.Name}
+                                  <div id = "percentage" className = "row">{prefixFour + topElements.four.Value*100+'%'}</div>
+                                  <div id = "identifier" className = "row">{topElements.four.Name}</div>
                                 </div>
                               </div>
                             </div>
@@ -304,22 +339,27 @@ class Impact extends React.Component {
                   <div id = "mainImpactTitle" className = "col-md-12">
                     {this.props.title}
                   </div>
-                  <div className="col-md-2">
-                    Start Date:
-                    <DatePicker
-                      dateFormat="YYYY-MM-DD"
-                      selected = {this.state.momentStart}
-                      onChange = {this.handleStartDateChange}
-                      />
+                  <div className = "col-md-12">
+                    <div id = "impactOptions" className = "row">
+                      <div className="col-md-3 col-md-offset-4">
+                        Start Date:
+                        <DatePicker
+                          dateFormat="YYYY-MM-DD"
+                          selected = {this.state.momentStart}
+                          onChange = {this.handleStartDateChange}
+                          />
+                      </div>
+                      <div className="col-md-3">
+                        End Date:
+                        <DatePicker
+                          dateFormat="YYYY-MM-DD"
+                          selected = {this.state.momentEnd}
+                          onChange = {this.handleEndDateChange}
+                          />
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-2">
-                    End Date:
-                    <DatePicker
-                      dateFormat="YYYY-MM-DD"
-                      selected = {this.state.momentEnd}
-                      onChange = {this.handleEndDateChange}
-                      />
-                  </div>
+
                   <div className = "col-md-12">
                     <ResponsiveReactGridLayout
                       className="layout"

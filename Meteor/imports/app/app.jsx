@@ -176,7 +176,9 @@ class App extends React.Component {
                       </div>
                   </div>
                   <div id="Menu" className="row">
-                    <a href="http://meteoristics.com/api/documentation">API</a>
+                    <a href= "/">Home - </a>
+                    <a href="/api/documentation">API - </a>
+                    <a href="/explorer">Stats Explorer</a>
                   </div>
                   <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate}/>
                 </div>)
