@@ -19,7 +19,6 @@ var PolarChart = require("react-chartjs").PolarArea;
 var LineChart = require("react-chartjs").Line;
 
 
-
 class Impact extends React.Component {
 
     constructor(props){
@@ -34,7 +33,9 @@ class Impact extends React.Component {
         ],
         areas:["Retail","MerchandiseExports"],
         impactBrief:null,
-        totalRetailMonthlyData:null
+        totalRetailMonthlyData:null,
+        timePeriodStart:this.props.startDate,
+        timePeriodEnd:this.props.endDate
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -42,24 +43,28 @@ class Impact extends React.Component {
 
       this.formatResponse = this.formatResponse.bind(this);
       this.findPercentGrowth = this.findPercentGrowth.bind(this);
+      this.loadData = this.loadData.bind(this);
 
+      this.handleStartDateChange = this.handleStartDateChange.bind(this);
+      this.handleEndDateChange = this.handleEndDateChange.bind(this);
     };
 
-    componentWillMount(){
+    loadData(){
+      console.log(this.state);
       var self = this;
-      Meteor.call('getRetailTurnover',"AUS,","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.props.startDate,this.props.endDate,function(err,res){
+      Meteor.call('getRetailTurnover',"AUS,","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalRetailMonthlyData:res,totalRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"AUS,","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.props.startDate,this.props.endDate,function(err,res){
+      Meteor.call('getMerchandiseExports',"AUS,","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalMerchMonthlyData:res,totalMerchMonthlyDataFormatted:formatted});
       });
 
-      var oldStartDate = this.props.startDate.split('-');
+      var oldStartDate = this.state.timePeriodStart.split('-');
       oldStartDate[0]=oldStartDate[0]-1;
-      var oldEndDate = this.props.endDate.split('-');
+      var oldEndDate = this.state.timePeriodEnd.split('-');
       oldEndDate[0]=oldEndDate[0]-1;
       formattedOldStartDate = oldStartDate.join("-");
       formattedOldEndDate = oldEndDate.join("-");
@@ -75,8 +80,33 @@ class Impact extends React.Component {
         console.log(formatted);
         self.setState({totalOldMerchMonthlyData:res,totalOldMerchMonthlyDataFormatted:formatted});
       });
+    }
 
+    componentWillMount(){
+      var startDateSplit = this.state.timePeriodStart.split('-');
+      var endDateSplit = this.state.timePeriodEnd.split('-');
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
+      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
+      this.loadData();
     };
+
+    handleStartDateChange(date){
+      console.log("r");
+      this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
+      this.loadData();
+      this.setState({momentStart:date});
+      this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
+
+    }
+
+    handleEndDateChange(date){
+      console.log("running");
+      this.setState({momentEnd:date})
+      this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
+      this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
+      this.loadData();
+    }
 
     formatResponse(data,industry) {
       var lineArray = new Array();
@@ -117,6 +147,9 @@ class Impact extends React.Component {
         }
         pieDataSet.value =total.toFixed(2);
         if (i==0) this.setState({lineGraphLabels:labelArray});
+        if (curr[transforms[industry].topLevelCategory].match(/^total/gi)){
+          continue;
+        }
         totals[curr[transforms[industry].topLevelCategory]]=total.toFixed(2);
         pieArray.push(pieDataSet);
         lineArray.push(dataSet);
@@ -145,11 +178,17 @@ class Impact extends React.Component {
         ([key,value]) => {
           var percentageGrowth = 1-(oldArray[key]/newArray[key]);
           percentageGrowth = percentageGrowth.toFixed(2);
+          var label = key
+          var colour = "rgba(0,300,"+(i+1*50)+",";
+          if (percentageGrowth<0){
+            label = label +"-negative --"
+            colour = "rgba(300,0,"+(i+1*50)+",";
+          }
           pieGraphData.push({
-            value: percentageGrowth,
-        		color:colours[i]+"0.5)",
+            value: Math.abs(percentageGrowth),
+        		color:colour+"0.5)",
         		highlight: "#FF5A5E",
-        		label: key
+        		label: label
           });
           totalsPercents[key]=percentageGrowth;
           i++;
@@ -258,6 +297,22 @@ class Impact extends React.Component {
         return (<div className = "row">
                   <div id = "mainImpactTitle" className = "col-md-12">
                     {this.props.title}
+                  </div>
+                  <div className="col-md-2">
+                    Start Date:
+                    <DatePicker
+                      dateFormat="YYYY-MM-DD"
+                      selected = {this.state.momentStart}
+                      onChange = {this.handleStartDateChange}
+                      />
+                  </div>
+                  <div className="col-md-2">
+                    End Date:
+                    <DatePicker
+                      dateFormat="YYYY-MM-DD"
+                      selected = {this.state.momentEnd}
+                      onChange = {this.handleEndDateChange}
+                      />
                   </div>
                   <div className = "col-md-12">
                     <ResponsiveReactGridLayout

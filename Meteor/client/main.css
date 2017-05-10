@@ -140,6 +140,31 @@ tr:nth-child(even) {
   justify-content: center;
 }
 
+#yasiImage {
+  max-width: 90%;
+  max-height: 100%;
+  position: relative;
+  left: 90px;
+}
+
+#yasiRoot {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
+  height: 41.7vh;
+}
+
+#eventTitle {
+  /*text-align: center;*/
+  /*display: flex;*/
+  align-items: center;
+  justify-content: left;
+  height: 41vh;
+  /*font-size: 80px;*/
+}
+
+#title{
+  font-size: 100px;
+}
+
 #Menu {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
   /*background-color: rgba(50,50,50,0.7);*/

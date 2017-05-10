@@ -4,8 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Briefs from '/imports/app/briefs.jsx';
-import AusMap from '/imports/app/ausMap.jsx';
-
 
 import ReactGridLayout from 'react-grid-layout';
 require ('/node_modules/react-grid-layout/css/styles.css');
@@ -150,7 +148,9 @@ class App extends React.Component {
                     </div>
                   </div>
                   <div id="Menu" className="row">
-                    <a href="http://meteoristics.com/api/documentation">API</a>
+                    <a href= "/">Home - </a>
+                    <a href="/api/documentation">API - </a>
+                    <a href="/explorer">Stats Explorer</a>
                   </div>
                   <div className="row">
                     <ResponsiveReactGridLayout
@@ -188,12 +188,14 @@ class App extends React.Component {
                       </div>
                   </div>
                   <div id="Menu" className="row">
-                    <a href="http://meteoristics.com/api/documentation">API</a>
+                    <a href= "/">Home - </a>
+                    <a href="/api/documentation">API - </a>
+                    <a href="/explorer">Stats Explorer</a>
                   </div>
                   <MainHome/>
                 </div>)
       } else {
-        return (<div><a href="http://meteoristics.com/api/documentation?ver=v1"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
+        return (<div><a href="http://meteoristics.com/api/documentation"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
       }
 
     }
