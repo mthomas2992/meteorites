@@ -13,6 +13,9 @@ var transforms = {RetailTurnover:{topLevelCategory:"RetailIndustry",dataValue:"T
 var colours=["rgba(150,0,0,","rgba(0,150,0,","rgba(0,0,150,","rgba(250,200,150,","rgba(150,200,250,",
             "rgba(250,0,150,","rgba(200,250,150,","rgba(220,220,220,","rgba(100,200,150,","rgba(200,150,100,"];
 
+import DatePicker from 'react-datepicker';
+import Moment from 'moment';
+
 class Briefs extends React.Component {
 
     constructor(props){
@@ -33,13 +36,33 @@ class Briefs extends React.Component {
       this.loadData = this.loadData.bind(this);
 
       this.formatResponse = this.formatResponse.bind(this);
+      this.handleStartDateChange=this.handleStartDateChange.bind(this);
+      this.handleEndDateChange=this.handleEndDateChange.bind(this);
+      this.selectIndustryChange = this.selectIndustryChange.bind(this);
     };
 
     componentWillReceiveProps(nextProps){
       this.loadData(nextProps,this.state.currState);
     }
 
+    handleStartDateChange(date){
+      this.setState({momentStart:date})
+      this.setState({currentTimePeriodStart:date.format('YYYY-MM-DD')});
+      this.loadData({status:{industry:this.state.currentIndustry,timePeriodStart:date.format('YYYY-MM-DD'),timePeriodEnd:this.state.currentTimePeriodEnd}},this.state.currState)
+    }
+
+    handleEndDateChange(date){
+      this.setState({momentEnd:date})
+      this.setState({currentTimePeriodEnd:date.format('YYYY-MM-DD')});
+      this.loadData({status:{industry:this.state.currentIndustry,timePeriodStart:this.state.currentTimePeriodStart,timePeriodEnd:date.format('YYYY-MM-DD')}},this.state.currState)
+    }
+
     componentWillMount(){
+      var startDateSplit = this.state.currentTimePeriodStart.split('-');
+      var endDateSplit = this.state.currentTimePeriodEnd.split('-');
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
+      this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
       this.loadData(this.props,this.state.currState);
     };
 
@@ -49,7 +72,7 @@ class Briefs extends React.Component {
     }
 
     loadData(newProps,newState){
-
+      console.log(newProps);
       this.setState({loading:true});
 
       this.setState({currentIndustry:newProps.status.industry,currentTimePeriodStart:newProps.status.timePeriodStart,currentTimePeriodEnd:newProps.status.timePeriodEnd})
@@ -138,6 +161,10 @@ class Briefs extends React.Component {
     componentDidMount(){
 
     };
+    selectIndustryChange(option){
+      this.setState({currentIndustry:option.value});
+      this.loadData({status:{industry:option.value,timePeriodStart:this.state.currentTimePeriodStart,timePeriodEnd:this.state.currentTimePeriodEnd}},this.state.currState)
+    }
 
     render() {
       if (this.state.loading){
@@ -163,8 +190,33 @@ class Briefs extends React.Component {
                       onChange = {this.selectChange.bind(this)}
                       />
                     </div>
-
+                    <div className="col-md-2">
+                      Start Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentStart}
+                        onChange = {this.handleStartDateChange}
+                        />
+                    </div>
+                    <div className="col-md-2">
+                      End Date:
+                      <DatePicker
+                        dateFormat="YYYY-MM-DD"
+                        selected = {this.state.momentEnd}
+                        onChange = {this.handleEndDateChange}
+                        />
+                    </div>
+                    <div id = "stateSelectorID" className = "col-md-1">
+                      <Select
+                      name= "industry-selector"
+                      value= {this.state.currentIndustry}
+                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
+                      clearable = {false}
+                      onChange = {this.selectIndustryChange}
+                      />
+                    </div>
                   </div>
+
                   <div id= "singularGraphSection" className="row">
                     <div className = "col-md-6">
                       <LineChart data={lineData} width = {(window.innerWidth/100)*25} height = {(window.innerHeight/100)*40}/>
@@ -174,7 +226,6 @@ class Briefs extends React.Component {
                     </div>
                   </div>
                   <div id= "singularTableData" className="row">
-
                     {this.state.tableData[this.state.currState]}
                   </div>
 

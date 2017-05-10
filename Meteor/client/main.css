@@ -99,8 +99,10 @@ h1, h2, h3, h4, h5, h6, a, p{
 }
 
 #actualTitle {
+  font-family: 'Roboto', sans-serif;
   font-size: 50px;
-
+  color: rgba(255,255,255,1);
+  background-color: rgba(40,40,40,0.7);
 }
 
 #singularGraphSection {

@@ -114,33 +114,7 @@ class App extends React.Component {
                     <div id="frontHeader" className="col-md-4">
                       Meteoristics
                     </div>
-                    <div id = "prompt" className= "col-md-1"> Select industry </div>
-                    <div id = "stateSelectorID" className = "col-md-1">
-                      <Select
-                      name= "industry-selector"
-                      value= {this.state.industry}
-                      options = {[{value:"RetailTurnover",label:"Retail Turnover"},{value:"MerchandiseExports",label:"Merchandise Exports"}]}
-                      clearable = {false}
-                      onChange = {this.selectIndustryChange.bind(this)}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      Start Date:
-                      <DatePicker
-                        dateFormat="YYYY-MM-DD"
-                        selected = {this.state.momentStart}
-                        onChange = {this.handleStartDateChange}
-                        />
-                    </div>
-                    <div className="col-md-2">
-                      End Date:
-                      <DatePicker
-                        dateFormat="YYYY-MM-DD"
-                        selected = {this.state.momentEnd}
-                        onChange = {this.handleEndDateChange}
-                        />
-                    </div>
-                    <div onClick={()=>{this.addPanel()}} id="addSection" className="col-md-1">
+                    <div onClick={()=>{this.addPanel()}} id="addSection" className="col-md-1 col-md-offset-6">
                       Add Panel
                     </div>
                     <div onClick={()=>{this.removePanel()}}id="removeSection" className="col-md-1">
