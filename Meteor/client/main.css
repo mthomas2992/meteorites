@@ -124,6 +124,10 @@ h1, h2, h3, h4, h5, h6, a, p{
 
 }
 
+td,th{
+  padding: 10px;
+}
+
 th{
   font-size: 20px;
 }
