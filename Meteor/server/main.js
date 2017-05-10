@@ -429,7 +429,7 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-
+      console.log(absQuery);
       try {
         var result = HTTP.get(absQuery);
         //console.log(absQuery);

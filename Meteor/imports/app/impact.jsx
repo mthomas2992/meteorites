@@ -52,12 +52,12 @@ class Impact extends React.Component {
     loadData(){
       console.log(this.state);
       var self = this;
-      Meteor.call('getRetailTurnover',"AUS,","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getRetailTurnover',"AUS","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalRetailMonthlyData:res,totalRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"AUS,","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getMerchandiseExports',"AUS","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalMerchMonthlyData:res,totalMerchMonthlyDataFormatted:formatted});
       });
@@ -69,12 +69,12 @@ class Impact extends React.Component {
       formattedOldStartDate = oldStartDate.join("-");
       formattedOldEndDate = oldEndDate.join("-");
 
-      Meteor.call('getRetailTurnover',"AUS,","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
+      Meteor.call('getRetailTurnover',"AUS","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalOldRetailMonthlyData:res,totalOldRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"AUS,","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
+      Meteor.call('getMerchandiseExports',"AUS","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         console.log(res);
         console.log(formatted);
@@ -171,6 +171,7 @@ class Impact extends React.Component {
     }
 
     findPercentGrowth(oldArray,newArray){
+      console.log(oldArray,newArray)
       var pieGraphData = new Array();
       var totalsPercents = {}
       var i=0;
@@ -203,11 +204,14 @@ class Impact extends React.Component {
       if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData){
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         //will eventually add in a combination of retailChange and merchandise change when merchandise works
-        var combinedChange = retailChange; //combination will occur here
+        console.log("formatted ", this.state.totalMerchMonthlyDataFormatted);
+        var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
+        console.log(merchChange);
+        var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)}; //combination will occur here
         var totalOldDataFormatted = {RetailTurnover:this.state.totalOldRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalOldMerchMonthlyDataFormatted.lineGraph};
         var totalNewDataFormatted = {RetailTurnover:this.state.totalRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalMerchMonthlyDataFormatted.lineGraph};
         // this.setState({totalOldDataFormatted:totalOldDataFormatted);
-        var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:retailChange.percents}; //change this to merchChange when it works
+        var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:merchChange.percents}; //change this to merchChange when it works
         var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
         console.log(combinedPercents);
         Object.entries(combinedPercents).forEach(
