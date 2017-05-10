@@ -219,13 +219,15 @@ class Impact extends React.Component {
             console.log(key1);
             Object.entries(combinedPercents[key1]).forEach(
               ([key2,value2]) => {
-                if (Math.abs(value2)>topElements.one.Value){
+                console.log(key2,Math.abs(value2));
+                if (Math.abs(value2)>Math.abs(topElements.one.Value)){
+                  console.log("entered with",value2,topElements.one.Value)
                   topElements.one = {Name:key2, Value:value2};
-                } else if (Math.abs(value2)>topElements.two.Value){
+                } else if (Math.abs(value2)>Math.abs(topElements.two.Value)){
                   topElements.two = {Name:key2, Value:value2};
-                } else if (Math.abs(value2)>topElements.three.Value){
+                } else if (Math.abs(value2)>Math.abs(topElements.three.Value)){
                   topElements.three = {Name:key2, Value:value2};
-                } else if (Math.abs(value2)>topElements.four.Value){
+                } else if (Math.abs(value2)>Math.abs(topElements.four.Value)){
                   topElements.four = {Name:key2, Value:value2};
                 }
               }
