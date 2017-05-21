@@ -20,16 +20,13 @@ class D3Test extends React.Component {
      //   self.setState({csvShit : res});
      //   console.log(res);
      // })
-    var text = [["account-account-account-account-account-account","22781"],
-                ["account-account-account-account-account-end","3311"],
-                ["account-account-account-account-account-home","906"],
-                ["account-account-account-account-account-other","1156"],
-                ["account-account-account-account-account-product","5969"],
-                ["account-account-account-account-account-search","692"],
-                ["account-account-account-account-end","7059"],
-                ["account-account-account-account-home-account","396"],
-                ["account-account-account-account-home-end","316"],
-                ["account-account-account-account-home-home","226"]
+    var text = [
+                ["account-search-end",6],
+                ["account-product-search-end",3],
+                ["home-product-search-end",7],
+                ["home-other-end",6],
+                ["other-product-search-end",3],
+                ["other-product-home-end",1]
                 ];
     var csv = text;
     console.log("0,0 is: "+text[0][0]);
@@ -144,6 +141,8 @@ function createVisualization(json) {
           return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
       });
 
+      console.log("THESES ARE TEH NODES"+nodes);
+
   var path = vis.data([json]).selectAll("path")
       .data(nodes)
       .enter().append("svg:path")
@@ -154,11 +153,14 @@ function createVisualization(json) {
       .style("opacity", 1)
       .on("mouseover", mouseover);
 
+console.log("THESES ARE TEH PATHS"+path);
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseleave", mouseleave);
 
   // Get total size of the tree = value of root node from partition.
-  totalSize = path.datum().value;
+  // totalSize = path.datum().value;
+
+  totalSize = 6;
  };
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
@@ -333,7 +335,7 @@ function toggleLegend() {
 function buildHierarchy(csv) {
   var root = {"name": "root", "children": []};
   for (var i = 0; i < csv.length; i++) {
-    console.log("i is : "+i);
+    //console.log("i is : "+i);
     var sequence = csv[i][0];
     var size = +csv[i][1];
     if (isNaN(size)) { // e.g. if this is a header row
