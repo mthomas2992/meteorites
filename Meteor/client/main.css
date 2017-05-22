@@ -188,7 +188,7 @@ tr:nth-child(even) {
 }
 
 #polarGraph {
-  padding-top :80px;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
