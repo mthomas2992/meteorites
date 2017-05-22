@@ -324,6 +324,8 @@ class D3Test extends React.Component {
       this.doEverything = this.doEverything.bind(this);
       this.stash = this.stash.bind(this);
       this.arcTween = this.arcTween(this);
+      this.mouseover = this.mouseover(this);
+      this.mouseleave = this.mouseleave(this);
     }
 
   componentDidMount(){
@@ -375,6 +377,7 @@ var arc = d3.svg.arc()
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
   var root = this.state.rooty;
+
   var path = svg.datum(root).selectAll("path")
       .data(partition.nodes)
     .enter().append("path")
@@ -383,7 +386,9 @@ var arc = d3.svg.arc()
       .style("stroke", "#fff")
       .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
       .style("fill-rule", "evenodd")
-      .each(this.stash);
+      .each(this.stash)
+      .on("mouseover", this.mouseover)
+      .on("mouseout", this.mouseleave);
 
   d3.selectAll("input").on("change", function change() {
     var value = this.value === "count"
@@ -401,28 +406,69 @@ var arc = d3.svg.arc()
 d3.select(self.frameElement).style("height", height + "px");
 
 
-  var path = svg.datum(root).selectAll("path")
-      .data(partition.nodes)
-    .enter().append("path")
-      .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
-      .attr("d", arc)
-      .style("stroke", "#fff")
-      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
-      .style("fill-rule", "evenodd")
-      .each(this.stash);
-
-  d3.selectAll("input").on("change", function change() {
-    var value = this.value === "count"
-        ? function() { return 1; }
-        : function(d) { return d.size; };
-
-    path
-        .data(partition.value(value).nodes)
-      .transition()
-        .duration(1500)
-        .attrTween("d", this.arcTween);
-  });
   }
+
+
+
+  // Fade all but the current sequence, and show it in the breadcrumb trail.
+mouseover(d) {
+console.log("MOUSE OVER NOW");
+
+  // d3.select(this)
+  //       .transition()
+  //       .duration(1000)
+  //       .ease('elastic')
+  //       .style("opacity", 0.3);
+
+  // var percentage = (100 * d.value / totalSize).toPrecision(3);
+  // var percentageString = percentage + "%";
+  // if (percentage < 0.1) {
+  //   percentageString = "< 0.1%";
+  // }
+
+  // d3.select("#percentage")
+  //     .text(percentageString);
+
+  // d3.select("#explanation")
+  //     .style("visibility", "");
+
+  // var sequenceArray = getAncestors(d);
+  //updateBreadcrumbs(sequenceArray, percentageString);
+
+  // Fade all the segments.
+  // d3.selectAll("path")
+  //     .style("opacity", 0.3);
+
+  // Then highlight only those that are an ancestor of the current segment.
+  // vis.selectAll("path")
+  //     .filter(function(node) {
+  //               return (sequenceArray.indexOf(node) >= 0);
+  //             })
+  //     .style("opacity", 1);
+}
+
+// Restore everything to full opacity when moving off the visualization.
+mouseleave(d) {
+console.log("MOUSELEAVE NOW");
+  // Hide the breadcrumb trail
+  // d3.select("#trail")
+  //     .style("visibility", "hidden");
+
+  // // Deactivate all segments during transition.
+  // d3.selectAll("path").on("mouseover", null);
+
+  // // Transition each segment to full opacity and then reactivate it.
+  // d3.selectAll("path")
+  //     .transition()
+  //     .duration(1000)
+  //     .style("opacity", 1)
+  //     .on("end", function() {
+  //             d3.select(this).on("mouseover", mouseover);
+  //           });
+
+  // d3.select("#explanation")
+  //     .style("visibility", "hidden");
+}
 
 render() {
       return(
