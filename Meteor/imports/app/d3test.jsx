@@ -326,7 +326,7 @@ class D3Test extends React.Component {
       this.arcTween = this.arcTween(this);
     }
 
-  componentWillMount(){
+  componentDidMount(){
     this.doEverything();
   }
 
@@ -352,12 +352,12 @@ arcTween(a) {
 }
 
 doEverything() {
-    var width = 125,
-    height = 100,
+    var width = 480,
+    height = 350,
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20c();
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(".d3Holder").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
@@ -426,8 +426,7 @@ d3.select(self.frameElement).style("height", height + "px");
 
 render() {
       return(
-        <div>
-        </div>
+        <div className="d3Holder"></div>
         );
     }
 }
