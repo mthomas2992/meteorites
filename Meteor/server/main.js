@@ -255,6 +255,10 @@ Meteor.startup(() => {
       return converter.makeHtml(Assets.getText(version+'/'+endpoint+'.txt'));
     },
 
+    'getCSVData' : function(){
+      return Assets.getText('visit-sequences.csv');
+    },
+
 
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here

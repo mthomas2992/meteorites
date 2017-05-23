@@ -15,6 +15,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
+import SunburstChart from '/imports/app/d3test.jsx';
 var PolarChart = require("react-chartjs").PolarArea;
 var LineChart = require("react-chartjs").Line;
 
@@ -298,8 +299,8 @@ class Impact extends React.Component {
                             Perctantile impact
                           </div>
                           <div className = "row">
-                            <div id= "polarGraph" className ="col-md-6">
-                              <PolarChart data={combinedChange.pieGraph} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                            <div className ="col-md-6">
+                              <SunburstChart data={combinedChange.pieGraph} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
                             </div>
                             <div className = "col-md-6">
                               <div className = "row">
