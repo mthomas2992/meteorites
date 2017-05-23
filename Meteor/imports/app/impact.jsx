@@ -48,6 +48,8 @@ class Impact extends React.Component {
 
       this.handleStartDateChange = this.handleStartDateChange.bind(this);
       this.handleEndDateChange = this.handleEndDateChange.bind(this);
+
+      this.formatSunburst = this.formatSunburst.bind(this);
     };
 
     loadData(){
@@ -103,6 +105,24 @@ class Impact extends React.Component {
       this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
       this.loadData();
+    }
+
+    formatSunburst(combinedPercents){
+      var base = {
+        "name": "flare",
+        "children": []};
+      var i = 0;
+      Object.entries(combinedPercents).forEach(([key,value]) => {
+        console.log(key,value);
+        var topLevel = key;
+        base.children.push({"name":key,"children":[]});
+        console.log(base);
+        Object.entries(value).forEach(([key,value]) =>{
+          base.children[i].children.push({"name":key,"size":value})
+        })
+        i++;
+      });
+      return(base);
     }
 
     formatResponse(data,industry) {
@@ -205,7 +225,8 @@ class Impact extends React.Component {
         var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)};
         var totalOldDataFormatted = {RetailTurnover:this.state.totalOldRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalOldMerchMonthlyDataFormatted.lineGraph};
         var totalNewDataFormatted = {RetailTurnover:this.state.totalRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalMerchMonthlyDataFormatted.lineGraph};
-        var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:merchChange.percents}; //change this to merchChange when it works
+        var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:merchChange.percents};
+        var flareData = this.formatSunburst(combinedPercents);
         var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
         Object.entries(combinedPercents).forEach(
           ([key1,value1]) => {
@@ -300,7 +321,7 @@ class Impact extends React.Component {
                           </div>
                           <div className = "row">
                             <div className ="col-md-6">
-                              <SunburstChart data={combinedChange.pieGraph} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                              <SunburstChart data={this.formatSunburst(combinedPercents)} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
                             </div>
                             <div className = "col-md-6">
                               <div className = "row">
