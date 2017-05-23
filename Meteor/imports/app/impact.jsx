@@ -395,6 +395,3 @@ class Impact extends React.Component {
 }
 
 export default Impact;
-
-// <h2 onClick={()=>{this.props.changeSelectedStates(["NSW"])}}> NSW </h2>
-// <h2 onClick={()=>{this.props.changeSelectedStates(["VIC"])}}> VIC </h2>
