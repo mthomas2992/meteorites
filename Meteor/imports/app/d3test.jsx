@@ -15,9 +15,8 @@ class D3Test extends React.Component {
       this.doEverything = this.doEverything.bind(this);
       this.stash = this.stash.bind(this);
       this.arcTween = this.arcTween.bind(this);
-      this.handleMouseOver = this.handleMouseOver.bind(this);
-      this.mouseleave = this.mouseleave.bind(this);
       this.getAncestors = this.getAncestors.bind(this);
+      console.log(this.props.data);
     }
 
   componentDidMount(){
@@ -28,65 +27,6 @@ class D3Test extends React.Component {
   componentDidUpdate(){
     this.doEverything();
   }
-
-  // Fade all but the current sequence, and show it in the breadcrumb trail.
-handleMouseOver(d) {
-// console.log("MOUSE OVER NOW");
-  // d3.select(this)
-  //       .transition()
-  //       .duration(1000)
-  //       .ease('elastic')
-  //       .style("opacity", 0.3);
-
-  // var percentage = (100 * d.value / totalSize).toPrecision(3);
-  // var percentageString = percentage + "%";
-  // if (percentage < 0.1) {
-  //   percentageString = "< 0.1%";
-  // }
-
-  // d3.select("#percentage")
-  //     .text(percentageString);
-
-  // d3.select("#explanation")
-  //     .style("visibility", "");
-
-  // var sequenceArray = getAncestors(d);
-  //updateBreadcrumbs(sequenceArray, percentageString);
-
-  // Fade all the segments.
-  // d3.selectAll("path")
-  //     .style("opacity", 0.3);
-
-  // Then highlight only those that are an ancestor of the current segment.
-  // vis.selectAll("path")
-  //     .filter(function(node) {
-  //               return (sequenceArray.indexOf(node) >= 0);
-  //             })
-  //     .style("opacity", 1);
-}
-
-// Restore everything to full opacity when moving off the visualization.
-mouseleave(d) {
-// console.log("MOUSELEAVE NOW");
-  // Hide the breadcrumb trail
-  // d3.select("#trail")
-  //     .style("visibility", "hidden");
-
-  // // Deactivate all segments during transition.
-  // d3.selectAll("path").on("mouseover", null);
-
-  // // Transition each segment to full opacity and then reactivate it.
-  // d3.selectAll("path")
-  //     .transition()
-  //     .duration(1000)
-  //     .style("opacity", 1)
-  //     .on("end", function() {
-  //             d3.select(this).on("mouseover", mouseover);
-  //           });
-
-  // d3.select("#explanation")
-  //     .style("visibility", "hidden");
-}
 
 
 
@@ -133,7 +73,12 @@ doEverything() {
 var partition = d3.layout.partition()
     .sort(null)
     .size([2 * Math.PI, radius * radius])
-    .value(function(d) { return 1; });
+    .value(function(d) { 
+      if (d.size > 0){
+        return d.size +0.01; 
+      } 
+      return d.size*(-1) + 0.001
+    });
 
 var arc = d3.svg.arc()
     .startAngle(function(d) { return d.x; })
@@ -161,11 +106,13 @@ var arc = d3.svg.arc()
         //this.handleMouseOver(d);
         // console.log("MOUSING OVER");
 
-        var percentage = (100 * d.value / totalSize).toPrecision(3);
+        // var percentage = (100 * d.value / totalSize).toPrecision(3);
+        // var percentageString = percentage + "%";
+        // if (percentage < 0.1) {
+        //   percentageString = "< 0.1%";
+        // }
+        var percentage = d.size;
         var percentageString = percentage + "%";
-        if (percentage < 0.1) {
-          percentageString = "< 0.1%";
-        }
 
         d3.select("#percentage")
           .text(percentageString);
