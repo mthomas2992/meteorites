@@ -75,9 +75,9 @@ var partition = d3.layout.partition()
     .size([2 * Math.PI, radius * radius])
     .value(function(d) { 
       if (d.size > 0){
-        return d.size +0.01; 
+        return d.size; 
       } 
-      return d.size*(-1) + 0.001
+      return d.size*(-1);
     });
 
 var arc = d3.svg.arc()
@@ -112,7 +112,7 @@ var arc = d3.svg.arc()
         //   percentageString = "< 0.1%";
         // }
         var percentage = d.size;
-        var percentageString = percentage + "%";
+        var percentageString = percentage + "%" + d.name;
 
         d3.select("#percentage")
           .text(percentageString);
