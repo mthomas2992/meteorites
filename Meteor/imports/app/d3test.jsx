@@ -339,7 +339,7 @@ class D3Test extends React.Component {
 
   // Fade all but the current sequence, and show it in the breadcrumb trail.
 handleMouseOver(d) {
-console.log("MOUSE OVER NOW");
+// console.log("MOUSE OVER NOW");
   // d3.select(this)
   //       .transition()
   //       .duration(1000)
@@ -375,7 +375,7 @@ console.log("MOUSE OVER NOW");
 
 // Restore everything to full opacity when moving off the visualization.
 mouseleave(d) {
-console.log("MOUSELEAVE NOW");
+// console.log("MOUSELEAVE NOW");
   // Hide the breadcrumb trail
   // d3.select("#trail")
   //     .style("visibility", "hidden");
@@ -465,7 +465,7 @@ var arc = d3.svg.arc()
       .each(this.stash)
       .on("mouseover", function(d){
         //this.handleMouseOver(d);
-        console.log("MOUSING OVER");
+        // console.log("MOUSING OVER");
 
         var path = [];
         var current = d;
@@ -489,7 +489,7 @@ var arc = d3.svg.arc()
             .style("opacity", 1);
       })
       .on("mouseout", function(d){
-        console.log("MOUSE LEAVING");
+        // console.log("MOUSE LEAVING");
           // // Transition each segment to full opacity and then reactivate it.
         d3.selectAll("path")
             .transition()

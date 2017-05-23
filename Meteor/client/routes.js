@@ -17,6 +17,12 @@ FlowRouter.route('/impact', {
   }
 });
 
+FlowRouter.route('/custom', {
+  action(params, queryParams) {
+    ReactDOM.render(<App path="Custom" queryParams={queryParams}/>, document.getElementById('app'));
+  }
+});
+
 FlowRouter.route('/explorer', {
   action(params, queryParams) {
     ReactDOM.render(<App path="Explorer" queryParams={queryParams}/>, document.getElementById('app'));
@@ -30,11 +36,6 @@ FlowRouter.route('/api/documentation', {
   }
 });
 
-FlowRouter.route('/api/d3test', {
-  action() {
-    ReactDOM.render(<D3Test/>, document.getElementById('app'));
-  }
-});
 
 FlowRouter.route('/api/explorer', {
   action(params,queryParams) {

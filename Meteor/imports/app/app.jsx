@@ -13,6 +13,7 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 import Impact from '/imports/app/impact.jsx';
+import CustomImpact from '/imports/app/customImpact.jsx';
 
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -169,6 +170,20 @@ class App extends React.Component {
                     <a href="/explorer">Stats Explorer</a>
                   </div>
                   <MainHome/>
+                </div>)
+      } else if (this.props.path == "Custom"){
+        return (<div className="container-fluid">
+                  <div id="homeTopBar" className="row">
+                      <div id="frontHeader" className="col-md-4">
+                        Meteoristics
+                      </div>
+                  </div>
+                  <div id="Menu" className="row">
+                    <a href= "/">Home - </a>
+                    <a href="/api/documentation">API - </a>
+                    <a href="/explorer">Stats Explorer</a>
+                  </div>
+                  <CustomImpact/>
                 </div>)
       } else {
         return (<div><a href="http://meteoristics.com/api/documentation"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
