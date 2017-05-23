@@ -158,18 +158,20 @@ class App extends React.Component {
                   <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate}/>
                 </div>)
       } else if (this.props.path =="Home"){
-        return(<div className="container-fluid">
-                  <div id="homeTopBar" className="row">
-                      <div id="frontHeader" className="col-md-4">
-                        Meteoristics
+        return(<div className="navbar navbar-defualt">
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="navbar-header">
+                          <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
                       </div>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><a id="navHeader" href= "/">Home</a></li>
+                        <li><a id="navHeader" href="/api/documentation">API</a></li>
+                        <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                      </ul>
+                    </div>
+                    <MainHome/>
                   </div>
-                  <div id="Menu" className="row">
-                    <a href= "/">Home - </a>
-                    <a href="/api/documentation">API - </a>
-                    <a href="/explorer">Stats Explorer</a>
-                  </div>
-                  <MainHome/>
                 </div>)
       } else if (this.props.path == "Custom"){
         return (<div className="container-fluid">
