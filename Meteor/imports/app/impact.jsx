@@ -19,8 +19,6 @@ import SunburstChart from '/imports/app/d3test.jsx';
 var PolarChart = require("react-chartjs").PolarArea;
 var LineChart = require("react-chartjs").Line;
 
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
 class Impact extends React.Component {
 
     constructor(props){
@@ -38,7 +36,8 @@ class Impact extends React.Component {
         impactBrief:null,
         totalRetailMonthlyData:null,
         timePeriodStart:this.props.startDate,
-        timePeriodEnd:this.props.endDate
+        timePeriodEnd:this.props.endDate,
+        region:this.props.region
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -52,16 +51,17 @@ class Impact extends React.Component {
       this.handleEndDateChange = this.handleEndDateChange.bind(this);
 
       this.formatSunburst = this.formatSunburst.bind(this);
+      this.selectChange = this.selectChange.bind(this);
     };
 
     loadData(){
       var self = this;
-      Meteor.call('getRetailTurnover',"QLD","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalRetailMonthlyData:res,totalRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"QLD","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalMerchMonthlyData:res,totalMerchMonthlyDataFormatted:formatted});
       });
@@ -115,37 +115,34 @@ class Impact extends React.Component {
       }
       formattedNewUpperFringeDate = newUpperFringeDates.join("-");
 
-      console.log(formattedOldLowerFringeDate,formattedOldUpperFringeDate);
-      console.log(formattedNewLowerFringeDate,formattedNewUpperFringeDate);
-
-      Meteor.call('getRetailTurnover',"QLD","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalOldRetailMonthlyData:res,totalOldRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"QLD","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalOldMerchMonthlyData:res,totalOldMerchMonthlyDataFormatted:formatted});
       });
 
       //make fringe calls
 
-      Meteor.call('getRetailTurnover',"QLD","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover","fringe");
         self.setState({oldFringeRetail:res,oldFringeRetailFormatted:formatted});
       });
 
-      Meteor.call('getRetailTurnover',"QLD","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover","fringe");
         self.setState({newFringeRetail:res,newFringeRetailFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"QLD","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports","fringe");
         self.setState({oldFringeMerch:res,oldFringeMerchFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"QLD","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports","fringe");
         self.setState({newFringeMerch:res,newFringeMerchFormatted:formatted});
       });
@@ -161,19 +158,25 @@ class Impact extends React.Component {
       this.loadData();
     };
 
+    selectChange(val){
+      this.setState({region:val.value});
+      FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+this.state.timePeriodEnd+'&region='+val.value);
+      location.reload();
+    }
     handleStartDateChange(date){
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
-      this.loadData();
       this.setState({momentStart:date});
       this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
-
+      FlowRouter.go('/impact?title=Custom&startDate='+date.format('YYYY-MM-DD')+'&endDate='+this.state.timePeriodEnd+'&region='+this.state.region);
+      location.reload();
     }
 
     handleEndDateChange(date){
       this.setState({momentEnd:date})
       this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
-      this.loadData();
+      FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+date.format('YYYY-MM-DD')+'&region='+this.state.region);
+      location.reload();
     }
 
     formatSunburst(combinedPercents){
@@ -260,7 +263,6 @@ class Impact extends React.Component {
     }
 
     findPercentGrowth(oldArray,newArray){
-      console.log(oldArray);
       //pass in
       var pieGraphData = new Array();
       var totalsPercents = {}
@@ -526,6 +528,16 @@ class Impact extends React.Component {
                           selected = {this.state.momentEnd}
                           onChange = {this.handleEndDateChange}
                           />
+                      </div>
+                      <div className ="col-md-3">
+                        <Select
+                          name= "state-selector"
+                          value= {this.state.region}
+                          options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
+                          {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
+                          clearable = {false}
+                          onChange = {this.selectChange}
+                        />
                       </div>
                     </div>
                   </div>
