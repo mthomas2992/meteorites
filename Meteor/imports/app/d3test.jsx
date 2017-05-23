@@ -426,15 +426,16 @@ getAncestors(node) {
 }
 
 doEverything() {
-    var width = 480,
-    height = 350,
+    var width = 680,
+    height = 500,
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20c();
+    var totalSize = 0;
 
   var svg = d3.select(".d3Holder").append("svg")
     .attr("width", width)
     .attr("height", height)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
 
 var partition = d3.layout.partition()
@@ -452,6 +453,7 @@ var arc = d3.svg.arc()
 
   svg.append("svg:circle")
       .attr("r", radius)
+      .attr("id", "container")
       .style("opacity", 0);
 
   var path = svg.datum(root).selectAll("path")
@@ -467,16 +469,23 @@ var arc = d3.svg.arc()
         //this.handleMouseOver(d);
         console.log("MOUSING OVER");
 
+        var percentage = (100 * d.value / totalSize).toPrecision(3);
+        var percentageString = percentage + "%";
+        if (percentage < 0.1) {
+          percentageString = "< 0.1%";
+        }
+
+        d3.select("#percentage")
+          .text(percentageString);
+
         var path = [];
         var current = d;
         while (current.parent) {
         path.unshift(current);
         current = current.parent;
         }
-
         //var sequenceArray = this.getAncestors(d);
         var sequenceArray = path;
-
         //fade everything
         d3.selectAll("path")
             .style("opacity", 0.3);
@@ -487,8 +496,11 @@ var arc = d3.svg.arc()
                       return (sequenceArray.indexOf(node) >= 0);
                     })
             .style("opacity", 1);
-      })
-      .on("mouseout", function(d){
+      });
+
+
+  // Add the mouseleave handler to the bounding circle.
+  d3.select("#container").on("mouseout", function(d){
         console.log("MOUSE LEAVING");
           // // Transition each segment to full opacity and then reactivate it.
         d3.selectAll("path")
@@ -499,6 +511,8 @@ var arc = d3.svg.arc()
             //         d3.select(this).on("mouseover", mouseover);
             //       });
       });
+
+    totalSize = path.node().__data__.value;
 
   d3.selectAll("input").on("change", function change() {
     var value = this.value === "count"
@@ -605,7 +619,12 @@ render() {
 
   render() {
         return(
-          <div className="d3Holder"></div>
+          <div className="d3Holder">
+            <div id="explanation">
+              <span id="percentage"></span><br/>
+              of visits begin with this sequence of pages
+            </div>
+          </div>
           );
       }
   }
