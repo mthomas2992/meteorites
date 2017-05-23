@@ -16,12 +16,32 @@ class D3Test extends React.Component {
       this.stash = this.stash.bind(this);
       this.arcTween = this.arcTween.bind(this);
       this.getAncestors = this.getAncestors.bind(this);
-      console.log(this.props.data);
+      this.sickFadeBro = this.sickFadeBro.bind(this);
+      //console.log(this.props.data);
+      // var tempRooty = this.state.rooty;
+      // //tempRooty[0].value = 6;
+      // //tempRooty[1].value = 6;
+      // console.log("temp root next");
+      // console.log(tempRooty.children[0].children[0]);
+      // var i = 0;
+      // var j = 0;
+      // var temp = 0;
+      // var tempObj;
+      // while(i<2){
+      //   while(j<6){
+      //     temp += tempRooty.children[i].children[j];
+      //     j++;
+      //   }
+      //   tempObj = {name : tempRooty.children[i].name, value : temp, children : tempRooty.children[i].children};
+      //   console.log(tempObj);
+      //   i++;
+      // }
     }
 
   componentDidMount(){
-    console.log(this.state.rooty);
-    this.doEverything();
+    //console.log(this.state.rooty);
+    var d = this.doEverything();
+    this.sickFadeBro(d);
   }
 
   componentDidUpdate(){
@@ -58,11 +78,12 @@ getAncestors(node) {
 }
 
 doEverything() {
-    var width = 680,
-    height = 500,
+    var width = 700,
+    height = 550,
     radius = Math.min(width, height) / 2,
-    color = d3.scale.category20c();
+    color = d3.scale.category20().domain(d3.range(-1,1));
     var totalSize = 0;
+    
 
   var svg = d3.select(".d3Holder").append("svg")
     .attr("width", width)
@@ -99,7 +120,48 @@ var arc = d3.svg.arc()
       .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
       .attr("d", arc)
       .style("stroke", "#fff")
-      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .style("fill", function(d) {
+        if (d.name == 'MerchandiseExports'){
+          return 'DodgerBlue';
+        } else if (d.name == 'RetailTurnover'){
+          return 'Crimson';
+        } else if (d.name == 'Mineral fuels, lubricants and related materials'){
+          return 'black';
+        } else if (d.name == 'Crude materials, inedible, except fuels'){
+          return 'brown';
+        } else if (d.name == 'Manufactured goods classified chiefly by material'){
+          return 'grey';
+        } else if (d.name == 'Food and live animals'){
+          return 'Salmon';
+        } else if (d.name == 'Beverages and tobacco'){
+          return  'orange';
+        } else if (d.name == 'Animal and vegetable oils, fats and waxes'){
+          return 'Goldenrod';
+        } else if (d.name == 'Food retailing'){
+          return 'MediumVioletRed';
+        } else if (d.name == 'Other retailing'){
+          return 'Tan';
+        } else if (d.name == 'Department stores'){
+          return 'Khaki';
+        } else if (d.name == 'Chemicals and related products, nes'){
+          return 'MediumSeaGreen';
+        } else if (d.name == 'Cafes, restaurants and takeaway food services'){
+          return 'RosyBrown';
+        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC'){
+          return 'DarkGreen';
+        } else if (d.name == 'Machinery and transport equipment'){
+          return 'DarkSlateGray';
+        } else if (d.name == 'Household goods retailing'){
+          return 'Teal';
+        } else if (d.name == 'Clothing, footwear and personal accessory retailing'){
+          return 'SaddleBrown';
+        } else if (d.name == 'Miscellaneous manufactured articles'){
+          return 'Gold';
+        }
+        
+        return 'red';
+        //return  color((d.children ? d : d.parent).name); 
+      })
       .style("fill-rule", "evenodd")
       .each(this.stash)
       .on("mouseover", function(d){
@@ -111,11 +173,16 @@ var arc = d3.svg.arc()
         // if (percentage < 0.1) {
         //   percentageString = "< 0.1%";
         // }
-        var percentage = d.size;
-        var percentageString = percentage + "%" + d.name;
+        var formatter = d3.format("04d");
+        var percentage = d3.round(d.value, 2);
+        //console.log("THIS IS THE PERCENTAGE: "+percentage+" here is the value: "+d.value);
+        var percentageString = percentage + "%";
 
         d3.select("#percentage")
           .text(percentageString);
+
+        d3.select("#dataName")
+          .text(d.name);
 
         var path = [];
         var current = d;
@@ -153,22 +220,25 @@ var arc = d3.svg.arc()
 
     totalSize = path.node().__data__.value;
 
-  d3.selectAll("input").on("change", function change() {
-    var value = this.value === "count"
-        ? function() { return 1; }
-        : function(d) { return d.size; };
-
-    path
-        .data(partition.value(value).nodes)
-      .transition()
-        .duration(1500)
-        .attrTween("d", this.arcTween);
-  });
-
+    //sickFadeBro(d);
 
 d3.select(self.frameElement).style("height", height + "px");
 
+  return d3;
+
 }
+
+  sickFadeBro(d){
+    console.log("FADED");
+    d3.selectAll("path")
+      .style("opacity", 0.05);
+
+    d3.selectAll("path")
+     .transition()
+     .duration(2000)
+     .style("opacity", 1);
+
+  }
 
   stash(d) {
     d.x0 = d.x;
@@ -189,83 +259,15 @@ d3.select(self.frameElement).style("height", height + "px");
 
 render() {
       return(
-        <div className="d3Holder"></div>
+        <div className="d3Holder">
+          <div id="explanation">
+            <span id="percentage"></span><br/>
+            <span id="dataName"></span><br/>
+          </div>
+        </div>
         );
 
     }
-
-
-
-    // Fade all but the current sequence, and show it in the breadcrumb trail.
-  mouseover(d) {
-  console.log("MOUSE OVER NOW");
-
-    // d3.select(this)
-    //       .transition()
-    //       .duration(1000)
-    //       .ease('elastic')
-    //       .style("opacity", 0.3);
-
-    // var percentage = (100 * d.value / totalSize).toPrecision(3);
-    // var percentageString = percentage + "%";
-    // if (percentage < 0.1) {
-    //   percentageString = "< 0.1%";
-    // }
-
-    // d3.select("#percentage")
-    //     .text(percentageString);
-
-    // d3.select("#explanation")
-    //     .style("visibility", "");
-
-    // var sequenceArray = getAncestors(d);
-    //updateBreadcrumbs(sequenceArray, percentageString);
-
-    // Fade all the segments.
-    // d3.selectAll("path")
-    //     .style("opacity", 0.3);
-
-    // Then highlight only those that are an ancestor of the current segment.
-    // vis.selectAll("path")
-    //     .filter(function(node) {
-    //               return (sequenceArray.indexOf(node) >= 0);
-    //             })
-    //     .style("opacity", 1);
-  }
-
-  // Restore everything to full opacity when moving off the visualization.
-  mouseleave(d) {
-  console.log("MOUSELEAVE NOW");
-    // Hide the breadcrumb trail
-    // d3.select("#trail")
-    //     .style("visibility", "hidden");
-
-    // // Deactivate all segments during transition.
-    // d3.selectAll("path").on("mouseover", null);
-
-    // // Transition each segment to full opacity and then reactivate it.
-    // d3.selectAll("path")
-    //     .transition()
-    //     .duration(1000)
-    //     .style("opacity", 1)
-    //     .on("end", function() {
-    //             d3.select(this).on("mouseover", mouseover);
-    //           });
-
-    // d3.select("#explanation")
-    //     .style("visibility", "hidden");
-  }
-
-  render() {
-        return(
-          <div className="d3Holder">
-            <div id="explanation">
-              <span id="percentage"></span><br/>
-              of visits begin with this sequence of pages
-            </div>
-          </div>
-          );
-      }
   }
 
   export default D3Test;
