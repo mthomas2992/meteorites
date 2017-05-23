@@ -19,6 +19,7 @@
     "react-dom": "^15.4.2",
     "react-grid-layout": "^0.14.4",
     "react-json-tree": "^0.10.7",
+    "react-numeric-input": "^2.0.7",
     "react-select": "^1.0.0-rc.3",
     "showdown": "^1.6.4"
   }
