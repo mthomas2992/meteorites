@@ -198,10 +198,6 @@ Meteor.startup(() => {
         var category = this.queryParams.category;
         var startDate = this.queryParams.startDate;
         var endDate = this.queryParams.endDate;
-        console.log(state);
-        console.log(category);
-        console.log(startDate);
-        console.log(endDate);
         if (this.queryParams.statisticsArea.match(/retail/gi)){
           var data = Meteor.call('getRetailTurnover',state,category,startDate,endDate);
         } else {
@@ -241,7 +237,6 @@ Meteor.startup(() => {
       var queryString = "http://stat.data.abs.gov.au/sdmx-json/data/RT/0.2+1.20+41+42+43+44+45+46.10+20+30.M/all?startTime=2016-02&endTime=2017-01&dimensionAtObservation=allDimensions&pid=28a5828e-8915-407f-8244-4c4a8635b29c"
       var result = HTTP.get(queryString);
       var newresult = JSON.parse(result.content);
-      console.log(newresult);
       return newresult;
     },
 
@@ -263,7 +258,6 @@ Meteor.startup(() => {
 
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
       //code for retail turnover here
-      console.log(stateString);
       var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
       var stateArray = stateString.split(",");
       var i;
@@ -429,7 +423,6 @@ Meteor.startup(() => {
       absQuery += "-"
       absQuery += endDateArray[1];
       absQuery += "&dimensionAtObservation=allDimensions";
-      console.log(absQuery);
       try {
         var result = HTTP.get(absQuery);
         //console.log(absQuery);
@@ -465,6 +458,10 @@ Meteor.startup(() => {
     'makeHttpRequest' :function(queryString){
       var result = HTTP.get(queryString);
       return HTTP.get(queryString);
+    },
+
+    getStockData : function(stocks,startDate,endDate){
+
     }
 
   })
