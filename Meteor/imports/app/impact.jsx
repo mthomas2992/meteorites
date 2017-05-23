@@ -26,7 +26,7 @@ class Impact extends React.Component {
       super(props);
       this.state = {
         layout: [
-         {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.6, isResizable:false},
+         {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i: 'spec0', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
          {i: 'spec1', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
          {i: 'spec2', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
