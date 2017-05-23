@@ -515,17 +515,99 @@ var arc = d3.svg.arc()
 
 d3.select(self.frameElement).style("height", height + "px");
 
+}
 
+  stash(d) {
+    d.x0 = d.x;
+    d.dx0 = d.dx;
   }
 
-
+  // Interpolate the arcs in data space.
+  arcTween(a) {
+    var i = d3.interpolate({x: a.x0, dx: a.dx0}, a);
+    return function(t) {
+      var b = i(t);
+      a.x0 = b.x;
+      a.dx0 = b.dx;
+      return arc(b);
+    };
+  }
 
 
 render() {
       return(
         <div className="d3Holder"></div>
         );
-    }
-}
 
-export default D3Test;
+    }
+
+
+
+    // Fade all but the current sequence, and show it in the breadcrumb trail.
+  mouseover(d) {
+  console.log("MOUSE OVER NOW");
+
+    // d3.select(this)
+    //       .transition()
+    //       .duration(1000)
+    //       .ease('elastic')
+    //       .style("opacity", 0.3);
+
+    // var percentage = (100 * d.value / totalSize).toPrecision(3);
+    // var percentageString = percentage + "%";
+    // if (percentage < 0.1) {
+    //   percentageString = "< 0.1%";
+    // }
+
+    // d3.select("#percentage")
+    //     .text(percentageString);
+
+    // d3.select("#explanation")
+    //     .style("visibility", "");
+
+    // var sequenceArray = getAncestors(d);
+    //updateBreadcrumbs(sequenceArray, percentageString);
+
+    // Fade all the segments.
+    // d3.selectAll("path")
+    //     .style("opacity", 0.3);
+
+    // Then highlight only those that are an ancestor of the current segment.
+    // vis.selectAll("path")
+    //     .filter(function(node) {
+    //               return (sequenceArray.indexOf(node) >= 0);
+    //             })
+    //     .style("opacity", 1);
+  }
+
+  // Restore everything to full opacity when moving off the visualization.
+  mouseleave(d) {
+  console.log("MOUSELEAVE NOW");
+    // Hide the breadcrumb trail
+    // d3.select("#trail")
+    //     .style("visibility", "hidden");
+
+    // // Deactivate all segments during transition.
+    // d3.selectAll("path").on("mouseover", null);
+
+    // // Transition each segment to full opacity and then reactivate it.
+    // d3.selectAll("path")
+    //     .transition()
+    //     .duration(1000)
+    //     .style("opacity", 1)
+    //     .on("end", function() {
+    //             d3.select(this).on("mouseover", mouseover);
+    //           });
+
+    // d3.select("#explanation")
+    //     .style("visibility", "hidden");
+  }
+
+  render() {
+        return(
+          <div className="d3Holder"></div>
+          );
+      }
+  }
+
+  export default D3Test;

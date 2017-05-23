@@ -51,7 +51,6 @@ class Impact extends React.Component {
     };
 
     loadData(){
-      console.log(this.state);
       var self = this;
       Meteor.call('getRetailTurnover',"AUS","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
@@ -77,10 +76,9 @@ class Impact extends React.Component {
 
       Meteor.call('getMerchandiseExports',"AUS","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
-        console.log(res);
-        console.log(formatted);
         self.setState({totalOldMerchMonthlyData:res,totalOldMerchMonthlyDataFormatted:formatted});
       });
+
     }
 
     componentWillMount(){
@@ -93,7 +91,6 @@ class Impact extends React.Component {
     };
 
     handleStartDateChange(date){
-      console.log("r");
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
       this.loadData();
       this.setState({momentStart:date});
@@ -102,7 +99,6 @@ class Impact extends React.Component {
     }
 
     handleEndDateChange(date){
-      console.log("running");
       this.setState({momentEnd:date})
       this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
@@ -117,7 +113,6 @@ class Impact extends React.Component {
       var totals = {};
       table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
       for (i=0;i<data.length;i++){
-        console.log(colours[i]);
         var curr = data[i];
         var dataSet= {
           label: curr[transforms[industry].topLevelCategory],
@@ -173,7 +168,8 @@ class Impact extends React.Component {
     }
 
     findPercentGrowth(oldArray,newArray){
-      console.log(oldArray,newArray)
+      console.log(oldArray);
+      //pass in
       var pieGraphData = new Array();
       var totalsPercents = {}
       var i=0;
@@ -205,20 +201,14 @@ class Impact extends React.Component {
 
       if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData){
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
-        //will eventually add in a combination of retailChange and merchandise change when merchandise works
-        console.log("formatted ", this.state.totalMerchMonthlyDataFormatted);
         var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
-        console.log(merchChange);
-        var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)}; //combination will occur here
+        var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)};
         var totalOldDataFormatted = {RetailTurnover:this.state.totalOldRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalOldMerchMonthlyDataFormatted.lineGraph};
         var totalNewDataFormatted = {RetailTurnover:this.state.totalRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalMerchMonthlyDataFormatted.lineGraph};
-        // this.setState({totalOldDataFormatted:totalOldDataFormatted);
         var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:merchChange.percents}; //change this to merchChange when it works
         var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
-        console.log(combinedPercents);
         Object.entries(combinedPercents).forEach(
           ([key1,value1]) => {
-            console.log(key1);
             Object.entries(combinedPercents[key1]).forEach(
               ([key2,value2]) => {
                 // console.log(key2,Math.abs(value2));
