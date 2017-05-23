@@ -17,11 +17,29 @@ class D3Test extends React.Component {
       this.arcTween = this.arcTween.bind(this);
       this.getAncestors = this.getAncestors.bind(this);
       this.sickFadeBro = this.sickFadeBro.bind(this);
-      console.log(this.props.data);
+      //console.log(this.props.data);
+      // var tempRooty = this.state.rooty;
+      // //tempRooty[0].value = 6;
+      // //tempRooty[1].value = 6;
+      // console.log("temp root next");
+      // console.log(tempRooty.children[0].children[0]);
+      // var i = 0;
+      // var j = 0;
+      // var temp = 0;
+      // var tempObj;
+      // while(i<2){
+      //   while(j<6){
+      //     temp += tempRooty.children[i].children[j];
+      //     j++;
+      //   }
+      //   tempObj = {name : tempRooty.children[i].name, value : temp, children : tempRooty.children[i].children};
+      //   console.log(tempObj);
+      //   i++;
+      // }
     }
 
   componentDidMount(){
-    console.log(this.state.rooty);
+    //console.log(this.state.rooty);
     var d = this.doEverything();
     this.sickFadeBro(d);
   }
@@ -60,7 +78,7 @@ getAncestors(node) {
 }
 
 doEverything() {
-    var width = 550,
+    var width = 700,
     height = 550,
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20().domain(d3.range(-1,1));
@@ -126,13 +144,19 @@ var arc = d3.svg.arc()
         } else if (d.name == 'Department stores'){
           return 'Khaki';
         } else if (d.name == 'Chemicals and related products, nes'){
-          return 'green';
+          return 'MediumSeaGreen';
         } else if (d.name == 'Cafes, restaurants and takeaway food services'){
           return 'RosyBrown';
         } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC'){
-          return 'SteelBlue';
+          return 'DarkGreen';
         } else if (d.name == 'Machinery and transport equipment'){
           return 'DarkSlateGray';
+        } else if (d.name == 'Household goods retailing'){
+          return 'Teal';
+        } else if (d.name == 'Clothing, footwear and personal accessory retailing'){
+          return 'SaddleBrown';
+        } else if (d.name == 'Miscellaneous manufactured articles'){
+          return 'Gold';
         }
         
         return 'red';
@@ -149,7 +173,9 @@ var arc = d3.svg.arc()
         // if (percentage < 0.1) {
         //   percentageString = "< 0.1%";
         // }
-        var percentage = d.size;
+        var formatter = d3.format("04d");
+        var percentage = d3.round(d.value, 2);
+        //console.log("THIS IS THE PERCENTAGE: "+percentage+" here is the value: "+d.value);
         var percentageString = percentage + "%";
 
         d3.select("#percentage")
