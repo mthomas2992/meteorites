@@ -383,6 +383,7 @@ class CustomImpact extends React.Component {
             Object.entries(currRatio).forEach(([key,value]) => {
               percentageChanges[topLevel][mainLevel] = percentageChanges[topLevel][mainLevel] + (this.state.values[key] * value);
             });
+            percentageChanges[topLevel][mainLevel] = percentageChanges[topLevel][mainLevel] / 100;
           };
         });
       });
@@ -562,9 +563,78 @@ class CustomImpact extends React.Component {
         </div>
       </div>;
       if (this.state.percentageChanges && this.state.sunburstData){
+        console.log(this.state.percentageChanges)
+
+        var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
+        Object.entries(this.state.percentageChanges).forEach(
+          ([key1,value1]) => {
+            Object.entries(this.state.percentageChanges[key1]).forEach(
+              ([key2,value2]) => {
+                // console.log(key2,Math.abs(value2));
+                if (Math.abs(value2)>Math.abs(topElements.one.Value)){
+                  topElements.one = {Name:key2, Value:value2};
+                } else if (Math.abs(value2)>Math.abs(topElements.two.Value)){
+                  topElements.two = {Name:key2, Value:value2};
+                } else if (Math.abs(value2)>Math.abs(topElements.three.Value)){
+                  topElements.three = {Name:key2, Value:value2};
+                } else if (Math.abs(value2)>Math.abs(topElements.four.Value)){
+                  topElements.four = {Name:key2, Value:value2};
+                }
+              }
+            );
+          }
+        );
+        var prefixTwo = "";
+        var prefixThree = "";
+        var prefixFour = "";
+        var prefixOne = "";
+
+        if (topElements.one.Value>0){
+          prefixOne = "+";
+        }
+        if (topElements.two.Value>0){
+          prefixTwo = "+";
+        }
+        if (topElements.three.Value>0){
+          prefixThree = "+";
+        }
+        if (topElements.four.Value>0){
+          prefixFour = "+";
+        }
         return (<div className = "row">
                   {textInput}
-                <Sunburst data = {this.state.sunburstData}/>
+                  <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
+                    <div  id = "impactType" className= "row">
+                      Perctantile impact
+                    </div>
+                    <div className = "row">
+                      <div className ="col-md-6">
+                        <Sunburst data={this.state.sunburstData}/>
+                      </div>
+                      <div className = "col-md-6">
+                        <div className = "row">
+                          <div id = "percentageDisp" className = "col-md-6">
+                            <div id = "percentage" className = "row">{prefixOne + topElements.one.Value*100+'%'}</div>
+                            <div id = "identifier" className = "row">{topElements.one.Name}</div>
+                          </div>
+                          <div id = "percentageDisp" className = "col-md-6">
+                            <div id = "percentage" className = "row">{prefixTwo + topElements.two.Value*100+'%'}</div>
+                            <div id = "identifier" className = "row">{topElements.two.Name}</div>
+                          </div>
+                        </div>
+                        <div className = "row">
+                          <div id = "percentageDisp" className = "col-md-6">
+                            <div id = "percentage" className = "row">{prefixThree + topElements.three.Value*100+'%'}</div>
+                            <div id = "identifier" className = "row">{topElements.three.Name}</div>
+                          </div>
+                          <div id = "percentageDisp" className = "col-md-6">
+                            <div id = "percentage" className = "row">{prefixFour + topElements.four.Value*100+'%'}</div>
+                            <div id = "identifier" className = "row">{topElements.four.Name}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>;
                 </div>)
       } else {
         return (<div className = "row">
