@@ -335,11 +335,15 @@ tr:nth-child(even) {
 #navHeader {
   padding-left: 25px;
   padding-right: 30px;
-/*  color: #252627;*/
+  color: #FFF9FB;
 }
 
 #navBar {
   background-color: #252627;
+}
+
+.nav > li > a:hover{
+    background-color:#BB0A21;
 }
 
 

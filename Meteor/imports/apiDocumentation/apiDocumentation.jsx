@@ -63,7 +63,7 @@ class APIDocumentation extends React.Component {
         return (<div id="mainDocumentation" className="container-fluid">
                 <div id="mainDocumentationTopHeaderRow" className="row">
                   <div id="header" className="col-md-12">
-                    Meteoristics: Api Docs
+                    Meteoristics API - Documentation
                   </div>
 
                 </div>
@@ -83,7 +83,7 @@ class APIDocumentation extends React.Component {
         return (<div id="mainDocumentation" className="container-fluid">
                 <div id="mainDocumentationTopHeaderRow" className="row">
                   <div id="header" className="col-md-12">
-                    Meteoristics: Api Docs
+                    Meteoristics API - Documentation
                   </div>
 
                 </div>

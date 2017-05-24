@@ -110,82 +110,87 @@ class App extends React.Component {
       // console.log(layouts);
 
       if (this.props.path == "Explorer"){
-        return (<div id="home" className="container-fluid">
-                  <div id="homeTopBar" className="row">
-                    <div id="frontHeader" className="col-md-4">
-                      Meteoristics
+        return (<div className="navbar navbar-defualt">
+                  <div className="container-fluid">
+                    <div id="navBar" className="row">
+                      <div className="navbar-header">
+                          <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
+                      </div>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><a id="navHeader" onClick={()=>{this.addPanel()}}>Add Panel</a></li>
+                        <li><a id="navHeader" onClick={()=>{this.removePanel()}}>Remove Panel</a></li>
+                        <li><a id="navHeader" href= "/">Home</a></li>
+                        <li><a id="navHeader" href="/custom">Predictor</a></li>
+                        <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/api/documentation">API</a></li>
+                      </ul>
                     </div>
-                    <div onClick={()=>{this.addPanel()}} id="addSection" className="col-md-1 col-md-offset-6">
-                      Add Panel
-                    </div>
-                    <div onClick={()=>{this.removePanel()}}id="removeSection" className="col-md-1">
-                      Remove Panel
+                    <div className="row">
+                      <ResponsiveReactGridLayout
+                        {...this.props}
+                        className="layout"
+                        layouts={layouts}
+                        rowHeight={window.innerHeight-((window.innerHeight/100)*3)}
+                        breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                        cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
+                        measureBeforeMount={false}
+                        onBreakpointChange={this.onBreakpointChange}
+                        onLayoutChange={this.layoutChange}>
+                        {panels}
+                      </ResponsiveReactGridLayout>
                     </div>
                   </div>
-                  <div id="Menu" className="row">
-                    <a href= "/">Home - </a>
-                    <a href="/api/documentation">API - </a>
-                    <a href="/explorer">Stats Explorer</a>
-                  </div>
-                  <div className="row">
-                    <ResponsiveReactGridLayout
-                      {...this.props}
-                      className="layout"
-                      layouts={layouts}
-                      rowHeight={window.innerHeight-((window.innerHeight/100)*3)}
-                      breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                      cols={{lg: 12, md: 12, sm: 12, xs: 6, xxs: 6}}
-                      measureBeforeMount={false}
-                      onBreakpointChange={this.onBreakpointChange}
-                      onLayoutChange={this.layoutChange}>
-                      {panels}
-                    </ResponsiveReactGridLayout>
-                  </div>
-
                 </div>);
       } else if (this.props.path == "impact") {
-        return (<div className="container-fluid">
-                  <div id="homeTopBar" className="row">
-                      <div id="frontHeader" className="col-md-4">
-                        Meteoristics
-                      </div>
-                  </div>
-                  <div id="Menu" className="row">
-                    <a href= "/">Home - </a>
-                    <a href="/api/documentation">API - </a>
-                    <a href="/explorer">Stats Explorer</a>
-                  </div>
-                  <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate} region = {this.props.queryParams.region}/>
-                </div>)
-      } else if (this.props.path =="Home"){
-        return(<div className="navbar navbar-defualt">
+        return (<div className="navbar navbar-defualt">
                   <div className="container-fluid">
-                    <div className="row">
+                    <div id="navBar" className="row">
                       <div className="navbar-header">
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
                       </div>
                       <ul className="nav navbar-nav navbar-right">
                         <li><a id="navHeader" href= "/">Home</a></li>
-                        <li><a id="navHeader" href="/api/documentation">API</a></li>
+                        <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/api/documentation">API</a></li>
+                      </ul>
+                    </div>
+                    <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate} region = {this.props.queryParams.region}/>
+                  </div>
+                </div>)
+      } else if (this.props.path =="Home"){
+        return(<div className="navbar navbar-defualt">
+                  <div className="container-fluid">
+                    <div id="navBar" className="row">
+                      <div className="navbar-header">
+                          <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
+                      </div>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><a id="navHeader" href= "/">Home</a></li>
+                        <li><a id="navHeader" href="/custom">Predictor</a></li>
+                        <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
                     <MainHome/>
                   </div>
                 </div>)
       } else if (this.props.path == "Custom"){
-        return (<div className="container-fluid">
-                  <div id="homeTopBar" className="row">
-                      <div id="frontHeader" className="col-md-4">
-                        Meteoristics
+        return (<div className="navbar navbar-defualt">
+                  <div className="container-fluid">
+                    <div id="navBar" className="row">
+                      <div className="navbar-header">
+                          <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
                       </div>
+                      <ul className="nav navbar-nav navbar-right">
+                        <li><a id="navHeader" href= "/">Home</a></li>
+                        <li><a id="navHeader" href="/custom">Predictor</a></li>
+                        <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/api/documentation">API</a></li>
+                      </ul>
+                    </div>
+                    <CustomImpact/>
                   </div>
-                  <div id="Menu" className="row">
-                    <a href= "/">Home - </a>
-                    <a href="/api/documentation">API - </a>
-                    <a href="/explorer">Stats Explorer</a>
-                  </div>
-                  <CustomImpact/>
                 </div>)
       } else {
         return (<div><a href="http://meteoristics.com/api/documentation"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
