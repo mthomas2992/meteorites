@@ -155,7 +155,7 @@ class App extends React.Component {
                     <a href="/api/documentation">API - </a>
                     <a href="/explorer">Stats Explorer</a>
                   </div>
-                  <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate}/>
+                  <Impact title = {this.props.queryParams.title} startDate={this.props.queryParams.startDate} endDate = {this.props.queryParams.endDate} region = {this.props.queryParams.region}/>
                 </div>)
       } else if (this.props.path =="Home"){
         return(<div className="navbar navbar-defualt">

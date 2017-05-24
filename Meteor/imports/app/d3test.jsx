@@ -173,8 +173,11 @@ var arc = d3.svg.arc()
         // if (percentage < 0.1) {
         //   percentageString = "< 0.1%";
         // }
-        var formatter = d3.format("04d");
-        var percentage = d3.round(d.value, 2);
+        if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
+          var percentage = d3.round(d.value, 2);
+        } else {
+          var percentage = d3.round(d.size, 2);
+        }
         //console.log("THIS IS THE PERCENTAGE: "+percentage+" here is the value: "+d.value);
         var percentageString = percentage + "%";
 

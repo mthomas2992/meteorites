@@ -19,7 +19,6 @@ import SunburstChart from '/imports/app/d3test.jsx';
 var PolarChart = require("react-chartjs").PolarArea;
 var LineChart = require("react-chartjs").Line;
 
-
 class Impact extends React.Component {
 
     constructor(props){
@@ -27,6 +26,7 @@ class Impact extends React.Component {
       this.state = {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
+         {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
          {i: 'spec0', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
          {i: 'spec1', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
          {i: 'spec2', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
@@ -36,7 +36,8 @@ class Impact extends React.Component {
         impactBrief:null,
         totalRetailMonthlyData:null,
         timePeriodStart:this.props.startDate,
-        timePeriodEnd:this.props.endDate
+        timePeriodEnd:this.props.endDate,
+        region:this.props.region
       }
 
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -50,16 +51,17 @@ class Impact extends React.Component {
       this.handleEndDateChange = this.handleEndDateChange.bind(this);
 
       this.formatSunburst = this.formatSunburst.bind(this);
+      this.selectChange = this.selectChange.bind(this);
     };
 
     loadData(){
       var self = this;
-      Meteor.call('getRetailTurnover',"AUS","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalRetailMonthlyData:res,totalRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"AUS","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalMerchMonthlyData:res,totalMerchMonthlyDataFormatted:formatted});
       });
@@ -71,14 +73,78 @@ class Impact extends React.Component {
       formattedOldStartDate = oldStartDate.join("-");
       formattedOldEndDate = oldEndDate.join("-");
 
-      Meteor.call('getRetailTurnover',"AUS","Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
+
+      var oldFringeDates = oldStartDate;
+      oldFringeDates[1] = oldFringeDates[1]-3;
+      if (oldFringeDates[1]<=0){
+        oldFringeDates[0]= oldFringeDates[0]-1;
+        oldFringeDates[1]= 12 + oldFringeDates[1];
+      }
+      formattedOldLowerFringeDate = oldFringeDates.join("-");
+
+      var oldUpperFringeDates = oldEndDate;
+      oldUpperFringeDates[1] = parseInt(oldUpperFringeDates[1])+3;
+      if (oldUpperFringeDates[1]>12){
+        oldUpperFringeDates[0]= parseInt(oldUpperFringeDates[0])+1;
+        oldUpperFringeDates[1]= oldUpperFringeDates[1]-12;
+      }
+      if (oldUpperFringeDates[1] < 10 ){
+        oldUpperFringeDates[1] = "0"+oldUpperFringeDates[1];
+      }
+      formattedOldUpperFringeDate = oldUpperFringeDates.join("-");
+
+
+      var newLowerFringeDates = this.state.timePeriodStart.split('-');
+      newLowerFringeDates[1] = newLowerFringeDates[1]-3;
+      if (newLowerFringeDates[1]<=0){
+        newLowerFringeDates[0]= newLowerFringeDates[0]-1;
+        newLowerFringeDates[1]= 12 + newLowerFringeDates[1];
+      }
+      formattedNewLowerFringeDate = newLowerFringeDates.join("-");
+
+
+
+      var newUpperFringeDates = this.state.timePeriodEnd.split('-');
+      newUpperFringeDates[1] = parseInt(newUpperFringeDates[1])+3;
+      if (newUpperFringeDates[1]>12){
+        newUpperFringeDates[0]= parseInt(newUpperFringeDates[0])+1;
+        newUpperFringeDates[1]= newUpperFringeDates[1]-12;
+      }
+      if (newUpperFringeDates[1] < 10 ){
+        newUpperFringeDates[1] = "0"+newUpperFringeDates[1];
+      }
+      formattedNewUpperFringeDate = newUpperFringeDates.join("-");
+
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
         self.setState({totalOldRetailMonthlyData:res,totalOldRetailMonthlyDataFormatted:formatted});
       });
 
-      Meteor.call('getMerchandiseExports',"AUS","Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldStartDate,formattedOldEndDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports");
         self.setState({totalOldMerchMonthlyData:res,totalOldMerchMonthlyDataFormatted:formatted});
+      });
+
+      //make fringe calls
+
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
+        var formatted = self.formatResponse(res,"RetailTurnover","fringe");
+        self.setState({oldFringeRetail:res,oldFringeRetailFormatted:formatted});
+      });
+
+      Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
+        var formatted = self.formatResponse(res,"RetailTurnover","fringe");
+        self.setState({newFringeRetail:res,newFringeRetailFormatted:formatted});
+      });
+
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedOldLowerFringeDate,formattedOldUpperFringeDate,function(err,res){
+        var formatted = self.formatResponse(res,"MerchandiseExports","fringe");
+        self.setState({oldFringeMerch:res,oldFringeMerchFormatted:formatted});
+      });
+
+      Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
+        var formatted = self.formatResponse(res,"MerchandiseExports","fringe");
+        self.setState({newFringeMerch:res,newFringeMerchFormatted:formatted});
       });
 
     }
@@ -92,19 +158,25 @@ class Impact extends React.Component {
       this.loadData();
     };
 
+    selectChange(val){
+      this.setState({region:val.value});
+      FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+this.state.timePeriodEnd+'&region='+val.value);
+      location.reload();
+    }
     handleStartDateChange(date){
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
-      this.loadData();
       this.setState({momentStart:date});
       this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
-
+      FlowRouter.go('/impact?title=Custom&startDate='+date.format('YYYY-MM-DD')+'&endDate='+this.state.timePeriodEnd+'&region='+this.state.region);
+      location.reload();
     }
 
     handleEndDateChange(date){
       this.setState({momentEnd:date})
       this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
-      this.loadData();
+      FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+date.format('YYYY-MM-DD')+'&region='+this.state.region);
+      location.reload();
     }
 
     formatSunburst(combinedPercents){
@@ -113,10 +185,8 @@ class Impact extends React.Component {
         "children": []};
       var i = 0;
       Object.entries(combinedPercents).forEach(([key,value]) => {
-        console.log(key,value);
         var topLevel = key;
         base.children.push({"name":key,"children":[]});
-        console.log(base);
         Object.entries(value).forEach(([key,value]) =>{
           base.children[i].children.push({"name":key,"size":value})
         })
@@ -125,7 +195,7 @@ class Impact extends React.Component {
       return(base);
     }
 
-    formatResponse(data,industry) {
+    formatResponse(data,industry,labelType) {
       var lineArray = new Array();
       var labelArray = new Array();
       var pieArray = new Array();
@@ -163,8 +233,13 @@ class Impact extends React.Component {
           }
         }
         pieDataSet.value =total.toFixed(2);
-        if (i==0) this.setState({lineGraphLabels:labelArray});
+        if (labelType == "fringe"){
+          if (i==0) this.setState({fringeGraphLabels:labelArray});
+        } else {
+          if (i==0) this.setState({lineGraphLabels:labelArray});
+        }
         if (curr[transforms[industry].topLevelCategory].match(/^total/gi)){
+          lineArray.push(dataSet);
           continue;
         }
         totals[curr[transforms[industry].topLevelCategory]]=total.toFixed(2);
@@ -188,7 +263,6 @@ class Impact extends React.Component {
     }
 
     findPercentGrowth(oldArray,newArray){
-      console.log(oldArray);
       //pass in
       var pieGraphData = new Array();
       var totalsPercents = {}
@@ -219,7 +293,7 @@ class Impact extends React.Component {
     render() {
       var layouts = {lg:this.state.layout,md:this.state.layout};
 
-      if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData){
+      if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData && this.state.newFringeRetail && this.state.oldFringeRetail && this.state.oldFringeMerch && this.state.newFringeMerch){
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
         var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)};
@@ -298,6 +372,92 @@ class Impact extends React.Component {
             );
           }
         );
+
+        var totalDataFringed = new Array();
+        var tempOldRetailSave = totalOldDataFormatted.RetailTurnover[6];
+        var tempNewRetailSave = totalNewDataFormatted.RetailTurnover[6];
+        tempOldRetailSave.data.unshift(null); //offset data
+        tempOldRetailSave.data.unshift(null);
+        tempOldRetailSave.data.unshift(null);
+        tempNewRetailSave.data.unshift(null);
+        tempNewRetailSave.data.unshift(null);
+        tempNewRetailSave.data.unshift(null);
+
+        var tempOldRetailFringe = this.state.oldFringeRetailFormatted.lineGraph[6];
+        tempOldRetailFringe.fillColor = "rgba(50,50,50,0.2)"
+        tempOldRetailFringe.pointColor = "rgba(50,50,50,1)"
+        tempOldRetailFringe.strokeColor = "rgba(50,50,50,1)"
+
+        var tempNewRetailFringe = this.state.newFringeRetailFormatted.lineGraph[6];
+        tempNewRetailFringe.fillColor = "rgba(50,50,50,0.2)"
+        tempNewRetailFringe.pointColor = "rgba(50,50,50,1)"
+        tempNewRetailFringe.strokeColor = "rgba(50,50,50,1)"
+
+        totalDataFringed.push(tempOldRetailFringe);
+        totalDataFringed.push(tempNewRetailFringe);
+        totalDataFringed.push(tempOldRetailSave);
+        totalDataFringed.push(tempNewRetailSave);
+
+        var totalMerchDataFringed = new Array();
+        var tempOldMerchSave = totalOldDataFormatted.MerchandiseExports[0];
+        var tempNewMerchSave = totalNewDataFormatted.MerchandiseExports[0];
+        tempOldMerchSave.data.unshift(null); //offset data
+        tempOldMerchSave.data.unshift(null);
+        tempOldMerchSave.data.unshift(null);
+        tempNewMerchSave.data.unshift(null);
+        tempNewMerchSave.data.unshift(null);
+        tempNewMerchSave.data.unshift(null);
+
+        var tempOldMerchFringe = this.state.oldFringeMerchFormatted.lineGraph[0];
+        tempOldMerchFringe.fillColor = "rgba(50,50,50,0.2)"
+        tempOldMerchFringe.pointColor = "rgba(50,50,50,1)"
+        tempOldMerchFringe.strokeColor = "rgba(50,50,50,1)"
+
+        var tempNewMerchFringe = this.state.newFringeMerchFormatted.lineGraph[0];
+        tempNewMerchFringe.fillColor = "rgba(50,50,50,0.2)"
+        tempNewMerchFringe.pointColor = "rgba(50,50,50,1)"
+        tempNewMerchFringe.strokeColor = "rgba(50,50,50,1)"
+
+        totalMerchDataFringed.push(tempOldMerchSave);
+        totalMerchDataFringed.push(tempNewMerchSave);
+        totalMerchDataFringed.push(tempOldMerchFringe);
+        totalMerchDataFringed.push(tempNewMerchFringe);
+
+
+
+        var fringeLineData = {
+          labels: this.state.fringeGraphLabels,
+          datasets:totalDataFringed
+        }
+
+        var merchFringLineData = {
+          labels: this.state.fringeGraphLabels,
+          datasets:totalMerchDataFringed
+        }
+
+        var mainComparisonGraph = <div className = "col-md-12" id = "specificsRoot" key="mainComparison">
+                                    <div className = "row">
+                                      <div className = "col-md-12" id="specificHeading">
+                                          Timeline
+                                      </div>
+                                      <div className = "col-md-6" id = "chart">
+                                        <div id = "timelineTitle" className = "row">
+                                          Retail and Trade
+                                        </div>
+                                        <div className = "row">
+                                          <LineChart data={fringeLineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*60}/>
+                                        </div>
+                                      </div>
+                                      <div className = "col-md-6" id = "chart">
+                                        <div id = "timelineTitle" className = "row">
+                                          Merchandise Exports
+                                        </div>
+                                        <div className = "row">
+                                          <LineChart data={merchFringLineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*60}/>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
         var prefixTwo = "";
         var prefixThree = "";
         var prefixFour = "";
@@ -369,6 +529,16 @@ class Impact extends React.Component {
                           onChange = {this.handleEndDateChange}
                           />
                       </div>
+                      <div className ="col-md-3">
+                        <Select
+                          name= "state-selector"
+                          value= {this.state.region}
+                          options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
+                          {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
+                          clearable = {false}
+                          onChange = {this.selectChange}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -383,6 +553,7 @@ class Impact extends React.Component {
                       onBreakpointChange={this.onBreakpointChange}
                       onLayoutChange={this.layoutChange}>
                       {mainBrief}
+                      {mainComparisonGraph}
                       {specificGraphs}
                     </ResponsiveReactGridLayout>
                   </div>
@@ -395,6 +566,3 @@ class Impact extends React.Component {
 }
 
 export default Impact;
-
-// <h2 onClick={()=>{this.props.changeSelectedStates(["NSW"])}}> NSW </h2>
-// <h2 onClick={()=>{this.props.changeSelectedStates(["VIC"])}}> VIC </h2>
