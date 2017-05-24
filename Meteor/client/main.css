@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* CSS declarations go here */
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 @import url('react-datepicker/dist/react-datepicker-cssmodules.css');
@@ -18,24 +19,57 @@
 
 #frontHeader {
   font-size: 30pt;
+
 }
 
-#ratioTitle {
-  text-align: center;
-  border-bottom-style:solid;
-  border-bottom-color: rgba(100,100,100,0.2);
-  border-bottom-width:0.05px;
-  margin-bottom: 5px;
-  padding-bottom: 10px;
+#navHeader {
+  padding-left: 25px;
+  padding-right: 30px;
+  color: #FFF9FB;
 }
 
-#bottomRatioTitle {
-  text-align: center;
+#navBar {
+  background-color: #252627;
 }
 
-#ratioNumber {
-  font-size: 30px;
+.nav > li > a:hover{
+    background-color:#BB0A21;
 }
+
+.nav > li > a:focus{
+    background-color:#BB0A21;
+}
+.nav > li > a:active{
+    background-color:#BB0A21;
+}
+
+/*.navbar {
+  background: #252627;
+  .navbar-nav li a {
+    color: #BB0A21;
+    &:hover {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    &:focus {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    &:active {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+  }
+}*/
 
 #timelineTitle {
   font-size: 30px;
@@ -324,26 +358,6 @@ tr:nth-child(even) {
 #graphLabel {
   text-align: center;
   color: grey;
-}
-
-#subLabel {
-  text-align: center;
-  color: black;
-  font-size: 20px;
-}
-
-#chart {
-  border-bottom-style:solid;
-  border-bottom-color: rgba(100,100,100,0.2);
-  border-bottom-width:0.05px;
-  margin-bottom: 5px;
-}
-
-#subChart {
-  border-bottom-style:solid;
-  border-bottom-color: rgba(100,100,100,0.2);
-  border-bottom-width:0.05px;
-  margin-bottom: 5px;
 }
 
 #stateSelectorID {

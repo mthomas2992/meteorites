@@ -83,7 +83,7 @@ doEverything() {
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20().domain(d3.range(-1,1));
     var totalSize = 0;
-    
+
 
   var svg = d3.select(".d3Holder").append("svg")
     .attr("width", width)
@@ -94,10 +94,10 @@ doEverything() {
 var partition = d3.layout.partition()
     .sort(null)
     .size([2 * Math.PI, radius * radius])
-    .value(function(d) { 
+    .value(function(d) {
       if (d.size > 0){
-        return d.size; 
-      } 
+        return d.size;
+      }
       return d.size*(-1);
     });
 
@@ -119,7 +119,15 @@ var arc = d3.svg.arc()
     .enter().append("path")
       .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
       .attr("d", arc)
-      .style("stroke", "#fff")
+      .attr("stroke-width", '2px')
+      .style("stroke", function(d){
+        if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
+          return 'white';
+        } else if (d.size < 0){
+          return 'red';
+        }
+          return 'MediumSeaGreen';
+      })
       .style("fill", function(d) {
         if (d.name == 'MerchandiseExports'){
           return 'DodgerBlue';
@@ -158,9 +166,9 @@ var arc = d3.svg.arc()
         } else if (d.name == 'Miscellaneous manufactured articles'){
           return 'Gold';
         }
-        
+
         return 'red';
-        //return  color((d.children ? d : d.parent).name); 
+        //return  color((d.children ? d : d.parent).name);
       })
       .style("fill-rule", "evenodd")
       .each(this.stash)
@@ -174,9 +182,9 @@ var arc = d3.svg.arc()
         //   percentageString = "< 0.1%";
         // }
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
-          var percentage = d3.round(d.value, 2);
+          var percentage = d3.round(d.value*100, 2);
         } else {
-          var percentage = d3.round(d.size, 2);
+          var percentage = d3.round(d.size*100, 2);
         }
         //console.log("THIS IS THE PERCENTAGE: "+percentage+" here is the value: "+d.value);
         var percentageString = percentage + "%";

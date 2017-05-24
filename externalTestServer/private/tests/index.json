@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"versions":[
 		{
@@ -7,3 +8,14 @@
 		}
 	]
 }
+=======
+{
+	"versions":[
+		{
+			"versionID":"v2",
+			"blackBoxTests":[{"endpoint":"RetailAndExports","tests":["basicRetailTest","basicMerchTest","retailMultipleStates","merchMultipleStates","retailMultipleCategory","merchMultipleCategories","retailMultipleStatesCat","merchMultipleStatesCat"]}],
+			"whiteBoxTests":["generalTest"]
+		}
+	]
+}
+>>>>>>> 48f07796369d5a57cf3ef5e232efcab63e868900
