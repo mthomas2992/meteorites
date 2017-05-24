@@ -256,7 +256,7 @@ tr:nth-child(even) {
   text-align: center;
   border-bottom-style: solid;
   border-bottom-color: rgba(0, 0, 0, .04);
-  background-color: rgba(80,80,80,0.8);
+  background-color: #252627;
   color: white;
 }
 
@@ -274,19 +274,21 @@ tr:nth-child(even) {
 #mainImpactTitle {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, .2);
   /*padding-top: 10px;*/
-  margin-top: 15px;
-  margin-bottom: 15px;
   text-align: center;
   font-size: 48px;
+  background-color: #BB0A21;
+  color:#FFF9FB;
 }
 
 #impactOptions {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, .2);
   /*background-color: rgba(50,50,50,0.7);*/
-  font-family: 'Roboto', sans-serif;
   font-weight: 200;
   color: black;
+  padding-top: 15px;
   padding-bottom: 15px;
+  font-size: 20px;
+  /*background-color: #D3D4D9;*/
 }
 
 #polarGraph {

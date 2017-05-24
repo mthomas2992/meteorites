@@ -596,7 +596,7 @@ class Impact extends React.Component {
                             </div>;
 
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
-                          <div  id = "impactType" className= "row">
+                          <div  id = "specificHeading" className= "row">
                             Percentile Impact
                           </div>
                           <div className = "row">
@@ -654,7 +654,7 @@ class Impact extends React.Component {
                           <div className = "col-md-2" id = "regionAdder">
                             Region:
                           </div>
-                          <div className = "col-md-10">
+                          <div className = "col-md-9 col-md-offset-1">
                             <Select
                               name= "state-selector"
                               value= {this.state.region}
