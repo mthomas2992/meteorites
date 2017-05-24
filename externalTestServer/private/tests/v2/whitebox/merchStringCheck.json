@@ -1,0 +1,7 @@
+{
+  "Method":"getMerchandiseExports",
+  "Inputs":"nsw,food,2015-09-09,2016-09-09",
+  "Name":"Merchandise string check",
+  "Description": "Check string output",
+  "Expected":"http://stat.data.abs.gov.au/sdmx-json/data/MERCH_EXP/1.2.41.10.M/all?startTime=2015-09&endTime=2016-09&dimensionAtObservation=allDimensions"
+}

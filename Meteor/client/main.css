@@ -21,6 +21,55 @@
 
 }
 
+#navHeader {
+  padding-left: 25px;
+  padding-right: 30px;
+  color: #FFF9FB;
+}
+
+#navBar {
+  background-color: #252627;
+}
+
+.nav > li > a:hover{
+    background-color:#BB0A21;
+}
+
+.nav > li > a:focus{
+    background-color:#BB0A21;
+}
+.nav > li > a:active{
+    background-color:#BB0A21;
+}
+
+/*.navbar {
+  background: #252627;
+  .navbar-nav li a {
+    color: #BB0A21;
+    &:hover {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    &:focus {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    &:active {
+      color: #252627;
+      background-color: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+  }
+}*/
+
 #timelineTitle {
   font-size: 30px;
   padding: 10px;
@@ -280,7 +329,7 @@ tr:nth-child(even) {
 }
 
 #Menu {
-  /*box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);*/
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
   /*background-color: rgba(50,50,50,0.7);*/
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
@@ -334,26 +383,6 @@ tr:nth-child(even) {
   font-size: 2.5em;
 }
 
-#navHeader {
-  padding-left: 25px;
-  padding-right: 30px;
-  color: #FFF9FB;
-}
-
-#navBar {
-  background-color: #252627;
-}
-
-.nav > li > a:hover{
-    background-color:#BB0A21;
-}
-
-.nav > li > a:focus{
-    background-color:#BB0A21;
-}
-.nav > li > a:active{
-    background-color:#BB0A21;
-}
 
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow {

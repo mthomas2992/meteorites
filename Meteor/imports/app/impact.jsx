@@ -27,10 +27,10 @@ class Impact extends React.Component {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
-         {i: 'spec0', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
-         {i: 'spec1', x: 0, y: 1, w: 6, h: 0.5, isResizable:false},
-         {i: 'spec2', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
-         {i: 'spec3', x: 6, y: 1, w: 6, h: 0.5, isResizable:false},
+         {i: 'spec0', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
+         {i: 'spec1', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
+         {i: 'spec2', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
+         {i: 'spec3', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
         ],
         areas:["Retail","MerchandiseExports"],
         impactBrief:null,
@@ -293,6 +293,8 @@ class Impact extends React.Component {
     render() {
       var layouts = {lg:this.state.layout,md:this.state.layout};
 
+
+
       if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData && this.state.newFringeRetail && this.state.oldFringeRetail && this.state.oldFringeMerch && this.state.newFringeMerch){
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
@@ -320,6 +322,42 @@ class Impact extends React.Component {
             );
           }
         );
+
+        normlabels = this.state.lineGraphLabels;
+        fringeLabels = this.state.fringeGraphLabels;
+
+        for(iJ=0;iJ<normlabels.length;iJ++){
+          curr = normlabels[iJ];
+          if (curr == "01") normlabels[iJ] = "Jan";
+          if (curr == "02") normlabels[iJ] = "Feb";
+          if (curr == "03") normlabels[iJ] = "Mar";
+          if (curr == "04") normlabels[iJ] = "Apr";
+          if (curr == "05") normlabels[iJ] = "May";
+          if (curr == "06") normlabels[iJ] = "Jun";
+          if (curr == "07") normlabels[iJ] = "Jul";
+          if (curr == "08") normlabels[iJ] = "Aug";
+          if (curr == "09") normlabels[iJ] = "Sep";
+          if (curr == "10") normlabels[iJ] = "Oct";
+          if (curr == "11") normlabels[iJ] = "Nov";
+          if (curr == "12") normlabels[iJ] = "Dec";
+        }
+
+        for (iJ=0; iJ<fringeLabels.length;iJ++){
+          curr = fringeLabels[iJ];
+          if (curr == "01") fringeLabels[iJ] = "Jan";
+          if (curr == "02") fringeLabels[iJ] = "Feb";
+          if (curr == "03") fringeLabels[iJ] = "Mar";
+          if (curr == "04") fringeLabels[iJ] = "Apr";
+          if (curr == "05") fringeLabels[iJ] = "May";
+          if (curr == "06") fringeLabels[iJ] = "Jun";
+          if (curr == "07") fringeLabels[iJ] = "Jul";
+          if (curr == "08") fringeLabels[iJ] = "Aug";
+          if (curr == "09") fringeLabels[iJ] = "Sep";
+          if (curr == "10") fringeLabels[iJ] = "Oct";
+          if (curr == "11") fringeLabels[iJ] = "Nov";
+          if (curr == "12") fringeLabels[iJ] = "Dec";
+        }
+
         //now for each of the top elements we need to get their line graph data
         var specificGraphs = new Array();
         var i=0;
@@ -343,7 +381,7 @@ class Impact extends React.Component {
                       newData.push(newtoBePushed);
                       // console.log(newData);
                       var lineData = {
-                        labels: this.state.lineGraphLabels,
+                        labels: normlabels,
                         datasets:newData
                       }
                       var currValue = "(Thousands of dollars)";
@@ -351,16 +389,49 @@ class Impact extends React.Component {
                       if (possibleCategoryRetail.includes(currLabel)){
                         currValue = "(Millions of dollars)"
                       }
+
+                      var previousTotal = 0 ;
+                      var nextTotal = 0;
+
+                      for (kL=0; kL<newData[0].data.length;kL++){
+                        previousTotal = previousTotal + parseInt(newData[0].data[kL]);
+                      }
+
+                      for (kL=0; kL<newData[1].data.length;kL++){
+                        nextTotal = nextTotal + parseInt(newData[1].data[kL]);
+                      }
+
+                      var percentageDifference = (1-( nextTotal/ previousTotal )) *100;
+
+                      var rounded = percentageDifference.toFixed(2);
+
                       specificGraphs.push(<div className = "col-md-6" id = "specificsRoot" key={"spec"+i}>
                                             <div className = "row">
                                               <div className = "col-md-12" id="specificHeading">
                                                   {currLabel}
                                               </div>
-                                              <div className = "col-md-12" id = "chart">
-                                                <LineChart data={lineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*40}/>
-                                              </div>
                                               <div id = "graphLabel" className = "col-md-12">
                                                 {currValue}
+                                              </div>
+                                              <div className = "col-md-12" id = "subChart">
+                                                <LineChart data={lineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*40}/>
+                                              </div>
+                                              <div className = "col-md-6" id = "ratioTitle">
+                                                  <div className = "row" id = "ratioNumber">${nextTotal}</div>
+                                                  <div id="subLabel"> Last cycle (1 year ago) </div>
+                                              </div>
+                                              <div className = "col-md-6" id="ratioTitle">
+                                                  <div className = "row" id = "ratioNumber">${previousTotal}</div>
+                                                  <div id="subLabel"> This cycle (1 year ago) </div>
+                                              </div>
+                                              <br></br>
+                                              <div className = "col-md-6" id = "bottomRatioTitle">
+                                                <div className = "row" id= "ratioNumber">{rounded}%</div>
+                                                <div id="subLabel"> Percentage change in this sector</div>
+                                              </div>
+                                              <div className = "col-md-6" id = "bottomRatioTitle">
+                                                <div className = "row" id= "ratioNumber">${nextTotal-previousTotal}</div>
+                                                <div id="subLabel"> Gross change</div>
                                               </div>
                                             </div>
                                           </div>);
