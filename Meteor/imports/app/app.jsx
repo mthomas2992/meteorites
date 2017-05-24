@@ -117,12 +117,12 @@ class App extends React.Component {
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
                       </div>
                       <ul className="nav navbar-nav navbar-right">
-                        <li><a id="navHeader" onClick={()=>{this.addPanel()}}>Add Panel</a></li>
-                        <li><a id="navHeader" onClick={()=>{this.removePanel()}}>Remove Panel</a></li>
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
+                        <li><a id="navPanelModify" onClick={()=>{this.addPanel()}}>Add Panel</a></li>
+                        <li><a id="navPanelModify" onClick={()=>{this.removePanel()}}>Remove Panel</a></li>
                       </ul>
                     </div>
                     <div className="row">
