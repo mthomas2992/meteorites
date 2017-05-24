@@ -205,7 +205,7 @@ var arc = d3.svg.arc()
         d3.select("#percentage")
           .text(percentageString);
 
-        var goodName = 'MISTAKE';
+        var goodName = d.name;
         if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
           goodName = 'Mineral fuels, lubricants and related materials';
         } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
