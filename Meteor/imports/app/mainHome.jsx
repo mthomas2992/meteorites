@@ -17,13 +17,13 @@ class MainHome extends React.Component {
     render() {
       return (<div className = "row">
                 <div onClick = {()=>{FlowRouter.go("/impact?title=Yasi&startDate=2011-01-09&endDate=2011-03-09&region=QLD")}}className = "col-md-7" id = "yasiRoot">
-                  Yasi clyclone
+                <img src='/images/yasi.png'/>
                 </div>
                 <div onClick = {()=>{FlowRouter.go('/impact?title=CycloneLarry&startDate=2009-01-09&endDate=2009-03-09&region=VIC')}} className = "col-md-5" id= "rightTop">
-                  Black Saturday bushfires
+                  <img src='/images/fire.png'/>
                 </div>
                 <div onClick = {()=>{FlowRouter.go('/impact?title=CycloneLarry&startDate=2006-02-09&endDate=2006-04-09&region=AUS')}} className = "col-md-5" id = "rightBottom">
-                  Cyclone larry
+                  <img src='/images/cyclone.png'/> 
                 </div>
 
               </div>)
