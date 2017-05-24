@@ -606,7 +606,7 @@ class CustomImpact extends React.Component {
                   {textInput}
                   <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                     <div  id = "impactType" className= "row">
-                      Perctantile impact
+                      Percentile impact
                     </div>
                     <div className = "row">
                       <div className ="col-md-6">
