@@ -564,11 +564,11 @@ class Impact extends React.Component {
         var merchTablePercents = new Array();
 
         Object.entries(combinedPercents.RetailTurnover).forEach(([key,value])=>{
-          retailTablePercents.push(<tr><td>{key}</td> <td>{value*100}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+          retailTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
         })
 
         Object.entries(combinedPercents.MerchandiseExports).forEach(([key,value])=>{
-          merchTablePercents.push(<tr><td>{key}</td> <td>{value*100}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+          merchTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
         })
 
         var mainList =<div className = "col-md-6" id = "specificsRoot" key="retailList">
@@ -606,21 +606,21 @@ class Impact extends React.Component {
                             <div className = "col-md-6">
                               <div className = "row">
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  <div id = "percentage" className = "row">{prefixOne + topElements.one.Value*100+'%'}</div>
+                                  <div id = "percentage" className = "row">{prefixOne + (topElements.one.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.one.Name}</div>
                                 </div>
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  <div id = "percentage" className = "row">{prefixTwo + topElements.two.Value*100+'%'}</div>
+                                  <div id = "percentage" className = "row">{prefixTwo + (topElements.two.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.two.Name}</div>
                                 </div>
                               </div>
                               <div className = "row">
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  <div id = "percentage" className = "row">{prefixThree + topElements.three.Value*100+'%'}</div>
+                                  <div id = "percentage" className = "row">{prefixThree + (topElements.three.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.three.Name}</div>
                                 </div>
                                 <div id = "percentageDisp" className = "col-md-6">
-                                  <div id = "percentage" className = "row">{prefixFour + topElements.four.Value*100+'%'}</div>
+                                  <div id = "percentage" className = "row">{prefixFour + (topElements.four.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.four.Name}</div>
                                 </div>
                               </div>
