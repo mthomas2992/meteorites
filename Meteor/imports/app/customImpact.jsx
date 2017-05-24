@@ -558,7 +558,7 @@ class CustomImpact extends React.Component {
         </div>
         <br></br>
         <div className = "row" id = "rootBack">
-          <div id = "calculateChange" onClick = {this.calculateChange} className = "col-md-4 col-md-offset-4">
+          <div id = "calculateChange" onClick = {this.calculateChange} className = "col-md-2 col-md-offset-5">
             Calculate
           </div>
         </div>
