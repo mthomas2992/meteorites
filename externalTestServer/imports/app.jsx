@@ -20,7 +20,11 @@ class App extends React.Component {
       var self=this;
       Meteor.call('runMeteoristicsTests',function(err,res){
         self.setState({meteoristicsData:res});
-      })
+        Meteor.call('runOtherTests',function(err,res){
+          self.setState({foriegnData:res});
+        })
+      });
+
     }
 
 
