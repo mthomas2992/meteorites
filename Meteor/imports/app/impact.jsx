@@ -596,7 +596,7 @@ class Impact extends React.Component {
                             </div>;
 
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
-                          <div  id = "impactType" className= "row">
+                          <div  id = "specificHeading" className= "row">
                             Percentile Impact
                           </div>
                           <div className = "row">
@@ -633,7 +633,7 @@ class Impact extends React.Component {
                   </div>
                   <div className = "col-md-12">
                     <div id = "impactOptions" className = "row">
-                      <div className="col-md-3 col-md-offset-4">
+                      <div className="col-md-3 col-md-offset-2">
                         Start Date:
                         <DatePicker
                           dateFormat="YYYY-MM-DD"
@@ -650,14 +650,24 @@ class Impact extends React.Component {
                           />
                       </div>
                       <div className ="col-md-3">
-                        <Select
-                          name= "state-selector"
-                          value= {this.state.region}
-                          options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
-                          {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
-                          clearable = {false}
-                          onChange = {this.selectChange}
-                        />
+                        <div className = "row">
+                          <div className = "col-md-2" id = "regionAdder">
+                            Region:
+                          </div>
+                          <div className = "col-md-9 col-md-offset-1">
+                            <Select
+                              name= "state-selector"
+                              value= {this.state.region}
+                              options = {[{value:"AUS",label:"AUS"},{value:"NSW",label:"NSW"},{value:"VIC",label:"VIC"},{value:"NT",label:"NT"},{value:"WA",label:"WA"},{value:"SA",label:"SA"},
+                              {value:"ACT",label:"ACT"},{value:"TAS",label:"TAS"},{value:"QLD",label:"QLD"}]}
+                              clearable = {false}
+                              onChange = {this.selectChange}
+                              className = "selectRegion"
+                            />
+                          </div>
+                        </div>
+
+
                       </div>
                     </div>
                   </div>
