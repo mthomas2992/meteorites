@@ -597,11 +597,11 @@ class Impact extends React.Component {
 
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div  id = "impactType" className= "row">
-                            Perctantile impact
+                            Percentile Impact
                           </div>
                           <div className = "row">
-                            <div className ="col-md-6">
-                              <SunburstChart data={this.formatSunburst(combinedPercents)} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                            <div id = "d3Padder" className ="col-md-6">
+                              <SunburstChart data={this.formatSunburst(combinedPercents)}/>
                             </div>
                             <div className = "col-md-6">
                               <div className = "row">

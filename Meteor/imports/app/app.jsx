@@ -110,8 +110,8 @@ class App extends React.Component {
       // console.log(layouts);
 
       if (this.props.path == "Explorer"){
-        return (<div className="navbar navbar-defualt">
-                  <div className="container-fluid">
+        return (<div className="container-fluid">
+                  <div className="navbar navbar-defualt">
                     <div id="navBar" className="row">
                       <div className="navbar-header">
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
@@ -142,8 +142,8 @@ class App extends React.Component {
                   </div>
                 </div>);
       } else if (this.props.path == "impact") {
-        return (<div className="navbar navbar-defualt">
-                  <div className="container-fluid">
+        return (<div className="container-fluid">
+                  <div className="navbar navbar-defualt">
                     <div id="navBar" className="row">
                       <div className="navbar-header">
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
@@ -159,8 +159,8 @@ class App extends React.Component {
                   </div>
                 </div>)
       } else if (this.props.path =="Home"){
-        return(<div className="navbar navbar-defualt">
-                  <div className="container-fluid">
+        return(<div className="container-fluid">
+                  <div className="navbar navbar-defualt">
                     <div id="navBar" className="row">
                       <div className="navbar-header">
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
@@ -176,8 +176,8 @@ class App extends React.Component {
                   </div>
                 </div>)
       } else if (this.props.path == "Custom"){
-        return (<div className="navbar navbar-defualt">
-                  <div className="container-fluid">
+        return (<div className="container-fluid">
+                  <div className="navbar navbar-defualt">
                     <div id="navBar" className="row">
                       <div className="navbar-header">
                           <a id="navHeader" className="navbar-brand" href= "/">Meteoristics</a>
