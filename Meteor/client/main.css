@@ -36,10 +36,11 @@
 }
 
 #calculateChange {
-  background-color: #252627;
+  background-color: #4B88A2;
   color: #FFF9FB;
   text-align: center;
   font-size: 30px;
+  padding: 10px;
 }
 
 #sectionHeading {
@@ -71,6 +72,7 @@
   border-bottom-color: rgba(100,100,100,0.2);
   border-bottom-width: 0.01px;
   padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #homeTopBar {
@@ -352,35 +354,6 @@ tr:nth-child(even) {
 .nav > li > a:active{
     background-color:#BB0A21;
 }
-
-/*.navbar {    
-  background: #252627;
-  .navbar-nav li a {
-    color: #BB0A21;
-    &:hover {
-      color: #252627;
-      background-color: transparent;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-    &:focus {
-      color: #252627;
-      background-color: transparent;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-    &:active {
-      color: #252627;
-      background-color: transparent;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-  }
-}*/
-
 
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow {
