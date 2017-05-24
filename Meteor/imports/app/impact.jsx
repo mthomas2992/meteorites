@@ -548,7 +548,7 @@ class Impact extends React.Component {
         }
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div  id = "impactType" className= "row">
-                            Perctantile impact
+                            Percentile Impact
                           </div>
                           <div className = "row">
                             <div id = "d3Padder" className ="col-md-6">
