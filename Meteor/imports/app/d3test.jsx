@@ -17,6 +17,7 @@ class D3Test extends React.Component {
       this.arcTween = this.arcTween.bind(this);
       this.getAncestors = this.getAncestors.bind(this);
       this.sickFadeBro = this.sickFadeBro.bind(this);
+      this.fixName = this.fixName.bind(this);
       //console.log(this.props.data);
       // var tempRooty = this.state.rooty;
       // //tempRooty[0].value = 6;
@@ -136,39 +137,40 @@ var arc = d3.svg.arc()
           return 'DodgerBlue';
         } else if (d.name == 'RetailTurnover'){
           return 'Crimson';
-        } else if (d.name == 'Mineral fuels, lubricants and related materials'){
+        } else if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
           return 'black';
-        } else if (d.name == 'Crude materials, inedible, except fuels'){
+        } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
           return 'brown';
-        } else if (d.name == 'Manufactured goods classified chiefly by material'){
+        } else if (d.name == 'Manufactured goods classified chiefly by material' || d.name == 'manufacutedGoods'){
           return 'grey';
-        } else if (d.name == 'Food and live animals'){
+        } else if (d.name == 'Food and live animals' || d.name == 'foodAndLiveAnimals'){
           return 'Salmon';
-        } else if (d.name == 'Beverages and tobacco'){
+        } else if (d.name == 'Beverages and tobacco' || d.name == 'beveragesAndTobacco'){
           return  'orange';
-        } else if (d.name == 'Animal and vegetable oils, fats and waxes'){
+        } else if (d.name == 'Animal and vegetable oils, fats and waxes' || d.name == 'animalAndVegitableOilFatAndWaxes'){
           return 'Goldenrod';
-        } else if (d.name == 'Food retailing'){
+        } else if (d.name == 'Food retailing' || d.name == 'food'){
           return 'MediumVioletRed';
-        } else if (d.name == 'Other retailing'){
+        } else if (d.name == 'Other retailing' || d.name == 'other'){
           return 'Tan';
-        } else if (d.name == 'Department stores'){
+        } else if (d.name == 'Department stores' || d.name == 'departmentStores'){
           return 'Khaki';
-        } else if (d.name == 'Chemicals and related products, nes'){
+        } else if (d.name == 'Chemicals and related products, nes' || d.name == 'chemicalsAndRelatedProducts'){
           return 'MediumSeaGreen';
-        } else if (d.name == 'Cafes, restaurants and takeaway food services'){
+        } else if (d.name == 'Cafes, restaurants and takeaway food services' || d.name == 'cafesResturantsAndTakeawayFood'){
           return 'RosyBrown';
-        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC'){
+        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC' || d.name == 'unclassified'){
           return 'DarkGreen';
-        } else if (d.name == 'Machinery and transport equipment'){
+        } else if (d.name == 'Machinery and transport equipment' || d.name == 'machineryAndTransportEquipments'){
           return 'DarkSlateGray';
-        } else if (d.name == 'Household goods retailing'){
+        } else if (d.name == 'Household goods retailing' || d.name == 'householdgood'){
           return 'Teal';
-        } else if (d.name == 'Clothing, footwear and personal accessory retailing'){
+        } else if (d.name == 'Clothing, footwear and personal accessory retailing' || d.name == 'clothingFootwareAndPersonalAccessory'){
           return 'SaddleBrown';
-        } else if (d.name == 'Miscellaneous manufactured articles'){
+        } else if (d.name == 'Miscellaneous manufactured articles' || d.name == 'otherManucacturedArticles'){
           return 'Gold';
         }
+        console.log("wrongText is : "+d.name);
 
         return 'red';
         //return  color((d.children ? d : d.parent).name);
@@ -203,8 +205,45 @@ var arc = d3.svg.arc()
         d3.select("#percentage")
           .text(percentageString);
 
+        var goodName = 'MISTAKE';
+        if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
+          goodName = 'Mineral fuels, lubricants and related materials';
+        } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
+          goodName = 'Crude materials, inedible, except fuels';
+        } else if (d.name == 'Manufactured goods classified chiefly by material' || d.name == 'manufacutedGoods'){
+          goodName = 'Manufactured goods classified chiefly by material';
+        } else if (d.name == 'Food and live animals' || d.name == 'foodAndLiveAnimals'){
+          goodName = 'Food and live animals';
+        } else if (d.name == 'Beverages and tobacco' || d.name == 'beveragesAndTobacco'){
+          goodName =  'Beverages and tobacco';
+        } else if (d.name == 'Animal and vegetable oils, fats and waxes' || d.name == 'animalAndVegitableOilFatAndWaxes'){
+          goodName = 'Animal and vegetable oils, fats and waxes';
+        } else if (d.name == 'Food retailing' || d.name == 'food'){
+          goodName = 'Food retailing';
+        } else if (d.name == 'Other retailing' || d.name == 'other'){
+          goodName = 'Other retailing';
+        } else if (d.name == 'Department stores' || d.name == 'departmentStores'){
+          goodName = 'Department stores';
+        } else if (d.name == 'Chemicals and related products, nes' || d.name == 'chemicalsAndRelatedProducts'){
+          goodName = 'Chemicals and related products, nes';
+        } else if (d.name == 'Cafes, restaurants and takeaway food services' || d.name == 'cafesResturantsAndTakeawayFood'){
+          goodName = 'Cafes, restaurants and takeaway food services';
+        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC' || d.name == 'unclassified'){
+          goodName = 'Commodities and transactions not classified elsewhere in the SITC';
+        } else if (d.name == 'Machinery and transport equipment' || d.name == 'machineryAndTransportEquipments'){
+          goodName = 'Machinery and transport equipment';
+        } else if (d.name == 'Household goods retailing' || d.name == 'householdgood'){
+          goodName = 'Household goods retailing';
+        } else if (d.name == 'Clothing, footwear and personal accessory retailing' || d.name == 'clothingFootwareAndPersonalAccessory'){
+          goodName = 'Clothing, footwear and personal accessory retailing';
+        } else if (d.name == 'Miscellaneous manufactured articles' || d.name == 'otherManucacturedArticles'){
+          goodName = 'Miscellaneous manufactured articles';
+        }
+
+
+
         d3.select("#dataName")
-          .text(d.name);
+          .text(goodName);
 
         var path = [];
         var current = d;
@@ -248,6 +287,43 @@ d3.select(self.frameElement).style("height", height + "px");
 
   return d3;
 
+}
+
+fixName(d){
+        if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
+          return 'Mineral fuels, lubricants and related materials';
+        } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
+          return 'Crude materials, inedible, except fuels';
+        } else if (d.name == 'Manufactured goods classified chiefly by material' || d.name == 'manufacutedGoods'){
+          return 'Manufactured goods classified chiefly by material';
+        } else if (d.name == 'Food and live animals' || d.name == 'foodAndLiveAnimals'){
+          return 'Food and live animals';
+        } else if (d.name == 'Beverages and tobacco' || d.name == 'beveragesAndTobacco'){
+          return  'Beverages and tobacco';
+        } else if (d.name == 'Animal and vegetable oils, fats and waxes' || d.name == 'animalAndVegitableOilFatAndWaxes'){
+          return 'Animal and vegetable oils, fats and waxes';
+        } else if (d.name == 'Food retailing' || d.name == 'food'){
+          return 'Food retailing';
+        } else if (d.name == 'Other retailing' || d.name == 'other'){
+          return 'Other retailing';
+        } else if (d.name == 'Department stores' || d.name == 'departmentStores'){
+          return 'Khaki';
+        } else if (d.name == 'Chemicals and related products, nes' || d.name == 'chemicalsAndRelatedProducts'){
+          return 'Chemicals and related products, nes';
+        } else if (d.name == 'Cafes, restaurants and takeaway food services' || d.name == 'cafesResturantsAndTakeawayFood'){
+          return 'Cafes, restaurants and takeaway food services';
+        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC' || d.name == 'unclassified'){
+          return 'Commodities and transactions not classified elsewhere in the SITC';
+        } else if (d.name == 'Machinery and transport equipment' || d.name == 'machineryAndTransportEquipments'){
+          return 'Machinery and transport equipment';
+        } else if (d.name == 'Household goods retailing' || d.name == 'householdgood'){
+          return 'Household goods retailing';
+        } else if (d.name == 'Clothing, footwear and personal accessory retailing' || d.name == 'clothingFootwareAndPersonalAccessory'){
+          return 'Clothing, footwear and personal accessory retailing';
+        } else if (d.name == 'Miscellaneous manufactured articles' || d.name == 'otherManucacturedArticles'){
+          return 'Miscellaneous manufactured articles';
+        }
+        return 'MISTAKE';
 }
 
   sickFadeBro(d){
