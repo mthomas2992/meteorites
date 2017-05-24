@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import d3 from 'd3';
 
 import Sunburst from '/imports/app/d3test.jsx';
 
@@ -614,21 +615,21 @@ class CustomImpact extends React.Component {
                       <div className = "col-md-6">
                         <div className = "row">
                           <div id = "percentageDisp" className = "col-md-6">
-                            <div id = "percentage" className = "row">{prefixOne + topElements.one.Value*100+'%'}</div>
+                            <div id = "percentage" className = "row">{prefixOne + d3.round(topElements.one.Value*100,2)+'%'}</div>
                             <div id = "identifier" className = "row">{topElements.one.Name}</div>
                           </div>
                           <div id = "percentageDisp" className = "col-md-6">
-                            <div id = "percentage" className = "row">{prefixTwo + topElements.two.Value*100+'%'}</div>
+                            <div id = "percentage" className = "row">{prefixTwo + d3.round(topElements.two.Value*100,2)+'%'}</div>
                             <div id = "identifier" className = "row">{topElements.two.Name}</div>
                           </div>
                         </div>
                         <div className = "row">
                           <div id = "percentageDisp" className = "col-md-6">
-                            <div id = "percentage" className = "row">{prefixThree + topElements.three.Value*100+'%'}</div>
+                            <div id = "percentage" className = "row">{prefixThree + d3.round(topElements.three.Value*100,2)+'%'}</div>
                             <div id = "identifier" className = "row">{topElements.three.Name}</div>
                           </div>
                           <div id = "percentageDisp" className = "col-md-6">
-                            <div id = "percentage" className = "row">{prefixFour + topElements.four.Value*100+'%'}</div>
+                            <div id = "percentage" className = "row">{prefixFour + d3.round(topElements.four.Value*100,2)+'%'}</div>
                             <div id = "identifier" className = "row">{topElements.four.Name}</div>
                           </div>
                         </div>
