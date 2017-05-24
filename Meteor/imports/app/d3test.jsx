@@ -170,6 +170,14 @@ var arc = d3.svg.arc()
         return 'red';
         //return  color((d.children ? d : d.parent).name); 
       })
+      .style("stroke-opacity", function(d){
+        if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
+          return '0';
+        } else if (d.size < 0){
+          return '1';
+        }
+          return '0.6';
+      })
       .style("fill-rule", "evenodd")
       .each(this.stash)
       .on("mouseover", function(d){
