@@ -27,6 +27,8 @@ class Impact extends React.Component {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
+         {i:'retailList', x:0, y:1, w:6,h:0.5, isResizable:false},
+         {i:'merchList', x:6, y:1, w:6,h:0.9, isResizable:false},
          {i: 'spec0', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec1', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec2', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
@@ -52,6 +54,8 @@ class Impact extends React.Component {
 
       this.formatSunburst = this.formatSunburst.bind(this);
       this.selectChange = this.selectChange.bind(this);
+
+      this.addGeneralPanel = this.addGeneralPanel.bind(this);
     };
 
     loadData(){
@@ -169,6 +173,10 @@ class Impact extends React.Component {
       this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
       FlowRouter.go('/impact?title=Custom&startDate='+date.format('YYYY-MM-DD')+'&endDate='+this.state.timePeriodEnd+'&region='+this.state.region);
       location.reload();
+    }
+
+    addGeneralPanel(category){
+      console.log(category);
     }
 
     handleEndDateChange(date){
@@ -360,7 +368,9 @@ class Impact extends React.Component {
 
         //now for each of the top elements we need to get their line graph data
         var specificGraphs = new Array();
+        var allGraphs = new Array();
         var i=0;
+        var jLO=0;
         Object.entries(topElements).forEach(
           ([key1,value1]) => {
             //get line graph data,push to total elements pool
@@ -369,6 +379,7 @@ class Impact extends React.Component {
                 Object.entries(totalOldDataFormatted[key2]).forEach(
                   ([key3,value3]) => {
                     if (value1.Name == value3.label){
+                      console.log(value1.Name);
                       var newData = new Array();
                       var toBePushed = totalNewDataFormatted[key2][key3];
                       var currLabel = toBePushed.label
@@ -437,6 +448,7 @@ class Impact extends React.Component {
                                           </div>);
                       i++;
                     }
+
                   }
                 );
               }
@@ -546,6 +558,43 @@ class Impact extends React.Component {
         if (topElements.four.Value>0){
           prefixFour = "+";
         }
+
+
+        var retailTablePercents = new Array();
+        var merchTablePercents = new Array();
+
+        Object.entries(combinedPercents.RetailTurnover).forEach(([key,value])=>{
+          retailTablePercents.push(<tr><td>{key}</td> <td>{value*100}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+        })
+
+        Object.entries(combinedPercents.MerchandiseExports).forEach(([key,value])=>{
+          merchTablePercents.push(<tr><td>{key}</td> <td>{value*100}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+        })
+
+        var mainList =<div className = "col-md-6" id = "specificsRoot" key="retailList">
+                              <div className = "row">
+                                <div className = "col-md-12" id="specificHeading">
+                                    Complete Retail Impact
+                                </div>
+                                <div className = "col-md-12" id = "tableCenter">
+                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
+                                  {retailTablePercents}
+                                </div>
+                              </div>
+                            </div>;
+
+        var merchList =<div className = "col-md-6" id = "specificsRoot" key="merchList">
+                              <div className = "row">
+                                <div className = "col-md-12" id="specificHeading">
+                                    Complete Merchandise Impact
+                                </div>
+                                <div className = "col-md-12" id = "tableCenter">
+                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
+                                  {merchTablePercents}
+                                </div>
+                              </div>
+                            </div>;
+
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div  id = "impactType" className= "row">
                             Perctantile impact
@@ -625,6 +674,8 @@ class Impact extends React.Component {
                       onLayoutChange={this.layoutChange}>
                       {mainBrief}
                       {mainComparisonGraph}
+                      {mainList}
+                      {merchList}
                       {specificGraphs}
                     </ResponsiveReactGridLayout>
                   </div>
