@@ -174,9 +174,9 @@ var arc = d3.svg.arc()
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
           return '0';
         } else if (d.size < 0){
-          return '1';
+          return '0.8';
         }
-          return '0.6';
+          return '0.7';
       })
       .style("fill-rule", "evenodd")
       .each(this.stash)
