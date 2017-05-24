@@ -551,8 +551,8 @@ class Impact extends React.Component {
                             Perctantile impact
                           </div>
                           <div className = "row">
-                            <div className ="col-md-6">
-                              <SunburstChart data={this.formatSunburst(combinedPercents)} width = {(window.innerWidth/100)*50} height = {(window.innerHeight/100)*40}/>
+                            <div id = "d3Padder" className ="col-md-6">
+                              <SunburstChart data={this.formatSunburst(combinedPercents)}/>
                             </div>
                             <div className = "col-md-6">
                               <div className = "row">

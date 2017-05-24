@@ -79,10 +79,13 @@ getAncestors(node) {
 
 doEverything() {
     var width = 700,
-    height = 550,
-    radius = Math.min(width, height) / 2,
+    height = 600,
+    // radius = Math.min(width, height) / 2,
+    radius = 275,
     color = d3.scale.category20().domain(d3.range(-1,1));
     var totalSize = 0;
+
+    console.log("this is the radius: "+radius);
 
 
   var svg = d3.select(".d3Holder").append("svg")
@@ -278,11 +281,13 @@ d3.select(self.frameElement).style("height", height + "px");
 
 render() {
       return(
+        <div id="D3Padder">
         <div className="d3Holder">
           <div id="explanation">
             <span id="percentage"></span><br/>
             <span id="dataName"></span><br/>
           </div>
+        </div>
         </div>
         );
 

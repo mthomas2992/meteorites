@@ -382,6 +382,10 @@ tr:nth-child(even) {
   font-size: 2.5em;
 }
 
+#d3Padder{
+  height: 800;
+}
+
 
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow {
