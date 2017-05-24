@@ -821,3 +821,12 @@ tr:nth-child(even) {
    margin-bottom: 5px;
    padding: 5px;
  }
+
+ .selectRegion {
+   width: 50%;
+ }
+
+ #regionAdder {
+   display: flex;
+   vertical-align:middle;
+ }
