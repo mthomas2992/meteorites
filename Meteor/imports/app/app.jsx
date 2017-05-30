@@ -120,6 +120,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                         <li><a id="navPanelModify" onClick={()=>{this.addPanel()}}>Add Panel</a></li>
                         <li><a id="navPanelModify" onClick={()=>{this.removePanel()}}>Remove Panel</a></li>
@@ -152,6 +153,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -169,6 +171,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -186,6 +189,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
