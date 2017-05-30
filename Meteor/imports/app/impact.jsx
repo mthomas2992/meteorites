@@ -28,8 +28,8 @@ class Impact extends React.Component {
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
          {i:'companyImpact', x:0, y:1, w:12,h:0.8, isResizable:false},
-         {i:'retailList', x:0, y:1, w:6,h:0.5, isResizable:false},
-         {i:'merchList', x:6, y:1, w:6,h:0.9, isResizable:false},
+         {i:'retailList', x:0, y:2, w:6,h:0.5, isResizable:false},
+         {i:'merchList', x:6, y:2, w:6,h:0.9, isResizable:false},
          {i: 'spec0', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec1', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec2', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
@@ -846,9 +846,9 @@ class Impact extends React.Component {
                       {mainBrief}
                       {mainComparisonGraph}
                       {companyImpact}
+                      {specificGraphs}
                       {mainList}
                       {merchList}
-                      {specificGraphs}
                     </ResponsiveReactGridLayout>
                   </div>
                 </div>)
