@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import App from '/imports/app/app.jsx';
 import APIDocumentation from '/imports/apiDocumentation/apiDocumentation.jsx';
 import ApiExplorer from '/imports/apiDocumentation/explorer.jsx';
-import D3Test from '/imports/app/d3test.jsx';
+//import About from '/imports/apiDocumentation/about.jsx';
+//import D3Test from '/imports/api/d3test.jsx';
+//import About from '/imports/app/about.jsx';
 
 FlowRouter.route('/', {
   action(params, queryParams) {
@@ -29,9 +31,15 @@ FlowRouter.route('/explorer', {
   }
 });
 
+FlowRouter.route('/about', {
+  action(params,queryParams) {
+    ReactDOM.render(<App path="About" queryParams={queryParams}/>, document.getElementById('app'));
+  }
+});
+
 //Api documentation routes are defined for a different app
 FlowRouter.route('/api/documentation', {
-  action(params,queryParams) {
+  action(params, queryParams) {
     ReactDOM.render(<APIDocumentation version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
   }
 });
@@ -42,6 +50,7 @@ FlowRouter.route('/api/explorer', {
     ReactDOM.render(<ApiExplorer version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
   }
 });
+
 
 FlowRouter.notFound = {
   action(){
