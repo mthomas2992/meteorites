@@ -7,18 +7,24 @@ import D3Test from '/imports/app/d3test.jsx';
 
 FlowRouter.route('/', {
   action(params, queryParams) {
+    //ReactDOM.render(<APIDocumentation version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
+
     ReactDOM.render(<App path="Home" />, document.getElementById('app'));
   }
 });
 
 FlowRouter.route('/impact', {
   action(params, queryParams) {
+    // ReactDOM.render(<APIDocumentation version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
+
     ReactDOM.render(<App path="impact" queryParams={queryParams}/>, document.getElementById('app'));
   }
 });
 
 FlowRouter.route('/custom', {
   action(params, queryParams) {
+    // ReactDOM.render(<APIDocumentation version={queryParams.ver} endpoint={queryParams.endpoint}/>, document.getElementById('app'));
+
     ReactDOM.render(<App path="Custom" queryParams={queryParams}/>, document.getElementById('app'));
   }
 });
