@@ -709,7 +709,21 @@ class CustomImpact extends React.Component {
                       Predictor
                     </div>
                     <div id = "predictorInfo" className = "col-md-12">
-                      Info about predictor and how to use it
+                      <div className = "row">
+                        <div className = "col-md-10 col-md-offset-1">
+                          Using all Statistics data availible and an intelligent Neural Network based algorithm we have been able to correlate the connections between different areas of Australian industry.
+                        </div>
+                      </div>
+                      <div className = "row" >
+                        <div className = "col-md-10 col-md-offset-1">
+                          By adding an area of statistics below (such as materials) and selecting the impact it experiences (say a strong negative downward trend) you can then view how it will affect the rest of Australian Statisitcs.
+                        </div>
+                      </div>
+                      <div className = "row">
+                        <div className = "col-md-10 col-md-offset-1">
+                          So if we knew that a mine was going to collapse, we can predict how this new event will impact the australian economy
+                        </div>
+                      </div>
                     </div>
                     {textInput}
                     <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
@@ -752,8 +766,26 @@ class CustomImpact extends React.Component {
                       Predictor
                     </div>
                     <div id = "predictorInfo" className = "col-md-12">
-                      Info about predictor and how to use it
+                      <div id = "heading" className="row">
+                        How it works
+                      </div>
+                      <div id = "textRow" className = "row">
+                        <div className = "col-md-10 col-md-offset-1">
+                          Using all Statistics data availible and an intelligent Neural Network based algorithm we have been able to correlate the connections between different areas of Australian industry.
+                        </div>
+                      </div>
+                      <div id = "textRow" className = "row" >
+                        <div className = "col-md-10 col-md-offset-1">
+                          By adding an area of statistics below (such as materials) and selecting the impact it experiences (say a strong negative downward trend) you can then view how it will affect the rest of Australian Statisitcs.
+                        </div>
+                      </div>
+                      <div id = "textRow" className = "row">
+                        <div className = "col-md-10 col-md-offset-1">
+                          So if we knew that a mine was going to collapse, we can predict how this new event will impact the australian economy
+                        </div>
+                      </div>
                     </div>
+
                     {textInput}
                     <div className = "col-md-12" id = "rootBack">
                       <div id = "calculateChange" onClick = {this.calculateChange} className = "col-md-2 col-md-offset-5">
