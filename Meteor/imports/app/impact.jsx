@@ -743,10 +743,10 @@ class Impact extends React.Component {
                         }
                       } else if (actualImpact< 0){
                         impactAmount = "Slight Negative Impact"
-                        arrowSource = "/images/singleDown.png"
+                        arrowSource = "/images/singleDown.svg"
                         if (actualImpact< -0.1){
                           impactAmount = "Moderate Negative Impact"
-                          arrowSource = "/images/singleDown.png"
+                          arrowSource = "/images/singleDown.svg"
                         }
                         if (actualImpact < -0.15) {
                           impactAmount = "Strong Negative Impact"
