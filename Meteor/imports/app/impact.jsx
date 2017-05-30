@@ -720,23 +720,52 @@ class Impact extends React.Component {
                         if (currentSentiment>0.5){
                           sentiment = "very positive"
                         }
-                      } else if (currentSentiment<0){
+                      } else if (currentSentiment < 0){
                         sentiment = "negative"
                         if (currentSentiment<-0.5){
                           sentiment = "very negative"
                         }
                       }
-                      impactedCompanies.push(<div className = "col-md-3">
-                        <div className = "row">
+                      var impactAmount = "negligable";
+                      var actualImpact = curr.stockImpact*value2;
+                      var arrowSource = "";
+
+                      if (actualImpact>0){
+                        impactAmount = "Slight Positive Impact";
+                        arrowSource = "/images/singleUp.png";
+                        if (actualImpact>0.1){
+                          impactAmount = "Moderate Positive Impact";
+                          arrowSource = "/images/singleUp.png";
+                        }
+                        if (actualImpact > 0.15) {
+                          impactAmount = "Strong Positive Impact"
+                          arrowSource = "/images/Double_arrow_green_up.png"
+                        }
+                      } else if (actualImpact< 0){
+                        impactAmount = "Slight Negative Impact"
+                        arrowSource = "/images/singleDown.png"
+                        if (actualImpact< -0.1){
+                          impactAmount = "Moderate Negative Impact"
+                          arrowSource = "/images/singleDown.png"
+                        }
+                        if (actualImpact < -0.15) {
+                          impactAmount = "Strong Negative Impact"
+                          arrowSource = "/images/Double_arrow_red_down.png"
+                        }
+                      }
+                      if (curr.stockImpact*value2)
+                      impactedCompanies.push(<div className = "col-md-3" id = "stockElement">
+                        <div className = "row" id = "stockCode">
                           {curr.stockCode}
+                          <img id = "stockArrow" src = {arrowSource}></img>
                         </div>
-                        <div className = "row">
+                        <div className = "row" id = "stockName">
                           {curr.stockName}
                         </div>
-                        <div className = "row">
-                          {(curr.stockImpact*value2).toFixed(2)}
+                        <div className = "row" id = "stockImpact">
+                          {impactAmount}
                         </div>
-                        <div className = "row">
+                        <div className = "row" id = "stockSentiment">
                           Sentiment:{sentiment}
                         </div>
                       </div>)
