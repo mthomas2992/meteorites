@@ -470,40 +470,43 @@ class CustomImpact extends React.Component {
         var textInput = <div className = "col-md-12">
           <br></br>
           <div className = "row" id = "rootBack">
-            <Select
-              name= "state-selector"
-              value= {this.state.currentSelect}
-              options = {[{value:"food",label:"Food"},
-                          {value:"householdgood",label:"Household good"},
-                          {value:"clothingFootwareAndPersonalAccessory",label:"Clothing, Footware and Personal Accessories"},
-                          {value:"departmentStores",label:"Department Stores"},
-                          {value:"cafesResturantsAndTakeawayFood",label:"Cafes, Resturants and Takeaway Food"},
-                          {value:"other",label:"Other retailing"},
-                          {value:"foodAndLiveAnimals",label:"Food and Live Animals"},
-                          {value:"beveragesAndTobacco",label:"Beverages and Tobacco"},
-                          {value:"crudMaterialAndInedible",label:"Crud Material and Inedible"},
-                          {value:"mineralFuelLubricentAndRelatedMaterial",label:"Mineral Fuel Lubricent and Related Material"},
-                          {value:"animalAndVegitableOilFatAndWaxes",label:"Animal and Vegetable Oil,Fat and Waxes"},
-                          {value:"chemicalsAndRelatedProducts",label:"Chemicals and Related Products"},
-                          {value:"manufacutedGoods",label:"Manufactured Goods"},
-                          {value:"machineryAndTransportEquipments",label:"Machinery and Transport Equipments"},
-                          {value:"otherManucacturedArticles",label:"Other Manufactured Articles"},
-                          {value:"unclassified",label:"Unclassified"}]}
-              clearable = {false}
-              onChange = {this.selectChange}
-              className = "selectRegion"
-            />
-            <div className = "col-md-4">
+            <div className = "col-md-4 col-md-offset-2">
+              <Select
+                name= "state-selector"
+                value= {this.state.currentSelect}
+                options = {[{value:"food",label:"Food"},
+                            {value:"householdgood",label:"Household good"},
+                            {value:"clothingFootwareAndPersonalAccessory",label:"Clothing, Footware and Personal Accessories"},
+                            {value:"departmentStores",label:"Department Stores"},
+                            {value:"cafesResturantsAndTakeawayFood",label:"Cafes, Resturants and Takeaway Food"},
+                            {value:"other",label:"Other retailing"},
+                            {value:"foodAndLiveAnimals",label:"Food and Live Animals"},
+                            {value:"beveragesAndTobacco",label:"Beverages and Tobacco"},
+                            {value:"crudMaterialAndInedible",label:"Crud Material and Inedible"},
+                            {value:"mineralFuelLubricentAndRelatedMaterial",label:"Mineral Fuel Lubricent and Related Material"},
+                            {value:"animalAndVegitableOilFatAndWaxes",label:"Animal and Vegetable Oil,Fat and Waxes"},
+                            {value:"chemicalsAndRelatedProducts",label:"Chemicals and Related Products"},
+                            {value:"manufacutedGoods",label:"Manufactured Goods"},
+                            {value:"machineryAndTransportEquipments",label:"Machinery and Transport Equipments"},
+                            {value:"otherManucacturedArticles",label:"Other Manufactured Articles"},
+                            {value:"unclassified",label:"Unclassified"}]}
+                clearable = {false}
+                onChange = {this.selectChange}
+                className = "selectArea"
+              />
+            </div>
+            <div className = "col-md-3">
                 <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
             </div>
-            <div onClick = {()=>{this.addValue()}}>
-              click to add
+            <div className = "col-md-2" onClick = {()=>{this.addValue()}}>
+              Add impact metric
             </div>
           </div>
           <br></br>
           <div className = "row" id = "rootBack">
             {this.state.addedValues}
           </div>
+          <br></br>
         </div>;
         if (this.state.percentageChanges && this.state.sunburstData){
           console.log(this.state.percentageChanges)
@@ -702,6 +705,12 @@ class CustomImpact extends React.Component {
                   </div>
 
           return (<div className = "row">
+                    <div id = "mainImpactTitle" className = "col-md-12">
+                      Predictor
+                    </div>
+                    <div id = "predictorInfo" className = "col-md-12">
+                      Info about predictor and how to use it
+                    </div>
                     {textInput}
                     <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                       <div  id = "impactType" className= "row">
@@ -739,10 +748,13 @@ class CustomImpact extends React.Component {
                   </div>)
         } else {
           return (<div className = "row">
-                    {textInput}
-                    <div className = "col-md-12">
-                      <br></br>
+                    <div id = "mainImpactTitle" className = "col-md-12">
+                      Predictor
                     </div>
+                    <div id = "predictorInfo" className = "col-md-12">
+                      Info about predictor and how to use it
+                    </div>
+                    {textInput}
                     <div className = "col-md-12" id = "rootBack">
                       <div id = "calculateChange" onClick = {this.calculateChange} className = "col-md-2 col-md-offset-5">
                         Calculate
