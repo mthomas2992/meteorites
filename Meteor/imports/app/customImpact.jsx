@@ -6,6 +6,8 @@ import d3 from 'd3';
 
 import Sunburst from '/imports/app/d3test.jsx';
 
+import Select from 'react-select';
+
 var possibleCategoryRetail = ["Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"];
 var possibleCategoryMerchandise = ["FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"];
 
@@ -32,12 +34,19 @@ class CustomImpact extends React.Component {
           otherManucacturedArticles:0,
           unclassified:0
         },
-        outputs:null
+        outputs:null,
+        currentSelect:null,
+        addingValue:0,
+        addedValues:null
       }
 
       this.handleChange = this.handleChange.bind(this);
       this.calculateChange = this.calculateChange.bind(this);
       this.formatSunburst = this.formatSunburst.bind(this);
+
+      this.selectChange = this.selectChange.bind(this);
+      this.handleNormChange = this.handleNormChange.bind(this);
+      this.addValue = this.addValue.bind(this);
     };
 
     componentWillMount(){
@@ -48,6 +57,7 @@ class CustomImpact extends React.Component {
     };
 
     handleChange(event) {
+      console.log(event);
       const target = event.target;
       const value = target.value;
       const name = target.name;
@@ -57,6 +67,20 @@ class CustomImpact extends React.Component {
         values:curr
       });
     };
+
+    handleNormChange(event) {
+      const target = event.target;
+      const value = target.value;
+      const name = target.name;
+      this.setState({
+        [name]: value
+      });
+    };
+
+    selectChange(val){
+      console.log(val);
+      this.setState({currentSelectRoot:val,currentSelect:val.value});
+    }
 
     calculateChange(){
       var percentageChanges = {
@@ -413,6 +437,31 @@ class CustomImpact extends React.Component {
       return(base);
     }
 
+    addValue() {
+      if (this.state.addedValues){
+        var current = this.state.addedValues;
+      } else {
+        var current = new Array();
+      }
+      console.log(this.state.currentSelectRoot.value);
+
+      var currentValues = this.state.values;
+      currentValues[this.state.currentSelectRoot.value] = this.state.addingValue;
+
+      this.setState({values:currentValues});
+
+      current.push(<div className = "row">
+                      <div id = "catTitle" className="col-md-6 col-md-offset-1">
+                        {this.state.currentSelectRoot.label}
+                      </div>
+                      <div className = "col-md-4">
+                        <input id = "catInput" type = "number" name = {this.state.currentSelectRoot.value} value={this.state.values[this.state.currentSelectRoot.value]} onChange={this.handleChange}/>
+                      </div>
+                    </div>);
+
+      this.setState({addedValues:current});
+    }
+
     render() {
       console.log(this.state);
       // this.calculateChange();
@@ -421,144 +470,39 @@ class CustomImpact extends React.Component {
         var textInput = <div className = "col-md-12">
           <br></br>
           <div className = "row" id = "rootBack">
-            <div className = "col-md-6">
-              <div className = "row" id = "sectionHeading">
-                Retail and Trade
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Food
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "food" value={this.state.values.food} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Householdgood
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "householdgood" value={this.state.values.householdgood} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Clothing, Footware and Personal Accessories
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "clothingFootwareAndPersonalAccessory" value={this.state.values.clothingFootwareAndPersonalAccessory} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  DepartmentStores
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "departmentStores" value={this.state.values.departmentStores} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Cafes, Resturants and Takeaway Food
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "cafesResturantsAndTakeawayFood" value={this.state.values.cafesResturantsAndTakeawayFood} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Other
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "other" value={this.state.values.other} onChange={this.handleChange}/>
-                </div>
-              </div>
+            <Select
+              name= "state-selector"
+              value= {this.state.currentSelect}
+              options = {[{value:"food",label:"Food"},
+                          {value:"householdgood",label:"Household good"},
+                          {value:"clothingFootwareAndPersonalAccessory",label:"Clothing, Footware and Personal Accessories"},
+                          {value:"departmentStores",label:"Department Stores"},
+                          {value:"cafesResturantsAndTakeawayFood",label:"Cafes, Resturants and Takeaway Food"},
+                          {value:"other",label:"Other retailing"},
+                          {value:"foodAndLiveAnimals",label:"Food and Live Animals"},
+                          {value:"beveragesAndTobacco",label:"Beverages and Tobacco"},
+                          {value:"crudMaterialAndInedible",label:"Crud Material and Inedible"},
+                          {value:"mineralFuelLubricentAndRelatedMaterial",label:"Mineral Fuel Lubricent and Related Material"},
+                          {value:"animalAndVegitableOilFatAndWaxes",label:"Animal and Vegetable Oil,Fat and Waxes"},
+                          {value:"chemicalsAndRelatedProducts",label:"Chemicals and Related Products"},
+                          {value:"manufacutedGoods",label:"Manufactured Goods"},
+                          {value:"machineryAndTransportEquipments",label:"Machinery and Transport Equipments"},
+                          {value:"otherManucacturedArticles",label:"Other Manufactured Articles"},
+                          {value:"unclassified",label:"Unclassified"}]}
+              clearable = {false}
+              onChange = {this.selectChange}
+              className = "selectRegion"
+            />
+            <div className = "col-md-4">
+                <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
             </div>
-            <div className = "col-md-6">
-              <div className="row" id="sectionHeading">
-                Merchandise Exports
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Food and Live Animals
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "foodAndLiveAnimals" value={this.state.values.foodAndLiveAnimals} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Beverages and Tobacco
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "beveragesAndTobacco" value={this.state.values.beveragesAndTobacco} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Crud Material and Inedible
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "crudMaterialAndInedible" value={this.state.values.crudMaterialAndInedible} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Mineral Fuel Lubricent and Related Material
-                </div>
-                <div className = "col-md-4">
-                  <input id ="catInput" type = "number" name = "mineralFuelLubricentAndRelatedMaterial" value={this.state.values.mineralFuelLubricentAndRelatedMaterial} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Animal and Vegetable Oil,Fat and Waxes
-                </div>
-                <div className = "col-md-4">
-                  <input id="catInput" type = "number" name = "animalAndVegitableOilFatAndWaxes" value={this.state.values.animalAndVegitableOilFatAndWaxes} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Chemicals and Related Products
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "chemicalsAndRelatedProducts" value={this.state.values.chemicalsAndRelatedProducts} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Manufactured Goods
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "manufacutedGoods" value={this.state.values.manufacutedGoods} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Machinery and Transport Equipments
-                </div>
-                <div className = "col-md-4">
-                  <input id="catInput" type = "number" name = "machineryAndTransportEquipments" value={this.state.values.machineryAndTransportEquipments} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Other Manufactured Articles
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "otherManucacturedArticles" value={this.state.values.otherManucacturedArticles} onChange={this.handleChange}/>
-                </div>
-              </div>
-              <div className = "row">
-                <div id = "catTitle" className="col-md-6 col-md-offset-1">
-                  Unclassified
-                </div>
-                <div className = "col-md-4">
-                  <input id = "catInput" type = "number" name = "unclassified" value={this.state.values.unclassified} onChange={this.handleChange}/>
-                </div>
-              </div>
+            <div onClick = {()=>{this.addValue()}}>
+              click to add
             </div>
+          </div>
+          <br></br>
+          <div className = "row" id = "rootBack">
+            {this.state.addedValues}
           </div>
         </div>;
         if (this.state.percentageChanges && this.state.sunburstData){
@@ -818,3 +762,145 @@ class CustomImpact extends React.Component {
 }
 
 export default CustomImpact;
+
+
+
+
+            // <div className = "col-md-6">
+            //   <div className = "row" id = "sectionHeading">
+            //     Retail and Trade
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Food
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "food" value={this.state.values.food} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Householdgood
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "householdgood" value={this.state.values.householdgood} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Clothing, Footware and Personal Accessories
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "clothingFootwareAndPersonalAccessory" value={this.state.values.clothingFootwareAndPersonalAccessory} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       DepartmentStores
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "departmentStores" value={this.state.values.departmentStores} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Cafes, Resturants and Takeaway Food
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "cafesResturantsAndTakeawayFood" value={this.state.values.cafesResturantsAndTakeawayFood} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Other
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "other" value={this.state.values.other} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            // </div>
+            // <div className = "col-md-6">
+            //   <div className="row" id="sectionHeading">
+            //     Merchandise Exports
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Food and Live Animals
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "foodAndLiveAnimals" value={this.state.values.foodAndLiveAnimals} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Beverages and Tobacco
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "beveragesAndTobacco" value={this.state.values.beveragesAndTobacco} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Crud Material and Inedible
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "crudMaterialAndInedible" value={this.state.values.crudMaterialAndInedible} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Mineral Fuel Lubricent and Related Material
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id ="catInput" type = "number" name = "mineralFuelLubricentAndRelatedMaterial" value={this.state.values.mineralFuelLubricentAndRelatedMaterial} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Animal and Vegetable Oil,Fat and Waxes
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id="catInput" type = "number" name = "animalAndVegitableOilFatAndWaxes" value={this.state.values.animalAndVegitableOilFatAndWaxes} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Chemicals and Related Products
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "chemicalsAndRelatedProducts" value={this.state.values.chemicalsAndRelatedProducts} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Manufactured Goods
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "manufacutedGoods" value={this.state.values.manufacutedGoods} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Machinery and Transport Equipments
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id="catInput" type = "number" name = "machineryAndTransportEquipments" value={this.state.values.machineryAndTransportEquipments} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Other Manufactured Articles
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "otherManucacturedArticles" value={this.state.values.otherManucacturedArticles} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            //   <div className = "row">
+            //     <div id = "catTitle" className="col-md-6 col-md-offset-1">
+            //       Unclassified
+            //     </div>
+            //     <div className = "col-md-4">
+            //       <input id = "catInput" type = "number" name = "unclassified" value={this.state.values.unclassified} onChange={this.handleChange}/>
+            //     </div>
+            //   </div>
+            // </div>
