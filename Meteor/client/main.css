@@ -836,3 +836,30 @@ tr:nth-child(even) {
  body {
    overflow-x: hidden;
  }
+
+ #impactedIndustriesTitle {
+   font-size: 30px;
+   text-align: center;
+   border-bottom-style:solid;
+   border-bottom-color: rgba(100,100,100,0.2);
+   border-bottom-width:0.05px;
+   margin-bottom: 5px;
+ }
+
+  #impactedIndustries {
+    background-color: #e0e0eb;
+    padding: 5px;
+    padding-top: 2px;
+    border-style: solid;
+    top: 20px;
+    position: relative;
+  }
+
+#specificHeading {
+  font-size: 30px;
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0, 0, 0, .04);
+  background-color: #252627;
+  color: white;
+}

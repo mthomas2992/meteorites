@@ -597,14 +597,20 @@ class Impact extends React.Component {
 
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div  id = "specificHeading" className= "row">
-                            Percentile Impact
+                            Disaster Impact
                           </div>
                           <div className = "row">
                             <div id = "d3Padder" className ="col-md-6">
                               <SunburstChart data={this.formatSunburst(combinedPercents)}/>
                             </div>
                             <div className = "col-md-6">
+                              <div id = "impactedIndustries">
                               <div className = "row">
+                                <div  className= "row">
+                                  <div id = "impactedIndustriesTitle">
+                                    Keys Impacts
+                                  </div>
+                                </div>
                                 <div id = "percentageDisp" className = "col-md-6">
                                   <div id = "percentage" className = "row">{prefixOne + (topElements.one.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.one.Name}</div>
@@ -623,6 +629,7 @@ class Impact extends React.Component {
                                   <div id = "percentage" className = "row">{prefixFour + (topElements.four.Value*100).toFixed(0)+'%'}</div>
                                   <div id = "identifier" className = "row">{topElements.four.Name}</div>
                                 </div>
+                              </div>
                               </div>
                             </div>
                           </div>
