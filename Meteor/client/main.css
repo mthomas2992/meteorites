@@ -840,17 +840,14 @@ tr:nth-child(even) {
  #impactedIndustriesTitle {
    font-size: 30px;
    text-align: center;
-   border-bottom-style:solid;
-   border-bottom-color: rgba(100,100,100,0.2);
-   border-bottom-width:0.05px;
    margin-bottom: 5px;
  }
 
   #impactedIndustries {
-    background-color: #e0e0eb;
-    padding: 5px;
-    padding-top: 2px;
+    background-color: #efeff5;
     border-style: solid;
+    border-color: rgba(100,100,100,0.2);
+    border-width:0.5px;
     top: 20px;
     position: relative;
   }
