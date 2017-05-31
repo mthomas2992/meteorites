@@ -778,9 +778,9 @@ class CustomImpact extends React.Component {
 
                     {textInput}
                     <div className = "col-md-12" id = "rootBack">
-                      <div id = "calculateChange" onClick = {this.calculateChange} className = "col-md-2 col-md-offset-5">
+                      <button id = "calculateChange" type="button" onClick = {this.calculateChange} className = "col-md-2 col-md-offset-5 btn btn-default">
                         Calculate
-                      </div>
+                      </button>
                     </div>
 
                   </div>)
