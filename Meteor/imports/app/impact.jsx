@@ -27,13 +27,13 @@ class Impact extends React.Component {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
-         {i:'companyImpact', x:0, y:1, w:12,h:0.8, isResizable:false},
+         {i:'companyImpact', x:0, y:1, w:12,h:0.7, isResizable:false},
          {i:'retailList', x:0, y:2, w:6,h:0.5, isResizable:false},
          {i:'merchList', x:6, y:2, w:6,h:0.9, isResizable:false},
-         {i: 'spec0', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
-         {i: 'spec1', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
-         {i: 'spec2', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
-         {i: 'spec3', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
+         {i: 'spec0', x: 0, y: 1, w: 6, h: 0.7, isResizable:false},
+         {i: 'spec1', x: 0, y: 1, w: 6, h: 0.7, isResizable:false},
+         {i: 'spec2', x: 6, y: 1, w: 6, h: 0.7, isResizable:false},
+         {i: 'spec3', x: 6, y: 1, w: 6, h: 0.7, isResizable:false},
         ],
         areas:["Retail","MerchandiseExports"],
         impactBrief:null,
@@ -433,14 +433,6 @@ class Impact extends React.Component {
                                               <div className = "col-md-12" id = "subChart">
                                                 <LineChart data={lineData} width = {(window.innerWidth/100)*47} height = {(window.innerHeight/100)*40}/>
                                               </div>
-                                              <div className = "col-md-6" id = "ratioTitle">
-                                                  <div className = "row" id = "ratioNumber">${nextTotal}</div>
-                                                  <div id="subLabel"> Last cycle (1 year ago) </div>
-                                              </div>
-                                              <div className = "col-md-6" id="ratioTitle">
-                                                  <div className = "row" id = "ratioNumber">${previousTotal}</div>
-                                                  <div id="subLabel"> This cycle (1 year ago) </div>
-                                              </div>
                                               <br></br>
                                               <div className = "col-md-6" id = "bottomRatioTitle">
                                                 <div className = "row" id= "ratioNumber">{rounded}%</div>
@@ -767,7 +759,9 @@ class Impact extends React.Component {
                           arrowSource = "/images/Double_arrow_red_down.png"
                         }
                       }
-                      if (curr.stockImpact*value2)
+                      if (impactAmount=="Slight Negative Impact" || impactAmount == "Slight Positive Impact"){
+                        continue;
+                      }
                       impactedCompanies.push(<div className = "col-md-3" id = "stockElement">
                         <div className = "row" id = "stockCode">
                           {curr.stockCode}

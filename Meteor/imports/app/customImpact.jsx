@@ -513,12 +513,12 @@ class CustomImpact extends React.Component {
                   name= "state-selector"
                   value= {this.state.currentMagnitudeSelect}
                   options = {[
-                              {value:10,label:"Strong Positive (+) Increase"},
-                              {value:5,label:"Moderate Positive (+) Increase"},
-                              {value:2,label:"Marginal Positive (+) Increase"},
-                              {value:-2,label:"Marginal Negative (-) Decrease"},
-                              {value:-5,label:"Moderate Negative (-) Decrease"},
-                              {value:-10,label:"Strong Negative (-)Increase"}]}
+                              {value:20,label:"Strong Positive (+) Increase"},
+                              {value:10,label:"Moderate Positive (+) Increase"},
+                              {value:5,label:"Marginal Positive (+) Increase"},
+                              {value:-5,label:"Marginal Negative (-) Decrease"},
+                              {value:-10,label:"Moderate Negative (-) Decrease"},
+                              {value:-25,label:"Strong Negative (-) Decrease"}]}
                   clearable = {false}
                   onChange = {this.selectChangeChange}
                   className = "selectArea"
