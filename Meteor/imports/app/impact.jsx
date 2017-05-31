@@ -609,12 +609,12 @@ class Impact extends React.Component {
                             <div id = "d3Padder" className ="col-md-6">
                               <SunburstChart data={this.formatSunburst(combinedPercents)}/>
                             </div>
-                            <div className = "col-md-6">
-                              <div id = "impactedIndustries">
+                            <div id = "impactedIndustries" className = "col-md-6">
+                              <div >
                               <div className = "row">
                                 <div  className= "row">
                                   <div id = "impactedIndustriesTitle">
-                                    Keys Impacts
+                                    Keys Statistics
                                   </div>
                                 </div>
                                 <div id = "percentageDisp" className = "col-md-6">
