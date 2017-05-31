@@ -498,6 +498,22 @@ class CustomImpact extends React.Component {
             <div className = "col-md-3">
                 <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
             </div>
+
+            <Select
+              name= "state-selector"
+              value= {this.state.currentSelect}
+              options = {[
+                          {value:10,label:"Strong Positive (+) Increase"},
+                          {value:5,label:"Moderate Positive (+) Increase"},
+                          {value:2,label:"Marginal Positive (+) Increase"},
+                          {value:-2,label:"Marginal Negative (-) Decrease"},
+                          {value:-5,label:"Moderate Negative (-) Decrease"},
+                          {value:-10,label:"Strong Negative (-)Increase"},]}
+              clearable = {false}
+              onChange = {this.selectChange}
+              className = "selectArea"
+            />
+
             <button id = "metricButton" type="button" className = "btn btn-default" onClick = {()=>{this.addValue()}}>
               Add impact metric (%)
             </button>
