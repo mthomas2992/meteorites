@@ -498,9 +498,9 @@ class CustomImpact extends React.Component {
             <div className = "col-md-3">
                 <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
             </div>
-            <div className = "col-md-2" onClick = {()=>{this.addValue()}}>
-              Add impact metric
-            </div>
+            <button id = "metricButton" type="button" className = "btn btn-default" onClick = {()=>{this.addValue()}}>
+              Add impact metric (%)
+            </button>
           </div>
           <br></br>
           <div className = "row" id = "rootBack">
@@ -766,17 +766,12 @@ class CustomImpact extends React.Component {
                       </div>
                       <div id = "textRow" className = "row">
                         <div className = "col-md-10 col-md-offset-1">
-                          Using all Statistics data availible and an intelligent Neural Network based algorithm we have been able to correlate the connections between different areas of Australian industry.
+                          Using all statistics data accessible through the Australian Bureau of Statistics, and an intelligent Neural-Network-based algorithm, we have been able to discover and correlate connections between different areas of Australian industry.
                         </div>
                       </div>
                       <div id = "textRow" className = "row" >
                         <div className = "col-md-10 col-md-offset-1">
-                          By adding an area of statistics below (such as materials) and selecting the impact it experiences (say a strong negative downward trend) you can then view how it will affect the rest of Australian Statisitcs.
-                        </div>
-                      </div>
-                      <div id = "textRow" className = "row">
-                        <div className = "col-md-10 col-md-offset-1">
-                          So if we knew that a mine was going to collapse, we can predict how this new event will impact the australian economy
+                         By adding an area of statistics below (e.g. Manufactured Goods) and selecting the impact it experiences (say a strong negative downward trend) you can then view how it will affect the rest of Australian Statisitcs.
                         </div>
                       </div>
                     </div>

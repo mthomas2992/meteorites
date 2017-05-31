@@ -915,3 +915,8 @@ tr:nth-child(even) {
    border-bottom-width: 0.01px;
    margin-bottom: 10px;
  }
+
+ #metricButton {
+    background-color: #4B88A2;
+    color: #FFF9FB;
+ }
