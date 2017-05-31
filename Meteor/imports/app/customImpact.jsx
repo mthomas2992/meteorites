@@ -443,7 +443,7 @@ class CustomImpact extends React.Component {
       } else {
         var current = new Array();
       }
-      console.log(this.state.currentSelectRoot.value);
+
 
       var currentValues = this.state.values;
       currentValues[this.state.currentSelectRoot.value] = this.state.addingValue;
@@ -459,7 +459,7 @@ class CustomImpact extends React.Component {
                       </div>
                     </div>);
 
-      this.setState({addedValues:current});
+      this.setState({addedValues:current,currentSelect:null,currentSelectRoot:null,addingValue:0});
     }
 
     render() {
