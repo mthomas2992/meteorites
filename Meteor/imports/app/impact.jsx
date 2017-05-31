@@ -27,8 +27,9 @@ class Impact extends React.Component {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
          {i:'mainComparison', x:0, y:1, w:12,h:0.8, isResizable:false},
-         {i:'retailList', x:0, y:1, w:6,h:0.5, isResizable:false},
-         {i:'merchList', x:6, y:1, w:6,h:0.9, isResizable:false},
+         {i:'companyImpact', x:0, y:1, w:12,h:0.8, isResizable:false},
+         {i:'retailList', x:0, y:2, w:6,h:0.5, isResizable:false},
+         {i:'merchList', x:6, y:2, w:6,h:0.9, isResizable:false},
          {i: 'spec0', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec1', x: 0, y: 1, w: 6, h: 0.8, isResizable:false},
          {i: 'spec2', x: 6, y: 1, w: 6, h: 0.8, isResizable:false},
@@ -149,7 +150,12 @@ class Impact extends React.Component {
       Meteor.call('getMerchandiseExports',this.state.region,"Total,FoodAndLiveAnimals,BeveragesAndTobacco,CrudMaterialAndInedible,MineralFuelLubricentAndRelatedMaterial,AnimalAndVegitableOilFatAndWaxes,ChemicalsAndRelatedProducts,ManufacutedGoods,MachineryAndTransportEquipments,OtherManucacturedArticles,Unclassified",formattedNewLowerFringeDate,formattedNewUpperFringeDate,function(err,res){
         var formatted = self.formatResponse(res,"MerchandiseExports","fringe");
         self.setState({newFringeMerch:res,newFringeMerchFormatted:formatted});
+
       });
+
+      Meteor.call('getLeadUpNews',formattedOldLowerFringeDate,formattedNewUpperFringeDate, function(err,res){
+        self.setState({newsArticles:res});
+      })
 
     }
 
@@ -303,7 +309,7 @@ class Impact extends React.Component {
 
 
 
-      if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData && this.state.newFringeRetail && this.state.oldFringeRetail && this.state.oldFringeMerch && this.state.newFringeMerch){
+      if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData && this.state.newFringeRetail && this.state.oldFringeRetail && this.state.oldFringeMerch && this.state.newFringeMerch && this.state.newsArticles){
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
         var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)};
@@ -634,6 +640,161 @@ class Impact extends React.Component {
                             </div>
                           </div>
                         </div>;
+
+
+        const companyLinks = {
+          "Food retailing":[{stockCode:"T3D",stockName:"333D LIMITED",stockImpact:0.9},
+                  {stockCode:"ABT",stockName:"ABUNDANT PRODUCE LIMITED",stockImpact:0.9},
+                  {stockCode:"AAC",stockName:"AUSTRALIAN AGRICULTURAL COMPANY LIMITED.",stockImpact:0.9},
+                  {stockCode:"AAP",stockName:"AUSTRALIAN AGRICULTURAL PROJECTS LIMITED",stockImpact:0.9},
+                  {stockCode:"AHF",stockName:"AUSTRALIAN DAIRY FARMS GROUP",stockImpact:0.9},
+                  {stockCode:"AVG",stockName:"AUSTRALIAN VINTAGE LTD",stockImpact:0.9},
+                  {stockCode:"AWY",stockName:"AUSTRALIAN WHISKY HOLDINGS LIMITED",stockImpact:0.9},
+                  {stockCode:"BGA",stockName:"BEGA CHEESE LIMITED",stockImpact:0.9},
+                  {stockCode:"BAL",stockName:"BELLAMY'S AUSTRALIA LIMITED",stockImpact:0.9},
+                  {stockCode:"BFC",stockName:"BESTON GLOBAL FOOD COMPANY LIMITED",stockImpact:0.9},
+                  {stockCode:"BEE",stockName:"BROO LTD",stockImpact:0.9},
+                  {stockCode:"BUB",stockName:"BUBS AUSTRALIA LIMITED",stockImpact:0.9},
+                  {stockCode:"BUG",stockName:"BUDERIM GROUP LIMITED",stockImpact:0.9},
+                  {stockCode:"CZZ",stockName:"CAPILANO HONEY LIMITED",stockImpact:0.9}],
+          "Household goods retailing":[{stockCode:"AHY",stockName:"ASALEO CARE LIMITED",stockImpact:0.9},
+                  {stockCode:"BKL",stockName:"BLACKMORES LIMITED",stockImpact:0.9},
+                  {stockCode:"BWX",stockName:"BWX LIMITED",stockImpact:0.9},
+                  {stockCode:"HCT",stockName:"HOLISTA COLLTECH LIMITED",stockImpact:0.9},
+                  {stockCode:"MHI",stockName:"MERCHANT HOUSE INTERNATIONAL LIMITED",stockImpact:0.9},
+                  {stockCode:"PTL",stockName:"PENTAL LIMITED",stockImpact:0.9},
+                  {stockCode:"SKN",stockName:"SKIN ELEMENTS LIMITED",stockImpact:0.9},
+                  {stockCode:"TIL",stockName:"TRILOGY INTERNATIONAL LIMITED",stockImpact:0.9}],
+          "Clothing, footwear and personal accessory retailing":[{stockCode:"NNW",stockName:"99 WUXIAN LIMITED",stockImpact:0.4},
+                  {stockCode:"ADH",stockName:"ADAIRS LIMITED",stockImpact:0.4},
+                  {stockCode:"AMA",stockName:"AMA GROUP LIMITED",stockImpact:0.4},
+                  {stockCode:"APE",stockName:"AP EAGERS LIMITED",stockImpact:0.4},
+                  {stockCode:"AHG",stockName:"AUTOMOTIVE HOLDINGS GROUP LIMITED.",stockImpact:0.4},
+                  {stockCode:"BBN",stockName:"BABY BUNTING GROUP LIMITED",stockImpact:0.4},
+                  {stockCode:"BAP",stockName:"BAPCOR LIMITED",stockImpact:0.4},
+                  {stockCode:"BDA",stockName:"BOD AUSTRALIA LIMITED",stockImpact:0.4}],
+          "Department stores":[{stockCode:"BLX",stockName:"BEACON LIGHTING GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"BRG",stockName:"BREVILLE GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"CCV",stockName:"CASH CONVERTERS INTERNATIONAL",stockImpact:0.7},
+                  {stockCode:"CQR",stockName:"CHARTER HALL RETAIL REIT",stockImpact:0.7},
+                  {stockCode:"DLC",stockName:"DELECTA LIMITED",stockImpact:0.7},
+                  {stockCode:"FUN",stockName:"FUNTASTIC LIMITED",stockImpact:0.7},
+                  {stockCode:"GFY",stockName:"GODFREYS GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"HT8",stockName:"HARRIS TECHNOLOGY GROUP LIMITED",stockImpact:0.7}],
+          "Cafes, restaurants and takeaway food services":[],
+          "Other retailing":[],
+          "Food and live animals":[{stockCode:"PDF",stockName:"PACIFIC DAIRIES LIMITED",stockImpact:0.7},
+                  {stockCode:"RGP",stockName:"REFRESH GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"RFG",stockName:"RETAIL FOOD GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"RIC",stockName:"RIDLEY CORPORATION LIMITED",stockImpact:0.7},
+                  {stockCode:"SFG",stockName:"SEAFARMS GROUP LIMITED",stockImpact:0.7},
+                  {stockCode:"SHV",stockName:"SELECT HARVESTS LIMITED",stockImpact:0.7}],
+          "Beverages and tobacco":[],
+          "Crude materials, inedible, except fuels":[{stockCode:"BHP",stockName:"BHP BILLITON LIMITED",stockImpact:0.9}],
+          "Mineral fuels, lubricants and related materials":[],
+          "Animal and vegetable oils, fats and waxes":[],
+          "Chemicals and related products, nes":[],
+          "Manufactured goods classified chiefly by material":[],
+          "Machinery and transport equipment":[],
+          "Miscellaneous manufactured articles":[]
+        }
+
+        var impactedCompanies = new Array();
+
+        Object.entries(combinedPercents).forEach(
+          ([key1,value1]) => {
+            Object.entries(combinedPercents[key1]).forEach(
+              ([key2,value2]) => {
+                // console.log(key2,Math.abs(value2));
+                if (Math.abs(value2)>0.05){
+                  console.log(key2,value2);
+                  console.log(companyLinks[key2])
+                  if (companyLinks[key2]){
+                    for (jiH=0;jiH<companyLinks[key2].length;jiH++){
+                      var curr = companyLinks[key2][jiH];
+                      var newsForCurrent = new Array();
+                      var searchingCode = curr +".AX";
+                      var currentSentiment = 0;
+                      for (newsCounter = 0; newsCounter< this.state.newsArticles.length;newsCounter++){
+                        if (this.state.newsArticles[newsCounter].InstrumentIDs.includes(searchingCode)){
+                          newsForCurrent.push(this.state.newsArticles[newsCounter]);
+                          currentSentiment=currentSentiment + this.state.newsArticles[newsCounter].Sentiment.Polarity;
+                        }
+                      }
+                      var sentiment = "N/A"
+                      if (currentSentiment>0){
+                        sentiment= "positive"
+                        if (currentSentiment>0.5){
+                          sentiment = "very positive"
+                        }
+                      } else if (currentSentiment < 0){
+                        sentiment = "negative"
+                        if (currentSentiment<-0.5){
+                          sentiment = "very negative"
+                        }
+                      }
+                      var impactAmount = "negligable";
+                      var actualImpact = curr.stockImpact*value2;
+                      var arrowSource = "";
+
+                      if (actualImpact>0){
+                        impactAmount = "Slight Positive Impact";
+                        arrowSource = "/images/singleUp.png";
+                        if (actualImpact>0.1){
+                          impactAmount = "Moderate Positive Impact";
+                          arrowSource = "/images/singleUp.png";
+                        }
+                        if (actualImpact > 0.15) {
+                          impactAmount = "Strong Positive Impact"
+                          arrowSource = "/images/Double_arrow_green_up.png"
+                        }
+                      } else if (actualImpact< 0){
+                        impactAmount = "Slight Negative Impact"
+                        arrowSource = "/images/singleDown.svg"
+                        if (actualImpact< -0.1){
+                          impactAmount = "Moderate Negative Impact"
+                          arrowSource = "/images/singleDown.svg"
+                        }
+                        if (actualImpact < -0.15) {
+                          impactAmount = "Strong Negative Impact"
+                          arrowSource = "/images/Double_arrow_red_down.png"
+                        }
+                      }
+                      if (curr.stockImpact*value2)
+                      impactedCompanies.push(<div className = "col-md-3" id = "stockElement">
+                        <div className = "row" id = "stockCode">
+                          {curr.stockCode}
+                          <img id = "stockArrow" src = {arrowSource}></img>
+                        </div>
+                        <div className = "row" id = "stockName">
+                          {curr.stockName}
+                        </div>
+                        <div className = "row" id = "stockImpact">
+                          {impactAmount}
+                        </div>
+                        <div className = "row" id = "stockSentiment">
+                          Sentiment:{sentiment}
+                        </div>
+                      </div>)
+                    }
+                  }
+
+
+                }
+              }
+            );
+          }
+        );
+        //search through each high impacted element
+        var companyImpact = <div className = "col-md-12" key="companyImpact">
+                    <div  id = "specificHeading" className= "row">
+                      Company impact
+                    </div>
+                    <div className = "row">
+                      {impactedCompanies}
+                    </div>
+                </div>
+
         return (<div className = "row">
                   <div id = "mainImpactTitle" className = "col-md-12">
                     {this.props.title}
@@ -691,9 +852,10 @@ class Impact extends React.Component {
                       onLayoutChange={this.layoutChange}>
                       {mainBrief}
                       {mainComparisonGraph}
+                      {companyImpact}
+                      {specificGraphs}
                       {mainList}
                       {merchList}
-                      {specificGraphs}
                     </ResponsiveReactGridLayout>
                   </div>
                 </div>)

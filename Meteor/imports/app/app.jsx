@@ -121,7 +121,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
-                        <li><a id="navHeader" href="/">About</a></li>
+                        <li><a id="navHeader" href="/about">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                         <li><a id="navPanelModify" onClick={()=>{this.addPanel()}}>Add Panel</a></li>
                         <li><a id="navPanelModify" onClick={()=>{this.removePanel()}}>Remove Panel</a></li>
@@ -154,7 +154,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
-                        <li><a id="navHeader" href="/">About</a></li>
+                        <li><a id="navHeader" href="/about">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -172,7 +172,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
-                        <li><a id="navHeader" href="/">About</a></li>
+                        <li><a id="navHeader" href="/about">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -190,7 +190,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
-                        <li><a id="navHeader" href="/">About</a></li>
+                        <li><a id="navHeader" href="/about">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -208,6 +208,7 @@ class App extends React.Component {
                         <li><a id="navHeader" href= "/">Home</a></li>
                         <li><a id="navHeader" href="/custom">Predictor</a></li>
                         <li><a id="navHeader" href="/explorer">Stats Explorer</a></li>
+                        <li><a id="navHeader" href="/about">About</a></li>
                         <li><a id="navHeader" href="/api/documentation">API</a></li>
                       </ul>
                     </div>
@@ -215,7 +216,7 @@ class App extends React.Component {
                   </div>
                 </div>)
       } else {
-        return (<div><a href="http://meteoristics.com/api/documentation"><h1> Meteoristics API Documentation </h1></a> <p>404</p></div>);
+        return (<div><h2>404</h2><p></p><a href="http://meteoristics.com/api/documentation"><h1> Meteoristics API Documentation </h1></a> </div>);
       }
 
     }

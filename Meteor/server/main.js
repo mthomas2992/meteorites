@@ -464,7 +464,16 @@ Meteor.startup(() => {
       return HTTP.get(queryString);
     },
 
-    getStockData : function(stocks,startDate,endDate){
+    getLeadUpNews : function(startDate,endDate){
+      var formattedStartDate = startDate +"T00:00:00.000Z";
+      var formattedEndDate = endDate + "T00:00:00.000Z";
+      var companyCodes = "T3D.AX,ABT.AX,AAC.AX,AAP.AX,AHF.AX,AVG.AX,AWY.AX,BGA.AX,BAL.AX,BFC.AX,BEE.AX,BUB.AX,BUG.AX,CZZ.AX,AHY.AX,BKL.AX,BWX.AX,HCT.AX,MHI.AX,PTL.AX,SKN.AX,TIL.AX,NNW.AX,ADH.AX,AMA.AX,APE.AX,AHG.AX,BBN.AX,BAP.AX,BDA.AX,BLX.AX,BRG.AX,CCV.AX,CQR.AX,DLC.AX,FUN.AX,GFY.AX,HT8.AX,PDF.AX,RGP.AX,RFG.AX,RIC.AX,SFG.AX,SHV.AX,BHP.AX"
+
+      var queryString = "https://nickr.xyz/coolbananas/api/?InstrumentIDs="+companyCodes+"&StartDate="+formattedStartDate+"&EndDate="+formattedEndDate+"&Sentiment=1";
+
+      var response = HTTP.get(queryString);
+      // console.log(response);
+      return response.data.NewsDataSet;
 
     }
 
