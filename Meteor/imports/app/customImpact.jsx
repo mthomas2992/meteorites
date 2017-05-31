@@ -37,7 +37,7 @@ class CustomImpact extends React.Component {
         outputs:null,
         currentSelect:null,
         addingValue:0,
-        addedValues:null
+        addedValues:"No Added Metrics"
       }
 
       this.handleChange = this.handleChange.bind(this);
@@ -45,6 +45,7 @@ class CustomImpact extends React.Component {
       this.formatSunburst = this.formatSunburst.bind(this);
 
       this.selectChange = this.selectChange.bind(this);
+      this.selectChangeChange = this.selectChangeChange.bind(this);
       this.handleNormChange = this.handleNormChange.bind(this);
       this.addValue = this.addValue.bind(this);
     };
@@ -80,6 +81,10 @@ class CustomImpact extends React.Component {
     selectChange(val){
       console.log(val);
       this.setState({currentSelectRoot:val,currentSelect:val.value});
+    }
+
+    selectChangeChange(val){
+      this.setState({currentMagnitudeRoot:val,currentMagnitudeSelect:val.value})
     }
 
     calculateChange(){
@@ -438,7 +443,7 @@ class CustomImpact extends React.Component {
     }
 
     addValue() {
-      if (this.state.addedValues){
+      if (this.state.addedValues!="No Added Metrics"){
         var current = this.state.addedValues;
       } else {
         var current = new Array();
@@ -446,20 +451,21 @@ class CustomImpact extends React.Component {
 
 
       var currentValues = this.state.values;
-      currentValues[this.state.currentSelectRoot.value] = this.state.addingValue;
+      console.log(this.state.currentSelect);
+      currentValues[this.state.currentSelectRoot.value] = this.state.currentMagnitudeRoot.value;
 
       this.setState({values:currentValues});
 
-      current.push(<div className = "row">
-                      <div id = "catTitle" className="col-md-6 col-md-offset-1">
+      current.push(<div className = "row" id = "metricEntry">
+                      <div id = "leftSide" className="col-md-6">
                         {this.state.currentSelectRoot.label}
                       </div>
-                      <div className = "col-md-4">
-                        <input id = "catInput" type = "number" name = {this.state.currentSelectRoot.value} value={this.state.values[this.state.currentSelectRoot.value]} onChange={this.handleChange}/>
+                      <div id = "rightSide" className = "col-md-6">
+                        {this.state.currentMagnitudeRoot.label}
                       </div>
                     </div>);
 
-      this.setState({addedValues:current,currentSelect:null,currentSelectRoot:null,addingValue:0});
+      this.setState({addedValues:current,currentSelect:null,currentSelectRoot:null,addingValue:0,currentMagnitudeRoot:null,});
     }
 
     render() {
@@ -469,8 +475,11 @@ class CustomImpact extends React.Component {
       if (this.state.newsArticles){
         var textInput = <div className = "col-md-12">
           <br></br>
-          <div className = "row" id = "rootBack">
-            <div className = "col-md-4 col-md-offset-2">
+          <div className = "row" id = "rootBackAdd">
+            <div id = "textAlignRight" className = "col-md-1 ">
+              Area:
+            </div>
+            <div className = "col-md-4 ">
               <Select
                 name= "state-selector"
                 value= {this.state.currentSelect}
@@ -495,28 +504,34 @@ class CustomImpact extends React.Component {
                 className = "selectArea"
               />
             </div>
+            <div id = "textAlignRight" className = "col-md-1">
+              Magnitude:
+            </div>
             <div className = "col-md-3">
-                <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
+
+                <Select
+                  name= "state-selector"
+                  value= {this.state.currentMagnitudeSelect}
+                  options = {[
+                              {value:10,label:"Strong Positive (+) Increase"},
+                              {value:5,label:"Moderate Positive (+) Increase"},
+                              {value:2,label:"Marginal Positive (+) Increase"},
+                              {value:-2,label:"Marginal Negative (-) Decrease"},
+                              {value:-5,label:"Moderate Negative (-) Decrease"},
+                              {value:-10,label:"Strong Negative (-)Increase"}]}
+                  clearable = {false}
+                  onChange = {this.selectChangeChange}
+                  className = "selectArea"
+                />
             </div>
 
-            <Select
-              name= "state-selector"
-              value= {this.state.currentSelect}
-              options = {[
-                          {value:10,label:"Strong Positive (+) Increase"},
-                          {value:5,label:"Moderate Positive (+) Increase"},
-                          {value:2,label:"Marginal Positive (+) Increase"},
-                          {value:-2,label:"Marginal Negative (-) Decrease"},
-                          {value:-5,label:"Moderate Negative (-) Decrease"},
-                          {value:-10,label:"Strong Negative (-)Increase"},]}
-              clearable = {false}
-              onChange = {this.selectChange}
-              className = "selectArea"
-            />
 
-            <button id = "metricButton" type="button" className = "btn btn-default" onClick = {()=>{this.addValue()}}>
-              Add impact metric (%)
-            </button>
+            <div className = "col-md-2">
+              <button id = "metricButton" type="button" className = "btn btn-default" id ="buttonAdd" onClick = {()=>{this.addValue()}}>
+                Add impact metric (%)
+              </button>
+            </div>
+
           </div>
           <br></br>
           <div className = "row" id = "rootBack">
@@ -954,3 +969,5 @@ export default CustomImpact;
             //     </div>
             //   </div>
             // </div>
+
+            // <input id = "catInput" type = "number" name = "addingValue" value={this.state.addingValue} onChange={this.handleNormChange}/>
