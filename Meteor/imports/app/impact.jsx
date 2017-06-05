@@ -400,6 +400,7 @@ class Impact extends React.Component {
                         currValue = "(Millions of dollars)"
                       }
 
+                      //calculate gross change values
                       var previousTotal = 0 ;
                       var nextTotal = 0;
 
@@ -448,6 +449,8 @@ class Impact extends React.Component {
           }
         );
 
+        //timeline component section
+        //create fringe data and move actual data to the center of the timeline
         var totalDataFringed = new Array();
         var tempOldRetailSave = totalOldDataFormatted.RetailTurnover[6];
         var tempNewRetailSave = totalNewDataFormatted.RetailTurnover[6];
@@ -458,6 +461,7 @@ class Impact extends React.Component {
         tempNewRetailSave.data.unshift(null);
         tempNewRetailSave.data.unshift(null);
 
+        //create fringe data and their syles
         var tempOldRetailFringe = this.state.oldFringeRetailFormatted.lineGraph[6];
         tempOldRetailFringe.fillColor = "rgba(50,50,50,0.2)"
         tempOldRetailFringe.pointColor = "rgba(50,50,50,1)"
@@ -473,6 +477,7 @@ class Impact extends React.Component {
         totalDataFringed.push(tempOldRetailSave);
         totalDataFringed.push(tempNewRetailSave);
 
+        //do the same for MerchandiseExports
         var totalMerchDataFringed = new Array();
         var tempOldMerchSave = totalOldDataFormatted.MerchandiseExports[0];
         var tempNewMerchSave = totalNewDataFormatted.MerchandiseExports[0];
@@ -499,7 +504,7 @@ class Impact extends React.Component {
         totalMerchDataFringed.push(tempNewMerchFringe);
 
 
-
+        //add the labels and create a the line data objects to be interpretted
         var fringeLineData = {
           labels: this.state.fringeGraphLabels,
           datasets:totalDataFringed
@@ -509,7 +514,7 @@ class Impact extends React.Component {
           labels: this.state.fringeGraphLabels,
           datasets:totalMerchDataFringed
         }
-
+        //return component to be rendered
         var mainComparisonGraph = <div className = "col-md-12" id = "specificsRoot" key="mainComparison">
                                     <div className = "row">
                                       <div className = "col-md-12" id="specificHeading">
@@ -533,6 +538,49 @@ class Impact extends React.Component {
                                       </div>
                                     </div>
                                   </div>
+
+        //generate complete tables
+
+        var retailTablePercents = new Array();
+        var merchTablePercents = new Array();
+
+        Object.entries(combinedPercents.RetailTurnover).forEach(([key,value])=>{
+          retailTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+        })
+
+        Object.entries(combinedPercents.MerchandiseExports).forEach(([key,value])=>{
+          merchTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
+        })
+
+        //create list for retail
+        var mainList =<div className = "col-md-6" id = "specificsRoot" key="retailList">
+                              <div className = "row">
+                                <div className = "col-md-12" id="specificHeading">
+                                    Complete Retail Impact
+                                </div>
+                                <div className = "col-md-12" id = "tableCenter">
+                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
+                                  {retailTablePercents}
+                                </div>
+                              </div>
+                            </div>;
+
+        //create list for merch
+        var merchList =<div className = "col-md-6" id = "specificsRoot" key="merchList">
+                              <div className = "row">
+                                <div className = "col-md-12" id="specificHeading">
+                                    Complete Merchandise Impact
+                                </div>
+                                <div className = "col-md-12" id = "tableCenter">
+                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
+                                  {merchTablePercents}
+                                </div>
+                              </div>
+                            </div>;
+
+        //create top main brief section component
+
+        //generate prefix's
         var prefixTwo = "";
         var prefixThree = "";
         var prefixFour = "";
@@ -551,41 +599,7 @@ class Impact extends React.Component {
           prefixFour = "+";
         }
 
-
-        var retailTablePercents = new Array();
-        var merchTablePercents = new Array();
-
-        Object.entries(combinedPercents.RetailTurnover).forEach(([key,value])=>{
-          retailTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
-        })
-
-        Object.entries(combinedPercents.MerchandiseExports).forEach(([key,value])=>{
-          merchTablePercents.push(<tr><td>{key}</td> <td>{(value*100).toFixed(2)}%</td><td onClick={()=>{specificGraphs}}> Add Panel</td></tr>)
-        })
-
-        var mainList =<div className = "col-md-6" id = "specificsRoot" key="retailList">
-                              <div className = "row">
-                                <div className = "col-md-12" id="specificHeading">
-                                    Complete Retail Impact
-                                </div>
-                                <div className = "col-md-12" id = "tableCenter">
-                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
-                                  {retailTablePercents}
-                                </div>
-                              </div>
-                            </div>;
-
-        var merchList =<div className = "col-md-6" id = "specificsRoot" key="merchList">
-                              <div className = "row">
-                                <div className = "col-md-12" id="specificHeading">
-                                    Complete Merchandise Impact
-                                </div>
-                                <div className = "col-md-12" id = "tableCenter">
-                                  <tr><th>Category</th><th>Percent change</th><th></th></tr>
-                                  {merchTablePercents}
-                                </div>
-                              </div>
-                            </div>;
+        //generate main component
 
         var mainBrief = <div className = "col-md-12"id ="briefsRoot" key = "mainImpact">
                           <div  id = "specificHeading" className= "row">
@@ -628,6 +642,8 @@ class Impact extends React.Component {
                         </div>;
 
 
+        //company links array generated from CSV
+        //contains the stocks affected by each industry and the magnitude to which they are impacted
         const companyLinks = {
           "Food retailing":[{stockCode:"T3D",stockName:"333D LIMITED",stockImpact:0.9},
                   {stockCode:"ABT",stockName:"ABUNDANT PRODUCE LIMITED",stockImpact:0.9},
@@ -693,27 +709,26 @@ class Impact extends React.Component {
         }
 
         var impactedCompanies = new Array();
-
-        Object.entries(combinedPercents).forEach(
+        //calculate the impacted companies using the given data
+        Object.entries(combinedPercents).forEach( //for each area in combined percents
           ([key1,value1]) => {
-            Object.entries(combinedPercents[key1]).forEach(
+            Object.entries(combinedPercents[key1]).forEach( //iterate through each percentage of an area
               ([key2,value2]) => {
-                // console.log(key2,Math.abs(value2));
-                if (Math.abs(value2)>0.05){
-                  console.log(key2,value2);
-                  console.log(companyLinks[key2])
+                if (Math.abs(value2)>0.05){ //if the impact percentage on this company is signficant enough
                   if (companyLinks[key2]){
-                    for (jiH=0;jiH<companyLinks[key2].length;jiH++){
+                    for (jiH=0;jiH< companyLinks[key2].length;jiH++){
                       var curr = companyLinks[key2][jiH];
                       var newsForCurrent = new Array();
                       var searchingCode = curr +".AX";
                       var currentSentiment = 0;
-                      for (newsCounter = 0; newsCounter< this.state.newsArticles.length;newsCounter++){
+                      for (newsCounter = 0; newsCounter< this.state.newsArticles.length;newsCounter++){ //iterate through news stories we have calculating sentiment
                         if (this.state.newsArticles[newsCounter].InstrumentIDs.includes(searchingCode)){
                           newsForCurrent.push(this.state.newsArticles[newsCounter]);
                           currentSentiment=currentSentiment + this.state.newsArticles[newsCounter].Sentiment.Polarity;
                         }
                       }
+
+                      //determine values and images
                       var sentiment = "N/A"
                       if (currentSentiment>0){
                         sentiment= "positive"
@@ -756,6 +771,7 @@ class Impact extends React.Component {
                       if (impactAmount=="Slight Negative Impact" || impactAmount == "Slight Positive Impact"){
                         continue;
                       }
+                      //push stock to company impact statement
                       impactedCompanies.push(<div className = "col-md-3" id = "stockElement">
                         <div className = "row" id = "stockCode">
                           {curr.stockCode}
@@ -780,7 +796,7 @@ class Impact extends React.Component {
             );
           }
         );
-        //search through each high impacted element
+        //create root company impact element
         var companyImpact = <div className = "col-md-12" key="companyImpact">
                     <div  id = "specificHeading" className= "row">
                       Company impact
@@ -790,6 +806,7 @@ class Impact extends React.Component {
                     </div>
                 </div>
 
+        //return the collection of elements
         return (<div className = "row">
                   <div id = "mainImpactTitle" className = "col-md-12">
                     {this.props.title}
@@ -855,7 +872,7 @@ class Impact extends React.Component {
                   </div>
                 </div>)
       } else {
-        return (<div>Loading..</div>)
+        return (<div>Loading..</div>) //we are still loading data
       }
 
     }
