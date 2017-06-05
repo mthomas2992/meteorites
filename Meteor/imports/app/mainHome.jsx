@@ -10,10 +10,6 @@ class MainHome extends React.Component {
 
     };
 
-    componentDidMount(){
-
-    };
-
     render() {
       return (<div className = "row">
                 <div onClick = {()=>{FlowRouter.go("/impact?title=Cyclone%20Yasi&startDate=2011-01-09&endDate=2011-03-09&region=QLD")}}className = "col-md-7" id = "yasiRoot">

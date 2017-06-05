@@ -23,6 +23,7 @@ class Impact extends React.Component {
 
     constructor(props){
       super(props);
+      //define the state of object based of paramaters
       this.state = {
         layout: [
          {i: 'mainImpact', x: 0, y: 0, w: 12, h: 0.8, isResizable:false},
@@ -43,23 +44,19 @@ class Impact extends React.Component {
         region:this.props.region
       }
 
+      //function bindings
       this.onBreakpointChange = this.onBreakpointChange.bind(this);
       this.layoutChange = this.layoutChange.bind(this);
-
       this.formatResponse = this.formatResponse.bind(this);
       this.findPercentGrowth = this.findPercentGrowth.bind(this);
       this.loadData = this.loadData.bind(this);
-
       this.handleStartDateChange = this.handleStartDateChange.bind(this);
       this.handleEndDateChange = this.handleEndDateChange.bind(this);
-
       this.formatSunburst = this.formatSunburst.bind(this);
       this.selectChange = this.selectChange.bind(this);
-
-      this.addGeneralPanel = this.addGeneralPanel.bind(this);
     };
 
-    loadData(){
+    loadData(){ //loads all nessaary data into the state of the component
       var self = this;
       Meteor.call('getRetailTurnover',this.state.region,"Total,Food,Householdgood,ClothingFootwareAndPersonalAccessory,DepartmentStores,CafesResturantsAndTakeawayFood,Other",this.state.timePeriodStart,this.state.timePeriodEnd,function(err,res){
         var formatted = self.formatResponse(res,"RetailTurnover");
@@ -71,6 +68,7 @@ class Impact extends React.Component {
         self.setState({totalMerchMonthlyData:res,totalMerchMonthlyDataFormatted:formatted});
       });
 
+      //splits and modifies dates to find previous cycle
       var oldStartDate = this.state.timePeriodStart.split('-');
       oldStartDate[0]=oldStartDate[0]-1;
       var oldEndDate = this.state.timePeriodEnd.split('-');
@@ -78,7 +76,7 @@ class Impact extends React.Component {
       formattedOldStartDate = oldStartDate.join("-");
       formattedOldEndDate = oldEndDate.join("-");
 
-
+      //finds and formatsfringe dates
       var oldFringeDates = oldStartDate;
       oldFringeDates[1] = oldFringeDates[1]-3;
       if (oldFringeDates[1]<=0){
@@ -106,8 +104,6 @@ class Impact extends React.Component {
         newLowerFringeDates[1]= 12 + newLowerFringeDates[1];
       }
       formattedNewLowerFringeDate = newLowerFringeDates.join("-");
-
-
 
       var newUpperFringeDates = this.state.timePeriodEnd.split('-');
       newUpperFringeDates[1] = parseInt(newUpperFringeDates[1])+3;
@@ -159,41 +155,38 @@ class Impact extends React.Component {
 
     }
 
-    componentWillMount(){
+    componentWillMount(){ //when page is loaded
       var startDateSplit = this.state.timePeriodStart.split('-');
       var endDateSplit = this.state.timePeriodEnd.split('-');
-      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2]));
+      var newStartMoment = new Moment(new Date(startDateSplit[0],startDateSplit[1]-1,startDateSplit[2])); //set existing dates
       var newEndMoment = new Moment(new Date(endDateSplit[0],endDateSplit[1]-1,endDateSplit[2]));
       this.setState({momentStart:newStartMoment,momentEnd:newEndMoment});
-      this.loadData();
+      this.loadData(); //load data, takes in paramaters from the state
     };
 
-    selectChange(val){
+    selectChange(val){ //called when the select is changed for the state
       this.setState({region:val.value});
       FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+this.state.timePeriodEnd+'&region='+val.value);
       location.reload();
     }
-    handleStartDateChange(date){
+
+    handleStartDateChange(date){ //called with date when the start date is changed through any method
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
       this.setState({momentStart:date});
       this.setState({timePeriodStart:date.format('YYYY-MM-DD')});
       FlowRouter.go('/impact?title=Custom&startDate='+date.format('YYYY-MM-DD')+'&endDate='+this.state.timePeriodEnd+'&region='+this.state.region);
-      location.reload();
+      location.reload(); //force a reload of the page due to D3
     }
 
-    addGeneralPanel(category){
-      console.log(category);
-    }
-
-    handleEndDateChange(date){
+    handleEndDateChange(date){ //called with date when the end date is changed through any method
       this.setState({momentEnd:date})
       this.setState({timePeriodEnd:date.format('YYYY-MM-DD')});
       this.setState({totalMerchMonthlyData:null,totalOldMerchMonthlyData:null,totalRetailMonthlyData:null,totalOldRetailMonthlyData:null});
       FlowRouter.go('/impact?title=Custom&startDate='+this.state.timePeriodStart+'&endDate='+date.format('YYYY-MM-DD')+'&region='+this.state.region);
-      location.reload();
+      location.reload(); //force a reoload of page due to D3 rendering
     }
 
-    formatSunburst(combinedPercents){
+    formatSunburst(combinedPercents){ //take in the calculated percentages and return it formatted for the sunburst chart
       var base = {
         "name": "flare",
         "children": []};
@@ -209,17 +202,17 @@ class Impact extends React.Component {
       return(base);
     }
 
-    formatResponse(data,industry,labelType) {
-      var lineArray = new Array();
+    formatResponse(data,industry,labelType) { //take the data recieved by our API and format it into several different data types at the same time to reduce computation
+      var lineArray = new Array(); //create the arrays we will fill with data set values
       var labelArray = new Array();
       var pieArray = new Array();
       var table = new Array();
       var totals = {};
       table.push(<tr><th>Sub-category</th><th>Total</th></tr>);
-      for (i=0;i<data.length;i++){
+      for (i=0;i< data.length;i++){ //for each piece of data
         var curr = data[i];
         var dataSet= {
-          label: curr[transforms[industry].topLevelCategory],
+          label: curr[transforms[industry].topLevelCategory],//different areas have different JSON values, so we use the transforms array to convert an industry name into its applicable category name
           fillColor: colours[i]+"0.2)",
           strokeColor: colours[i]+"1)",
           pointColor: colours[i]+"1)",
@@ -236,47 +229,45 @@ class Impact extends React.Component {
         }
         var total =0;
         var currMonthData = curr.RegionalData[0].Data;
-        for (j=0;j<currMonthData.length;j++){
+        for (j=0;j< currMonthData.length;j++){ //for each month in the current data set
+          //if the data is not present for that month
           if (currMonthData[j][transforms[industry].dataValue] == "Data missing" || currMonthData[j][transforms[industry].dataValue] == null){
-            continue;
+            continue; //skip and do not add
           }
-          dataSet.data.push(currMonthData[j][transforms[industry].dataValue].toFixed(2));
-          total = total +currMonthData[j][transforms[industry].dataValue];
+          dataSet.data.push(currMonthData[j][transforms[industry].dataValue].toFixed(2)); //add data to root line chart data set
+          total = total +currMonthData[j][transforms[industry].dataValue]; //add to total
           if (i==0){
-            labelArray.push(currMonthData[j].Date.slice(5,-3));
+            labelArray.push(currMonthData[j].Date.slice(5,-3)); //add date to the list of labels for any graph that uses this data
           }
         }
-        pieDataSet.value =total.toFixed(2);
-        if (labelType == "fringe"){
+        pieDataSet.value =total.toFixed(2); //add data to pie chart
+        if (labelType == "fringe"){ //if we are calling this to format fringe data we need a different kind of label array
           if (i==0) this.setState({fringeGraphLabels:labelArray});
         } else {
           if (i==0) this.setState({lineGraphLabels:labelArray});
         }
-        if (curr[transforms[industry].topLevelCategory].match(/^total/gi)){
+        if (curr[transforms[industry].topLevelCategory].match(/^total/gi)){ //ignore the total section as it is irrelevant to us
           lineArray.push(dataSet);
           continue;
         }
         totals[curr[transforms[industry].topLevelCategory]]=total.toFixed(2);
         pieArray.push(pieDataSet);
-        lineArray.push(dataSet);
+        lineArray.push(dataSet); //push all datasets
         table.push(<tr><td>{curr[transforms[industry].topLevelCategory]}</td> <td>{total.toFixed(2)}</td></tr>);
       }
       var completedTable = <table id ="singularDataTable">{table}</table>;
-      return {lineGraph:lineArray,pieGraph:pieArray,tableData:completedTable,totalsData:totals};
+      return {lineGraph:lineArray,pieGraph:pieArray,tableData:completedTable,totalsData:totals}; //return values
     }
 
-    onBreakpointChange(breakpoint){
+    onBreakpointChange(breakpoint){ //for debug purposes
       // console.log(breakpoint)
     }
 
-    layoutChange(layout){
-      // for (kl=0;kl<layout.length;kl++){
-      //   layout[kl].w=6;
-      //   // if (kl%2 != 0 && kl!=0) layout[kl].x=6;
-      // }
+    layoutChange(layout){ //for debug purposes
+      // console.log(layout);
     }
 
-    findPercentGrowth(oldArray,newArray){
+    findPercentGrowth(oldArray,newArray){ //find the percentatge growth between object arrays
       //pass in
       var pieGraphData = new Array();
       var totalsPercents = {}
@@ -287,7 +278,7 @@ class Impact extends React.Component {
           percentageGrowth = percentageGrowth.toFixed(2);
           var label = key
           var colour = "rgba(0,300,"+(i+1*50)+",";
-          if (percentageGrowth<0){
+          if (percentageGrowth< 0){
             label = label +"-negative --"
             colour = "rgba(300,0,"+(i+1*50)+",";
           }
@@ -305,24 +296,26 @@ class Impact extends React.Component {
     }
 
     render() {
-      var layouts = {lg:this.state.layout,md:this.state.layout};
+      var layouts = {lg:this.state.layout,md:this.state.layout}; //set the layout
 
-
-
+      //If we have loaded the data
       if (this.state.totalMerchMonthlyData && this.state.totalRetailMonthlyData && this.state.totalOldRetailMonthlyData && this.state.totalOldMerchMonthlyData && this.state.newFringeRetail && this.state.oldFringeRetail && this.state.oldFringeMerch && this.state.newFringeMerch && this.state.newsArticles){
+        //calculate percentage growths and find their change
         var retailChange = this.findPercentGrowth(this.state.totalOldRetailMonthlyDataFormatted.totalsData,this.state.totalRetailMonthlyDataFormatted.totalsData);
         var merchChange = this.findPercentGrowth(this.state.totalOldMerchMonthlyDataFormatted.totalsData,this.state.totalMerchMonthlyDataFormatted.totalsData);
         var combinedChange = {pieGraph:retailChange.pieGraph.concat(merchChange.pieGraph)};
+
+        //format the found growths and change
         var totalOldDataFormatted = {RetailTurnover:this.state.totalOldRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalOldMerchMonthlyDataFormatted.lineGraph};
         var totalNewDataFormatted = {RetailTurnover:this.state.totalRetailMonthlyDataFormatted.lineGraph,MerchandiseExports:this.state.totalMerchMonthlyDataFormatted.lineGraph};
         var combinedPercents = {RetailTurnover:retailChange.percents,MerchandiseExports:merchChange.percents};
         var flareData = this.formatSunburst(combinedPercents);
+        //find the important values
         var topElements ={one:{Name:null,Value:null},two:{Name:null,Value:null},three:{Name:null,Value:null},four:{Name:null,Value:null}};
         Object.entries(combinedPercents).forEach(
           ([key1,value1]) => {
             Object.entries(combinedPercents[key1]).forEach(
               ([key2,value2]) => {
-                // console.log(key2,Math.abs(value2));
                 if (Math.abs(value2)>Math.abs(topElements.one.Value)){
                   topElements.one = {Name:key2, Value:value2};
                 } else if (Math.abs(value2)>Math.abs(topElements.two.Value)){
@@ -336,11 +329,11 @@ class Impact extends React.Component {
             );
           }
         );
-
+        //set the labels, converting them into months
         normlabels = this.state.lineGraphLabels;
         fringeLabels = this.state.fringeGraphLabels;
 
-        for(iJ=0;iJ<normlabels.length;iJ++){
+        for(iJ=0;iJ< normlabels.length;iJ++){
           curr = normlabels[iJ];
           if (curr == "01") normlabels[iJ] = "Jan";
           if (curr == "02") normlabels[iJ] = "Feb";
@@ -356,7 +349,7 @@ class Impact extends React.Component {
           if (curr == "12") normlabels[iJ] = "Dec";
         }
 
-        for (iJ=0; iJ<fringeLabels.length;iJ++){
+        for (iJ=0; iJ< fringeLabels.length;iJ++){
           curr = fringeLabels[iJ];
           if (curr == "01") fringeLabels[iJ] = "Jan";
           if (curr == "02") fringeLabels[iJ] = "Feb";
@@ -377,6 +370,8 @@ class Impact extends React.Component {
         var allGraphs = new Array();
         var i=0;
         var jLO=0;
+
+        //if it wasn't for D3, this would be in a component yet doing so causes a state update
         Object.entries(topElements).forEach(
           ([key1,value1]) => {
             //get line graph data,push to total elements pool
@@ -384,8 +379,7 @@ class Impact extends React.Component {
               ([key2,value2]) => {
                 Object.entries(totalOldDataFormatted[key2]).forEach(
                   ([key3,value3]) => {
-                    if (value1.Name == value3.label){
-                      console.log(value1.Name);
+                    if (value1.Name == value3.label){ //look through each formatted data till we find the appropriate one
                       var newData = new Array();
                       var toBePushed = totalNewDataFormatted[key2][key3];
                       var currLabel = toBePushed.label
@@ -393,14 +387,13 @@ class Impact extends React.Component {
                       newData.push(toBePushed);
                       var newtoBePushed = value3;
                       newtoBePushed.label="Current";
-                      // console.log(totalNewDataFormatted[key2][key3]);
-                      // console.log(value3);
                       newData.push(newtoBePushed);
-                      // console.log(newData);
                       var lineData = {
                         labels: normlabels,
                         datasets:newData
                       }
+
+                      //determine the value of these numbers
                       var currValue = "(Thousands of dollars)";
                       var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
                       if (possibleCategoryRetail.includes(currLabel)){
@@ -410,11 +403,11 @@ class Impact extends React.Component {
                       var previousTotal = 0 ;
                       var nextTotal = 0;
 
-                      for (kL=0; kL<newData[0].data.length;kL++){
+                      for (kL=0; kL< newData[0].data.length;kL++){
                         previousTotal = previousTotal + parseInt(newData[0].data[kL]);
                       }
 
-                      for (kL=0; kL<newData[1].data.length;kL++){
+                      for (kL=0; kL< newData[1].data.length;kL++){
                         nextTotal = nextTotal + parseInt(newData[1].data[kL]);
                       }
 
@@ -422,6 +415,7 @@ class Impact extends React.Component {
 
                       var rounded = percentageDifference.toFixed(2);
 
+                      //push the JSX component to the array to be rendered
                       specificGraphs.push(<div className = "col-md-6" id = "specificsRoot" key={"spec"+i}>
                                             <div className = "row">
                                               <div className = "col-md-12" id="specificHeading">
