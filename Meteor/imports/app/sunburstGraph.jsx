@@ -66,7 +66,6 @@ doEverything() {
     color = d3.scale.category20().domain(d3.range(-1,1));
     var totalSize = 0;
 
-    console.log("this is the radius: "+radius);
 
 
   var svg = d3.select(".d3Holder").append("svg")
@@ -150,11 +149,10 @@ var arc = d3.svg.arc()
         } else if (d.name == 'Miscellaneous manufactured articles' || d.name == 'otherManucacturedArticles'){
           return 'Gold';
         }
-        console.log("wrongText is : "+d.name);
 
         return 'red';
       })
-      .style("stroke-opacity", function(d){ //this function sets the width of the outline for different industries dependent 
+      .style("stroke-opacity", function(d){ //this function sets the width of the outline for different industries dependent
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){ // on the amount of percentage chang that it experienced
           return '0';
         } else if (d.size < 0){
@@ -239,7 +237,6 @@ var arc = d3.svg.arc()
 
   // Add the mouseleave handler to the bounding circle.
   d3.select("#container").on("mouseout", function(d){
-        console.log("MOUSE LEAVING");
           // // Transition each segment to full opacity and then reactivate it.
         d3.selectAll("path")
             .transition()
@@ -262,7 +259,6 @@ d3.select(self.frameElement).style("height", height + "px");
 
 
   sickFadeBro(d){
-    console.log("FADED");
     d3.selectAll("path")
       .style("opacity", 0.05);
 

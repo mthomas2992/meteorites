@@ -166,12 +166,11 @@ Meteor.startup(() => {
       var startTime = dateGetter.getTime();
       var possibleStatisticsArea = ["Retail","MerchandiseExports"];
       var possibleState = ["AUS","NSW","WA","SA","ACT","VIC","TAS","QLD","NT"];
-      // var possibleCategoryRetail = ["Total","Food","Householdgood","ClothingFootwareAndPersonalAccessory","DepartmentStores","CafesResturantsAndTakeawayFood","Other"]
-      // var possibleCategoryMerchandise = ["Total","FoodAndLiveAnimals","BeveragesAndTobacco","CrudMaterialAndInedible","MineralFuelLubricentAndRelatedMaterial","AnimalAndVegitableOilFatAndWaxes","ChemicalsAndRelatedProducts","ManufacutedGoods","MachineryAndTransportEquipments","OtherManucacturedArticles","Unclassified"]
       if(!this.queryParams.statisticsArea){
         return {statusCode:400, body:{status:"Error in statistics Area"}}
       }
-      if (this.queryParams.statisticsArea.match(/retail/gi)){
+      if (this.queryParams.statisticsArea.match(/retail/gi)){ //generate array of requirements which we can check and depend on
+        //completly modular requirements, intended for api growth into other areas
         var requirements = [{name:"statisticsArea", expected: new RegExp(createListRequirementRegex(possibleStatisticsArea),'gi'),possibles:"one or multiple of "+possibleStatisticsArea.toString(),required:true},
                             {name:"state", expected: new RegExp(createListRequirementRegex(possibleState),'gi'),possibles:"one or multiple of "+possibleState.toString(),required:true},
                             {name:"category", expected: new RegExp(createListRequirementRegex(possibleCategoryRetail),'gi'), possibles:"one or multiple of "+possibleCategoryRetail.toString(), required:true},
@@ -188,8 +187,8 @@ Meteor.startup(() => {
       }
 
 
-      var errorsAndWarnings = checkRequirements(requirements,this.queryParams);
-      var apiInfo = {devTeam:"Meteorites",version:"v1",module:"Meteoristics API",wesbite:"http://meteoristics.com"};
+      var errorsAndWarnings = checkRequirements(requirements,this.queryParams); //based on the requirements, do we fulfil it
+      var apiInfo = {devTeam:"Meteorites",version:"v2",module:"Meteoristics API",wesbite:"http://meteoristics.com"};
       if (errorsAndWarnings.errors.length!=0){
         return {statusCode:400, body:{status:errorsAndWarnings, data:'Errors prevented data request, check the status field',info:apiInfo}}
       } else {
@@ -199,7 +198,7 @@ Meteor.startup(() => {
         var startDate = this.queryParams.startDate;
         var endDate = this.queryParams.endDate;
         if (this.queryParams.statisticsArea.match(/retail/gi)){
-          var data = Meteor.call('getRetailTurnover',state,category,startDate,endDate);
+          var data = Meteor.call('getRetailTurnover',state,category,startDate,endDate); //call the library function
         } else {
           var data = Meteor.call('getMerchandiseExports',state,category,startDate,endDate);
         }
@@ -240,7 +239,6 @@ Meteor.startup(() => {
       return newresult;
     },
 
-
     'getApiDocumentationIndex' : function(){
       return Assets.getText('Index.txt');
     },
@@ -255,20 +253,14 @@ Meteor.startup(() => {
       return converter.makeHtml(Assets.getText(version+'/'+endpoint+'.txt'));
     },
 
-    'getCSVData' : function(){
-      return Assets.getText('visit-sequences.csv');
-    },
-
 
     'getRetailTurnover' : function(stateString, industryString, startDate, endDate){
-      //code for retail turnover here
+      //convert given paramaters into ABS required format
       var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/RT/";
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
       for(i=0; i<length; i++){
-
-        //console.log(stateArray[i]);
 
         if (stateArray[i].match(/NSW/gi)) {
           absQuery += "1";
@@ -345,14 +337,12 @@ Meteor.startup(() => {
     },
 
     'getMerchandiseExports' : function(stateString, commodityString, startDate, endDate){
-      //code for Merchandise exports turnover here
-            var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/MERCH_EXP/";
-
+      //convert similar to retail
+      var absQuery = "http://stat.data.abs.gov.au/sdmx-json/data/MERCH_EXP/";
       var stateArray = stateString.split(",");
       var i;
       var length = stateArray.length;
       for(i=0; i<length; i++){
-
         if (stateArray[i].match(/AUS/gi)) {
           absQuery += "-";
         } else if (stateArray[i].match(/NSW/gi)) {
@@ -455,16 +445,12 @@ Meteor.startup(() => {
       return results;
     },
 
-    // getNewsData(startDate,EndDate, topicCodes){
-    //   var queryString;
-    // }
-
-    'makeHttpRequest' :function(queryString){
+    'makeHttpRequest' :function(queryString){ //boilerplate function to make basic http request
       var result = HTTP.get(queryString);
       return HTTP.get(queryString);
     },
 
-    getLeadUpNews : function(startDate,endDate){
+    getLeadUpNews : function(startDate,endDate){ //get all news for the given start dates for all stocks we capture
       var formattedStartDate = startDate +"T00:00:00.000Z";
       var formattedEndDate = endDate + "T00:00:00.000Z";
       var companyCodes = "YAL.AX,WPL.AX,SXY.AX,CCL.AX,RFG.AX,DMP.AX,MPL.AX,NCK.AX,PGH.AX,IPL.AX,NUF.AX,JYC.AX,DOW.AX,PTL.AX,CZZ.AX,AHY.AX,BKL.AX,BWX.AX,HCT.AX,MHI.AX,PTL.AX,SKN.AX,TIL.AX,NNW.AX,ADH.AX,AMA.AX,APE.AX,AHG.AX,BBN.AX,BAP.AX,BDA.AX,BLX.AX,BRG.AX,CCV.AX,CQR.AX,DLC.AX,FUN.AX,GFY.AX,HT8.AX,PDF.AX,RGP.AX,RFG.AX,RIC.AX,SFG.AX,SHV.AX,BHP.AX"
@@ -472,9 +458,7 @@ Meteor.startup(() => {
       var queryString = "https://nickr.xyz/coolbananas/api/?InstrumentIDs="+companyCodes+"&StartDate="+formattedStartDate+"&EndDate="+formattedEndDate+"&Sentiment=1";
 
       var response = HTTP.get(queryString);
-      // console.log(response);
       return response.data.NewsDataSet;
-
     }
 
   })
