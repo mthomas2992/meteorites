@@ -22,7 +22,7 @@ class MainHome extends React.Component {
                 <div onClick = {()=>{FlowRouter.go('/impact?title=Black%20Saturday&startDate=2006-02-09&endDate=2006-04-09&region=AUS')}} className = "col-md-5" id= "rightTop">
                   <img src='/images/fire.png'/>
                 </div>
-                <div onClick = {()=>{FlowRouter.go('/impact?title=Cyclone%20Larry&startDate=2009-01-09&endDate=2009-03-09&region=VIC')}} className = "col-md-5" id = "rightBottom">
+                <div onClick = {()=>{FlowRouter.go('/impact?title=Cyclone%20Larry&startDate=2009-01-09&endDate=2009-03-09&region=QLD')}} className = "col-md-5" id = "rightBottom">
                   <img src='/images/cyclone.png'/>
                 </div>
 
