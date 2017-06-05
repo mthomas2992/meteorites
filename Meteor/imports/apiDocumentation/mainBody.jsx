@@ -26,10 +26,6 @@ class MainBody extends React.Component {
       })
     }
 
-    loadContents(){
-
-    }
-
     render() {
       if (this.state.pageContents){
         return (<div id="mainBodyText" dangerouslySetInnerHTML={this.state.pageContents}></div>);
@@ -37,8 +33,6 @@ class MainBody extends React.Component {
         return (<div> Loading....
                 </div>);
       }
-
-
     }
 }
 
