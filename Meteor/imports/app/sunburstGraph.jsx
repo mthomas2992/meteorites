@@ -18,29 +18,9 @@ class D3Test extends React.Component {
       this.getAncestors = this.getAncestors.bind(this);
       this.sickFadeBro = this.sickFadeBro.bind(this);
       this.fixName = this.fixName.bind(this);
-      //console.log(this.props.data);
-      // var tempRooty = this.state.rooty;
-      // //tempRooty[0].value = 6;
-      // //tempRooty[1].value = 6;
-      // console.log("temp root next");
-      // console.log(tempRooty.children[0].children[0]);
-      // var i = 0;
-      // var j = 0;
-      // var temp = 0;
-      // var tempObj;
-      // while(i<2){
-      //   while(j<6){
-      //     temp += tempRooty.children[i].children[j];
-      //     j++;
-      //   }
-      //   tempObj = {name : tempRooty.children[i].name, value : temp, children : tempRooty.children[i].children};
-      //   console.log(tempObj);
-      //   i++;
-      // }
     }
 
   componentDidMount(){
-    //console.log(this.state.rooty);
     var d = this.doEverything();
     this.sickFadeBro(d);
   }
@@ -48,7 +28,6 @@ class D3Test extends React.Component {
   componentDidUpdate(){
     this.doEverything();
   }
-
 
 
     // Stash the old values for transition.
@@ -173,7 +152,6 @@ var arc = d3.svg.arc()
         console.log("wrongText is : "+d.name);
 
         return 'red';
-        //return  color((d.children ? d : d.parent).name);
       })
       .style("stroke-opacity", function(d){
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
@@ -186,20 +164,12 @@ var arc = d3.svg.arc()
       .style("fill-rule", "evenodd")
       .each(this.stash)
       .on("mouseover", function(d){
-        //this.handleMouseOver(d);
-        // console.log("MOUSING OVER");
-
-        // var percentage = (100 * d.value / totalSize).toPrecision(3);
-        // var percentageString = percentage + "%";
-        // if (percentage < 0.1) {
-        //   percentageString = "< 0.1%";
-        // }
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
           var percentage = d3.round(d.value*100, 2);
         } else {
           var percentage = d3.round(d.size*100, 2);
         }
-        //console.log("THIS IS THE PERCENTAGE: "+percentage+" here is the value: "+d.value);
+
         var percentageString = percentage + "%";
 
         d3.select("#percentage")
@@ -251,7 +221,7 @@ var arc = d3.svg.arc()
         path.unshift(current);
         current = current.parent;
         }
-        //var sequenceArray = this.getAncestors(d);
+
         var sequenceArray = path;
         //fade everything
         d3.selectAll("path")
@@ -366,7 +336,6 @@ render() {
         </div>
         </div>
         );
-
     }
   }
 

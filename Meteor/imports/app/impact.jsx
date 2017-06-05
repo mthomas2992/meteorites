@@ -15,7 +15,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
-import SunburstChart from '/imports/app/d3test.jsx';
+import SunburstChart from '/imports/app/sunburstGraph.jsx';
 var PolarChart = require("react-chartjs").PolarArea;
 var LineChart = require("react-chartjs").Line;
 
