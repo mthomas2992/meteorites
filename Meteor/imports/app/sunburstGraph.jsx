@@ -17,16 +17,15 @@ class D3Test extends React.Component {
       this.arcTween = this.arcTween.bind(this);
       this.getAncestors = this.getAncestors.bind(this);
       this.sickFadeBro = this.sickFadeBro.bind(this);
-      this.fixName = this.fixName.bind(this);
     }
 
   componentDidMount(){
-    var d = this.doEverything();
-    this.sickFadeBro(d);
+    var d = this.doEverything(); //this renders everything and then returns the d3 object and assigns it to the variable d
+    this.sickFadeBro(d); //passes the d3 object into a function which causes the graph to fade into existence when the page first loads
   }
 
   componentDidUpdate(){
-    this.doEverything();
+    this.doEverything(); //re renders the graph when the react component needs to update
   }
 
 
@@ -47,6 +46,7 @@ arcTween(a) {
   };
 }
 
+//this works out which section of the inner ring is the parent of a certain section of the outer ring
 getAncestors(node) {
   var path = [];
   var current = node;
@@ -57,6 +57,7 @@ getAncestors(node) {
   return path;
 }
 
+//renders the sunburst graph
 doEverything() {
     var width = 700,
     height = 600,
@@ -103,7 +104,7 @@ var arc = d3.svg.arc()
       .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
       .attr("d", arc)
       .attr("stroke-width", '2px')
-      .style("stroke", function(d){
+      .style("stroke", function(d){ //this function assigns different colours to different industries
         if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
           return 'white';
         } else if (d.size < 0){
@@ -153,8 +154,8 @@ var arc = d3.svg.arc()
 
         return 'red';
       })
-      .style("stroke-opacity", function(d){
-        if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){
+      .style("stroke-opacity", function(d){ //this function sets the width of the outline for different industries dependent 
+        if (d.name == 'RetailTurnover' || d.name == 'MerchandiseExports'){ // on the amount of percentage chang that it experienced
           return '0';
         } else if (d.size < 0){
           return '0.8';
@@ -175,7 +176,7 @@ var arc = d3.svg.arc()
         d3.select("#percentage")
           .text(percentageString);
 
-        var goodName = d.name;
+        var goodName = d.name; //fixes the names because some of them are spelt wrong in the spec
         if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
           goodName = 'Mineral fuels, lubricants and related materials';
         } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
@@ -212,7 +213,7 @@ var arc = d3.svg.arc()
 
 
 
-        d3.select("#dataName")
+        d3.select("#dataName") //changes the text in the middle of the sunburst dynamically
           .text(goodName);
 
         var path = [];
@@ -259,42 +260,6 @@ d3.select(self.frameElement).style("height", height + "px");
 
 }
 
-fixName(d){
-        if (d.name == 'Mineral fuels, lubricants and related materials' || d.name == 'mineralFuelLubricentAndRelatedMaterial'){
-          return 'Mineral fuels, lubricants and related materials';
-        } else if (d.name == 'Crude materials, inedible, except fuels' || d.name == 'crudMaterialAndInedible'){
-          return 'Crude materials, inedible, except fuels';
-        } else if (d.name == 'Manufactured goods classified chiefly by material' || d.name == 'manufacutedGoods'){
-          return 'Manufactured goods classified chiefly by material';
-        } else if (d.name == 'Food and live animals' || d.name == 'foodAndLiveAnimals'){
-          return 'Food and live animals';
-        } else if (d.name == 'Beverages and tobacco' || d.name == 'beveragesAndTobacco'){
-          return  'Beverages and tobacco';
-        } else if (d.name == 'Animal and vegetable oils, fats and waxes' || d.name == 'animalAndVegitableOilFatAndWaxes'){
-          return 'Animal and vegetable oils, fats and waxes';
-        } else if (d.name == 'Food retailing' || d.name == 'food'){
-          return 'Food retailing';
-        } else if (d.name == 'Other retailing' || d.name == 'other'){
-          return 'Other retailing';
-        } else if (d.name == 'Department stores' || d.name == 'departmentStores'){
-          return 'Khaki';
-        } else if (d.name == 'Chemicals and related products, nes' || d.name == 'chemicalsAndRelatedProducts'){
-          return 'Chemicals and related products, nes';
-        } else if (d.name == 'Cafes, restaurants and takeaway food services' || d.name == 'cafesResturantsAndTakeawayFood'){
-          return 'Cafes, restaurants and takeaway food services';
-        } else if (d.name == 'Commodities and transactions not classified elsewhere in the SITC' || d.name == 'unclassified'){
-          return 'Commodities and transactions not classified elsewhere in the SITC';
-        } else if (d.name == 'Machinery and transport equipment' || d.name == 'machineryAndTransportEquipments'){
-          return 'Machinery and transport equipment';
-        } else if (d.name == 'Household goods retailing' || d.name == 'householdgood'){
-          return 'Household goods retailing';
-        } else if (d.name == 'Clothing, footwear and personal accessory retailing' || d.name == 'clothingFootwareAndPersonalAccessory'){
-          return 'Clothing, footwear and personal accessory retailing';
-        } else if (d.name == 'Miscellaneous manufactured articles' || d.name == 'otherManucacturedArticles'){
-          return 'Miscellaneous manufactured articles';
-        }
-        return 'MISTAKE';
-}
 
   sickFadeBro(d){
     console.log("FADED");
